@@ -70,6 +70,8 @@ def apply_extractions(plans_doc: dict, extractions: dict[str, list[dict]]) -> di
             url = plan.get("documents", {}).get(doc["doc_type"], "")
             if doc.get("uins") and not plan.get("uin"):
                 plan["uin"] = doc["uins"][0]
+            if doc.get("uin_matches") is False and doc.get("uins"):
+                continue  # a different version of the product: never let it overwrite current values
             for cand in doc["candidates"]:
                 if not cand.get("validated"):
                     continue

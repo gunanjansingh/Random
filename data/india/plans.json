@@ -7,8 +7,9 @@
    "insurer": "HDFC ERGO",
    "name": "Optima Secure",
    "documents": {
-    "policy_wording": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
-    "prospectus": "https://www.hdfcergo.com/docs/default-source/downloads/prospectus/health/my-optima-secure-prospectus.pdf",
+    "prospectus": "https://customer-portal-assets.hdfcergo.com/documents/Prospectus_myOptimaSecure-81493430264.pdf",
+    "policy_wording": "https://customer-portal-assets.hdfcergo.com/documents/PolicyWordings_myOptimaSecure-76673175551.pdf",
+    "customer_information_sheet": "https://customer-portal-assets.hdfcergo.com/documents/CIS_Website_myOptimaSecure-751325733632.pdf",
     "brochure": "https://www.hdfcergo.com/docs/default-source/downloads/brochures/optima-secure-brochure.pdf",
     "product_page": "https://www.hdfcergo.com/health-insurance/optima-secure/"
    },
@@ -294,7 +295,13 @@
      "caveat": "Configuration: Optima Secure + unlimited restoration add-on, 5% digital discount applied. Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "uin": "HDFHLIP26058V082526",
+   "documents_older": {
+    "policy_wording_v06": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+    "prospectus_v06": "https://www.hdfcergo.com/docs/default-source/downloads/prospectus/health/my-optima-secure-prospectus.pdf"
+   },
+   "document_notes": "Premium tables: prospectus Annexure C 'Premium Table: Exclusive of GST', by city tier (Tier 1: Delhi/NCR, Mumbai, Thane, Navi Mumbai, Surat, Ahmedabad, Vadodara; Tier 2: rest of India), age band and SI. The prospectus covers 7 Optima plans; use the 'Optima Secure' table. www.hdfcergo.com copies look like the older V06 (HDFHLIP25041V062425)."
   },
   {
    "id": "niva-bupa-reassure-2",
@@ -313,10 +320,9 @@
     10000000
    ],
    "documents": {
+    "prospectus": "https://transactions.nivabupa.com/pages/doc/prospectus/ReAssure-2.0-Prospectus-cum-Sales-Literature.pdf",
     "policy_wording": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
-    "prospectus": "https://transactions.nivabupa.com/pages/doc/prospectus/ReAssure-2.0-Prospectus-cum-Sales-Literature.pdf?v=1.10",
-    "brochure": "https://otc.nivabupa.com/nivabupalogo/ReAssureBrochure2.0.pdf",
-    "product_page": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html"
+    "brochure": "https://transactions.nivabupa.com/pages/doc/brochure/ReAssure_2.0_Titanium_plus_&_Platinumplus_SS_with_Deductible.pdf?v=1.2"
    },
    "highlights": [
     "ReAssure Forever: unlimited restorations once the first claim is paid",
@@ -605,7 +611,8 @@
      "caveat": "Configuration: Platinum+ with mandatory and recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "document_notes": "Premium rates are an annexure to the prospectus: age band x zone (Zone 1: Delhi NCR, Mumbai incl. Navi Mumbai/Thane, Kolkata; Zone 2: rest of India) x SI (5L-1Cr) x variant. CIS: download centre (transactions.nivabupa.com/pages/downloads.aspx). Not ReAssure (NBHHLIP26050V042526) or ReAssure 3.0 (NBHHLIP26047V012526)."
   },
   {
    "id": "care-supreme",
@@ -614,8 +621,9 @@
    "name": "Care Supreme",
    "uin": "CHIHLIP27061V032627",
    "documents": {
-    "policy_wording": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---policy-terms-and-conditions.pdf",
     "prospectus": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+    "policy_wording": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---policy-terms-and-conditions.pdf",
+    "premium_change_notice": "https://selfcare.careinsurance.com/data/Care Supreme - Rationale for Premium change.pdf",
     "brochure": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---brochure.pdf",
     "product_page": "https://www.careinsurance.com/product/care-supreme",
     "policy_usage_guide": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme----policy-usage-guide.pdf"
@@ -1027,7 +1035,11 @@
      "caveat": "Configuration: Care Supreme + add-ons: Cumulative Bonus Super, Annual Health Checkup, Claim Shield Plus, Wellness Benefit, Air Ambulance. Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "documents_older": {
+    "rate_chart_page_v01": "https://careinsurance.com/v1/rate-chart/care-supreme"
+   },
+   "document_notes": "Premium tables: prospectus (Zone 1 base rates by age band and SI; other zones by zone factors). Repriced from 29 Apr 2026 with zonal restructuring (Zones 1-7), so any older table is stale. Brochure is the Nov 2022 original."
   },
   {
    "id": "icici-lombard-elevate",
@@ -1035,10 +1047,9 @@
    "insurer": "ICICI Lombard",
    "name": "Elevate",
    "documents": {
-    "policy_wording": "https://www.icicilombard.com/docs/default-source/default-document-library/revised-elevate-policy-wording---rev---4.pdf",
-    "prospectus": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate-prospectus8c0007ff45fd68ff8a0df0055f689f94.pdf",
-    "product_page": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
-    "press_release": "https://www.icicilombard.com/docs/default-source/public-disclosures/2024-25/press-release---icici-lombard-introduces-elevate.pdf"
+    "prospectus": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate-prospectus_.pdf",
+    "policy_wording": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate.pdf",
+    "product_page": "https://www.icicilombard.com/health-insurance/elevate-health-policy/"
    },
    "highlights": [
     "Infinite Care: unlimited cover for any one claim in the policy lifetime (add-on)",
@@ -1229,7 +1240,14 @@
      "caveat": "Configuration: Elevate with Ditto-recommended add-ons (e.g. Claim Protector, Annual Health Checkup). Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "uin": "ICIHLIP27057V062627",
+   "documents_older": {
+    "rate_chart_v02": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate-rate-chart8c0007ff45fd68ff8a0df0055f689fc2.pdf",
+    "policy_wording_v04": "https://www.icicilombard.com/docs/default-source/default-document-library/revised-elevate-policy-wording---rev---4.pdf",
+    "prospectus_old": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate-prospectus8c0007ff45fd68ff8a0df0055f689f94.pdf"
+   },
+   "document_notes": "Current version V06. The only rate chart found is V02 (FY24-25, Zones A-D), probably stale; the product page links a rate chart not indexed by search, so check it by hand. The Key Information Sheet is usually page 1 of the policy wording."
   },
   {
    "id": "aditya-birla-activ-one-max",
@@ -1238,6 +1256,7 @@
    "name": "Activ One",
    "variant": "MAX",
    "documents": {
+    "premium_chart": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/ActivOneDocs/ActivOneMAX/ProductInformation/RateChart.pdf",
     "policy_wording": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
     "customer_information_sheet": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/customer-information-sheet.pdf",
     "prospectus": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/prospectus.pdf",
@@ -1450,7 +1469,8 @@
      "caveat": "Configuration: Activ One MAX (Ditto indicative configuration). Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "document_notes": "Premium tables: MAX RateChart.pdf, gross premium by age band x SI x Zones 1-3 (Zone 2: Kolkata, Pune, Hyderabad, Chennai, Chandigarh, Mohali, Panchkula, Lucknow, Patna; Zone 3: rest). Do NOT use the NXT/VYTL/MAXplus rate charts. UIN unclear: ADIHLIP24097V012324 vs newer ADIHLIP27048V022627; check page 1."
   },
   {
    "id": "star-super-star",
@@ -1459,6 +1479,9 @@
    "name": "Super Star",
    "uin": "SHAHLIP27049V022627",
    "documents": {
+    "premium_chart": "https://d28c6jni2fmamz.cloudfront.net/Premium_Illustration_Super_Star_3cfc4113c2.pdf",
+    "policy_wording": "https://d28c6jni2fmamz.cloudfront.net/Policy_Super_Star_V_3_80e5dd8988.pdf",
+    "customer_information_sheet": "https://d28c6jni2fmamz.cloudfront.net/CIS_Super_Star_V_2_89eb6ddab6.pdf",
     "product_page": "https://www.starhealth.in/health-insurance/super-star/"
    },
    "highlights": [
@@ -1693,7 +1716,11 @@
      "caveat": "Configuration: Super Star with Ditto-recommended add-ons (preventive health check-up, limitless loyalty bonus). Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "unknown"
     }
-   ]
+   ],
+   "documents_older": {
+    "prospectus_v1": "https://d28c6jni2fmamz.cloudfront.net/Prospectus_Super_Star_V_1_21e5a78563.pdf"
+   },
+   "document_notes": "Star Health hosts its PDFs on its document CDN d28c6jni2fmamz.cloudfront.net. Current prospectus (PROS/SS/V.3/2026) not found; check starhealth.in/downloads by hand. Premiums depend on 21 add-ons; zones A/B/C. Super Star launched under this UIN on 26 May 2026 (previous SHAHLIP25036V012425)."
   },
   {
    "id": "tata-aig-medicare-premier",
@@ -1701,9 +1728,9 @@
    "insurer": "Tata AIG",
    "name": "MediCare Premier",
    "documents": {
-    "policy_wording": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+    "premium_chart": "https://www.tataaig.com/s3/TATA_Medicare_Premier_871b2dee42.pdf",
     "prospectus": "https://www.tataaig.com/s3/03_medicare_premier_prospectus_b93b6fc6df.pdf",
-    "customer_information_sheet": "https://www.tataaig.com/s3/Medi_Care_Premier_48e8569ce1.PDF"
+    "policy_wording": "https://www.tataaig.com/s3/tata_aig_medicare_premier_policy_wordings_781aa2fd94.pdf"
    },
    "highlights": [
     "Consumables benefit included",
@@ -1972,7 +1999,14 @@
      "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "2026"
     }
-   ]
+   ],
+   "uin": "TATHLIP26052V052526",
+   "documents_older": {
+    "rate_chart_v02": "https://www.tataaig.com/s3/Tata_AIG_Medicare_Premier_df805d1c41.pdf",
+    "policy_wording_unclear": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+    "cis_2022": "https://www.tataaig.com/s3/Medi_Care_Premier_48e8569ce1.PDF"
+   },
+   "document_notes": "Premium tables: rate chart with Zones A/B/C, annual per-person rates by entry age, SI up to 300L, discounts 7.5% (3-year) and 22% (2-member floater). Current CIS: tataaig.com/downloads, MediCare Premier section."
   },
   {
    "id": "manipalcigna-sarvah-param",
@@ -1981,9 +2015,10 @@
    "name": "Sarvah",
    "variant": "Param",
    "documents": {
-    "policy_wording": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
     "prospectus": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-Prospectus/c2543c7b-764d-2157-7f4c-214616f20ff4",
+    "policy_wording": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
     "customer_information_sheet": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-Plan-CIS/d224d616-03a2-abf9-2273-94b3033e7e16",
+    "benefit_illustration": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-Annexure-to-CIS-Benefitillustration/d7b04f46-bfa0-2246-ae0c-4ba85b8726e5",
     "product_page": "https://www.manipalcigna.com/hospitalization-cover/manipalcigna-sarvah/manipalcigna-sarvah-param"
    },
    "highlights": [
@@ -2130,7 +2165,9 @@
      "caveat": "Configuration: Sarvah Param. Indicative figure from joinditto.in; not a quote for you.",
      "as_of": "2026"
     }
-   ]
+   ],
+   "uin": "MCIHLIP27040V032627",
+   "document_notes": "No public rate chart. The only official rupee figures are the CIS benefit-illustration annexure (sample ages at Rs 10L, Zone 1, file title V2 Oct 2025, may predate the V03 April 2026 rates). Full rate grid may need the online quote engine or an IRDAI filing request."
   },
   {
    "id": "bajaj-health-guard-gold",
@@ -2138,11 +2175,12 @@
    "insurer": "Bajaj General",
    "name": "Health Guard",
    "variant": "Gold",
-   "uin": "BAJHLIP25035V072425",
+   "uin": "BAJHLIP26073V082526",
    "documents": {
-    "policy_wording": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
-    "brochure": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
-    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+    "premium_chart": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/New-Health-Guard-Premium-Chart.pdf",
+    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf",
+    "customer_information_sheet": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-CIS-print.pdf",
+    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html"
    },
    "highlights": [
     "Sum insured reinstatement up to 100% once SI + bonus are exhausted"
@@ -2286,7 +2324,16 @@
      "caveat": "Configuration: Health Guard Gold, healthy, no add-ons stated. Indicative figure from joinditto.in; GST basis not stated (may predate the Sep-2025 GST exemption, i.e. up to ~18% high); not independently re-verified; not a quote for you.",
      "as_of": "2026 (page)"
     }
-   ]
+   ],
+   "uin_history": [
+    "BAJHLIP25035V072425"
+   ],
+   "documents_older": {
+    "brochure_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
+    "policy_wording_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+   },
+   "document_notes": "Insurer renamed to Bajaj General (bajajgeneralinsurance.com). Current set (probably V08, BAJHLIP26073V082526) is in the health-guard/ folder; premium chart by age x SI x zone covers Gold and Silver. Check the chart prints V08 (a 2023 copy with the same name exists). Previous UIN BAJHLIP25035V072425 (V07)."
   },
   {
    "id": "bajaj-health-guard-silver",
@@ -2294,10 +2341,12 @@
    "insurer": "Bajaj General",
    "name": "Health Guard",
    "variant": "Silver",
-   "uin": "BAJHLIP25035V072425",
+   "uin": "BAJHLIP26073V082526",
    "documents": {
-    "brochure": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
-    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+    "premium_chart": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/New-Health-Guard-Premium-Chart.pdf",
+    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf",
+    "customer_information_sheet": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-CIS-print.pdf",
+    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html"
    },
    "highlights": [
     "Cheaper variant with a 1%-of-SI room cap",
@@ -2371,7 +2420,16 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "uin_history": [
+    "BAJHLIP25035V072425"
+   ],
+   "documents_older": {
+    "brochure_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
+    "policy_wording_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/HG_Silver_Policy_Wording_&_CIS.pdf",
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+   },
+   "document_notes": "Insurer renamed to Bajaj General (bajajgeneralinsurance.com). Current set (probably V08, BAJHLIP26073V082526) is in the health-guard/ folder; premium chart by age x SI x zone covers Gold and Silver. Check the chart prints V08 (a 2023 copy with the same name exists). Previous UIN BAJHLIP25035V072425 (V07)."
   }
  ]
 }

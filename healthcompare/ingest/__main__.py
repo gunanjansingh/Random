@@ -47,6 +47,11 @@ def main(argv: list[str] | None = None) -> None:
             name = f"{p['insurer']} {p['name']} {p.get('variant', '')}".strip()
             res = extract_document(CACHE / entry["path"], name, doc_type, use_claude=not args.no_claude,
                                    criteria=DOC_CRITERIA)
+            expected = p.get("uin")
+            res["uin_matches"] = bool(expected) and expected in res["uins"]
+            if expected and res["uins"] and not res["uin_matches"]:
+                print(f"WARNING {key}: document shows UIN {', '.join(res['uins'])}, expected {expected} "
+                      f"(older or different version?)")
             docs = [d for d in results.get(plan_id, []) if d["doc_type"] != doc_type]
             results[plan_id] = docs + [res]
             print(f"{key}: {len(res['candidates'])} validated values, {res['dropped']} dropped (quote not found)")

@@ -10,7 +10,7 @@ import urllib.request
 import urllib.robotparser
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 
 USER_AGENT = "CoverCompareBot/0.1 (health insurance comparison research)"
 DELAY_SECONDS = 2.0  # between requests to the same host
@@ -53,7 +53,7 @@ class Fetcher:
         wait = DELAY_SECONDS - (time.monotonic() - self._last_hit.get(host, 0))
         if wait > 0:
             time.sleep(wait)
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        req = urllib.request.Request(quote(url, safe=":/?&=%#+,;@"), headers={"User-Agent": USER_AGENT})
         try:
             with urllib.request.urlopen(req, timeout=60) as resp:
                 body = resp.read()

@@ -58,9 +58,21 @@ which needs an **Anthropic API key**, with a monthly spend limit that you
 set. Without a key I can still read the documents myself in a session; that
 is slower, but fine for 10 plans.
 
-**Domains to allow:** hdfcergo.com, nivabupa.com, careinsurance.com,
-icicilombard.com, adityabirlacapital.com, starhealth.in, tataaig.com,
-manipalcigna.com, bajajallianz.com, bajajgeneral.com, irdai.gov.in.
+**Domains to allow** (exact hosts where the current documents live):
+- cms.careinsurance.com
+- customer-portal-assets.hdfcergo.com
+- d28c6jni2fmamz.cloudfront.net
+- selfcare.careinsurance.com
+- transactions.nivabupa.com
+- www.adityabirlacapital.com
+- www.bajajgeneralinsurance.com
+- www.careinsurance.com
+- www.hdfcergo.com
+- www.icicilombard.com
+- www.manipalcigna.com
+- www.starhealth.in
+- www.tataaig.com
+- irdai.gov.in (insurer claim statistics)
 
 ---
 

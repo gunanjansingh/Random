@@ -86,3 +86,12 @@ class MetricPrecedence(unittest.TestCase):
         irdai = {"value": 92, "confidence": 0.6, "verified": False, "citation": {"source": "irdai", "url": "https://b"}}
         self.assertEqual(merge_value(page, irdai, "csr_count")["value"], 92)
         self.assertEqual(merge_value(page, irdai, "room_rent_limit")["value"], 99)
+
+
+class VersionGuard(unittest.TestCase):
+    def test_document_from_another_version_is_not_applied(self):
+        doc = {"plans": [{"id": "p", "uin": "NEWHLIP27001V032627", "documents": {"policy_wording": "https://pw"}, "values": {}}]}
+        ext = {"p": [{"doc_type": "policy_wording", "uins": ["NEWHLIP25001V012425"], "uin_matches": False, "candidates": [
+            {"criterion": "ped_waiting_months", "value": 48, "quote": "q", "page": 2, "confidence": 0.9, "validated": True}]}]}
+        apply_extractions(doc, ext)
+        self.assertEqual(doc["plans"][0]["values"], {})

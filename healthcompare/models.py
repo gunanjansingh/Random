@@ -128,7 +128,10 @@ class Plan:
     variant: str = ""
     uin: str = ""
     sum_insured_options: list[int] = field(default_factory=list)
-    documents: dict[str, str] = field(default_factory=dict)  # doc type -> official URL
+    documents: dict[str, str] = field(default_factory=dict)  # doc type -> official URL (current version)
+    documents_older: dict[str, str] = field(default_factory=dict)  # superseded versions, for reference only
+    document_notes: str = ""  # where the premium tables are, version pitfalls
+    uin_history: list[str] = field(default_factory=list)
     highlights: list[str] = field(default_factory=list)
     premium_by_age: dict[int, int] = field(default_factory=dict)  # band lower bound -> annual premium per member
     premium_basis: str = ""  # SI / zone / variant the premium table is for
@@ -160,6 +163,9 @@ class Plan:
             uin=d.get("uin", ""),
             sum_insured_options=d.get("sum_insured_options", []),
             documents=d.get("documents", {}),
+            documents_older=d.get("documents_older", {}),
+            document_notes=d.get("document_notes", ""),
+            uin_history=d.get("uin_history", []),
             highlights=d.get("highlights", []),
             premium_by_age={int(k): v for k, v in d.get("premium_by_age", {}).items()},
             premium_basis=d.get("premium_basis", ""),
