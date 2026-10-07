@@ -163,7 +163,7 @@ Already visible in the seed data:
 - Search summaries sometimes return a *definition* ("up to 36 months") in
   place of the plan's *value*. Quote validation against the PDF exists to
   catch this.
-- Premiums: 52 indicative figures for 9 plans, each for a stated reference
+- Premiums: 50 indicative reference-profile prices for 9 plans, each for a stated reference
   profile (ages, members, sum insured, city), taken from broker reviews,
   aggregators and insurer illustrations. They were adversarially checked;
   4 refuted figures were dropped. Most are single-source and low confidence.

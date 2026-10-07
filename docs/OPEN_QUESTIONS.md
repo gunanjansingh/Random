@@ -59,7 +59,7 @@ for parents) buying or porting a base plan, launched as an invite-only beta.
 
 ### A4. Data sourcing rights
 **Today's sources**
-- Most premium figures (52 figures, 9 plans) and the CSR figures come from
+- Most premium figures (50 reference profiles, 9 plans) and the CSR figures come from
   **joinditto.in, a registered broker and therefore a competitor**.
 - The rest come from nyvo.in, a social-media post, press articles, and
   insurer marketing pages.
