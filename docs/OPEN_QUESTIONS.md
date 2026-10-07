@@ -1,109 +1,70 @@
 # Open questions for the product owner
 
 Decisions only you can make, each with a recommended default so work can
-continue if you're happy with it. **Blocking** items gate any public launch.
-The regulatory facts below were fact-checked against press and legal sources
-(Oct 2026). They are not legal advice; get counsel to confirm.
+continue in the meantime.
 
 ---
 
-## A. Blocking
+## Decided (7 Oct 2026)
 
-### A1. Regulatory route: can we rank plans at all?
-**Verified facts**
-- The IRDAI (Insurance Web Aggregators) Regulations 2017 (Reg. 42) say a web
-  aggregator "shall not display ratings, rankings, endorsements or
-  bestsellers", must keep content "unbiased and factual", and must "desist
-  from commenting on insurers or their products". This is a flat ban. There
-  is no exception for publishing your criteria.
-- IRDAI fined Policybazaar ₹5 crore (order dated 4 Aug 2025). One of the
-  penalised charges was showing plans as "Top"/"Best" without a disclosed
-  basis; its health "Top plans" section featured 12 of 23 partner insurers.
-- Comparison becomes a regulated activity once leads, sales or insurer money
-  are involved. Brokers and corporate agents have their own regulations, and
-  I haven't checked them for an equivalent ban.
+| Topic | Decision |
+|---|---|
+| Positioning | **Information only** for now, to help people make an informed decision. IRDAI registration will come later. |
+| How results are framed | No "best plan" labels. The user answers questions and sets filters; the plans left are shown as *"Based on our conversation and your filters, this is the best-suited plan for you"*, **with the reasons and supporting data**. Each reason states the filters passed (with the plan's actual value), its strengths on what the user said matters, its trade-offs, and its source. Close calls are called close. |
+| Data for premiums | Use the **insurers' own filed documents** (prospectus or premium chart) as the source of premium tables. |
+| v1 (MVP) | **Stateless**: nothing about the user is stored. |
+| Regulation research | Not needed now. |
 
-**Why it matters:** the CLI currently prints "Top 3 for you", a "Match score
-/100", and warnings that name insurers' clauses.
+## Deferred
 
-**Options**
-- (a) Information-only site: no leads, no insurer money, neutral wording.
-- (b) Operate under a licensed broker or corporate-agent partner.
-- (c) Get your own IRDAI registration (web aggregator or broker).
+- **Business model**: revisit once the MVP works. *(I'll ask again then.)*
+- **Section B** below: discuss later.
 
-**Recommended:** stay private and get an insurance-regulatory lawyer's opinion
-now. If launching sooner, do (a). Replace "Top 3"/"score" with "Plans that fit
-your criteria", show every eligible plan, and publish the methodology.
-
-### A2. Business model
-Free, ads, referral fees via a licensed partner, commission as an
-intermediary, a paid fee-only report, or B2B data licensing.
-
-**Why it matters:** any insurer or broker money pulls you into licensing
-(A1). It also undercuts the "honest fine print" pitch unless disclosed on
-every page.
-
-**Recommended:** take no insurer or broker money until counsel signs off;
-after that, a broker partnership with disclosed compensation.
+## Still open
 
 ### A3. Who is v1 for?
 Families buying a first base plan, people buying for senior parents, people
-porting or upgrading (upload your policy PDF), or advisors (B2B).
-
-**Why it matters:** this sets the questionnaire, the plan scope (senior plans,
-super top-ups) and how you stand apart from Ditto, Beshak, Nyvo and
-Policybazaar, some of which already publish fine-print reviews.
+porting or upgrading, or advisors.
 
 **Recommended:** retail families (self, spouse, kids, plus a separate policy
-for parents) buying or porting a base plan, launched as an invite-only beta.
+for parents), shared with a small group of testers first.
 
-### A4. Data sourcing rights
-**Today's sources**
-- Most premium figures (50 reference profiles, 9 plans) and the CSR figures come from
-  **joinditto.in, a registered broker and therefore a competitor**.
-- The rest come from nyvo.in, a social-media post, press articles, and
-  insurer marketing pages.
-- Policybazaar quotes sit behind a mobile-number lead form, so scraping them
-  creates fake leads, and their terms forbid it. I did **not** scrape them.
+### A6. Running the document downloader (plain-English version)
+**What the problem is.** I'm working in a locked-down cloud computer. Its
+internet access is limited to a short safe-list (GitHub and Python
+packages). Every insurer website, IRDAI and Policybazaar is off that list,
+so when the downloader tries to fetch a prospectus PDF, the request is
+blocked. That's the only reason the premium tables and policy wordings
+haven't been read yet. The code to download and read them is already built.
 
-**Recommended:** use only primary public sources. That means insurer filed
-documents (policy wording, CIS and prospectus, which often contain premium
-tables), the IRDAI Annual Report and the insurers' NL public disclosures.
-Treat competitor figures as temporary placeholders. Approach 2-3 insurers or
-a broker for rate data, and watch Bima Sugam.
+**What I need from you: pick one.**
 
-### A5. Users' health data (DPDP Act)
-**Verified:** the DPDP Rules 2025 were notified on 13 Nov 2025. Notice,
-consent, security safeguards, breach notification and verifiable parental
-consent apply from **13 May 2027**. MeitY has proposed pulling this forward to
-about 13 Nov 2026, but that had not been notified as of Sept 2026.
+1. **Let this cloud computer reach the insurer sites** (easiest; about 2
+   minutes in settings). Open the cloud environment menu in this session's
+   title bar → **Edit** → **Network access**. Then either choose full access,
+   or keep "Limited" and add the insurer and IRDAI domains (listed below)
+   under *Allowed domains*, leaving "Allow package managers" ticked. Guide:
+   https://code.claude.com/docs/en/cloud-environments#network-access.
+   If the current session still can't reach the sites afterwards, we continue in a new one.
+2. **Run it on your own computer.** Install Python, then run
+   `python -m healthcompare.ingest fetch`. That downloads every document
+   into a `.cache` folder; send or commit those files and I'll take it
+   from there.
 
-**Why it matters:** the questionnaire collects health conditions, pregnancy
-plans and children's data for several family members.
+**Reading the documents.** Premium tables can mostly be read from the PDFs
+with plain code, with a quick check by me. To pull the ~90 fine-print terms out of
+each 40-100 page policy wording automatically, the pipeline uses Claude,
+which needs an **Anthropic API key**, with a monthly spend limit that you
+set. Without a key I can still read the documents myself in a session; that
+is slower, but fine for 10 plans.
 
-**Recommended:** run v1 stateless. Use no names, store no health answers on a
-server, share nothing with third parties, and draft a DPDP notice now.
-
-### A6. Infrastructure and budget
-**Why it matters:** this build environment can't reach any insurer site,
-irdai.gov.in, Policybazaar or Ditto, so no value has been verified yet. Web
-search is also capped at 200 calls per turn, which cut short the Bajaj
-premium and IRDAI-metrics searches.
-
-**Needed from you:**
-- Where ingestion runs: your machine, a cloud VM or a scheduled CI job with
-  open network access.
-- An Anthropic API key.
-- A monthly spend cap.
-- Or widen this environment's network access: cloud environment menu → Edit
-  → Network access.
-
-**Recommended:** a 2-plan pilot run of `python -m healthcompare.ingest` to
-measure the cost per document.
+**Domains to allow:** hdfcergo.com, nivabupa.com, careinsurance.com,
+icicilombard.com, adityabirlacapital.com, starhealth.in, tataaig.com,
+manipalcigna.com, bajajallianz.com, bajajgeneral.com, irdai.gov.in.
 
 ---
 
-## B. Important, not blocking
+## B. Important, not blocking (deferred: discuss later)
 
 | # | Question | Recommended default |
 |---|---|---|

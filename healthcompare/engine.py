@@ -233,13 +233,13 @@ def score_plan(plan: Plan, user: UserProfile) -> ScoreCard:
     )
 
 
-def rank(plans: list[Plan], user: UserProfile, top: int = 3) -> tuple[list[ScoreCard], list[ScoreCard]]:
-    """Return (top eligible plans by score, rejected plans)."""
+def rank(plans: list[Plan], user: UserProfile, top: int | None = 3) -> tuple[list[ScoreCard], list[ScoreCard]]:
+    """Return (eligible plans by score, top N or all if top is None; plans ruled out by filters)."""
     cards = [score_plan(p, user) for p in plans]
     eligible = sorted((c for c in cards if c.filters.eligible),
                       key=lambda c: (-c.total, c.premium if c.premium is not None else float("inf")))
     rejected = [c for c in cards if not c.filters.eligible]
-    return eligible[:top], rejected
+    return (eligible[:top] if top else eligible), rejected
 
 
 # --------------------------------------------------------------------------- verification list

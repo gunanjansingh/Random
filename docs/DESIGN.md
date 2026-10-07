@@ -116,7 +116,11 @@ Every plan value is stored as a **cited fact**:
 4. **Personal gotchas**: rules that turn fine print into warnings for this
    user, e.g. *"You are 58. This plan adds 20% co-pay from 61, which is 3
    renewals away."*
-5. **Comparison view**: top N plans side by side. Every cell links to its
+5. **Result**: *"Based on our conversation and your filters, this is the
+   best-suited plan for you"*. The result lists the filters the plan passed
+   with its actual values, its strengths on what the user said matters, its
+   trade-offs and close calls, each with a source (`healthcompare/explain.py`).
+   No "best"/"top" labels. Then a side-by-side view of the plans that fit. Every cell links to its
    quote and page in the source document. Missing data is shown as
    **Unknown – ask insurer**, never as a silent zero.
 

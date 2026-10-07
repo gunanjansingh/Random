@@ -12,6 +12,7 @@ from pathlib import Path
 from . import india
 from .criteria import BY_ID, Category
 from .engine import ClaimScenario, ScoreCard, common_reference, rank, simulate_claim
+from .explain import explain, headline
 from .india import inr
 from .models import DealBreakers, Member, UserProfile, load_insurers, load_plans
 
@@ -124,24 +125,35 @@ def table(rows: list[list[str]]) -> str:
     return "\n".join(lines)
 
 
-def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile) -> None:
+def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, top: int = 3) -> None:
+    """`fit`: every plan that passed the filters, best first; the first `top` are explained."""
+    cards = fit[:top]
     if not cards:
-        print("\nNo plan passes all your deal-breakers. Relax one and retry:")
-    elif rejected:
-        print("\nDropped by your deal-breakers:")
-    for c in rejected:
-        print(f"  x {c.plan.label()}: {'; '.join(c.filters.failures)}")
-    if not cards:
+        print("\nNo plan passes all your filters. Relax one and retry:")
+        for c in rejected:
+            print(f"  x {c.plan.label()}: {'; '.join(c.filters.failures)}")
         return
 
-    print(f"\n=== Top {len(cards)} for you (city: {user.city}, sum insured {inr(user.sum_insured)}) ===")
-    lo_first = cards[0].score_range[0]
-    if any(c.score_range[1] > lo_first for c in cards[1:]):
-        print("Note: with the data extracted so far, these plans' score ranges overlap, so the order is not decisive.\n"
-              "Run `python -m healthcompare.ingest` to verify plans against their policy wordings.")
+    print(f"\n=== Your result ({user.city}, sum insured {inr(user.sum_insured)}, "
+          f"{len(fit)} of {len(fit) + len(rejected)} plans fit your filters; "
+          f"showing {len(cards)}) ===")
+    print(headline(cards))
+    marks = {"filter": "Meets your filter", "unconfirmed": "Can't confirm yet", "strength": "Strength", "tradeoff": "Trade-off"}
+    for i, c in enumerate(cards):
+        print(f"\n{'Best suited' if i == 0 else 'Also suited'}: {c.plan.label()}  "
+              f"(fit {c.total:g}/100, {c.coverage:.0%} of the fine print known; approx. premium {premium_cell(c)})")
+        for r in explain(c, [o for o in fit if o is not c], user, n=3 if i == 0 else 2):
+            src = f"  [{r.source}]" if r.source else ""
+            print(f"  - {marks[r.kind]}: {r.text}{src}")
+    if rejected:
+        print("\nRuled out by your filters:")
+        for c in rejected:
+            print(f"  x {c.plan.label()}: {'; '.join(c.filters.failures)}")
+
+    print("\n=== Side-by-side ===")
     header = ["", *[c.plan.label() for c in cards]]
     rows = [header,
-            ["Match score /100", *[f"{c.total}" for c in cards]],
+            ["Fit score /100", *[f"{c.total}" for c in cards]],
             ["Possible range (unknowns)", *[f"{c.score_range[0]:g}-{c.score_range[1]:g}" for c in cards]],
             ["Data coverage", *[f"{c.coverage:.0%}" for c in cards]],
             ["Approx. premium, nearest profile", *[premium_cell(c) for c in cards]]]
@@ -211,8 +223,8 @@ def main(argv: list[str] | None = None) -> None:
     data = Path(args.data)
     plans = load_plans(data / "plans.json", load_insurers(data / "insurers.json"))
     user = demo_profile() if args.demo else questionnaire()
-    cards, rejected = rank(plans, user, top=args.top)
-    report(cards, rejected, user)
+    fit, rejected = rank(plans, user, top=None)
+    report(fit, rejected, user, top=args.top)
 
 
 if __name__ == "__main__":

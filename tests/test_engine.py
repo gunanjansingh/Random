@@ -189,3 +189,39 @@ class FixesTest(unittest.TestCase):
         r = check_deal_breakers(plan(), u)
         self.assertTrue(r.eligible)
         self.assertTrue(any("Network" in x for x in r.unverified))
+
+
+class ExplainTest(unittest.TestCase):
+    def cards(self, u, *plans):
+        fit, _ = rank(list(plans), u, top=None)
+        return fit
+
+    def test_filter_reasons_cite_values_and_unknowns_are_flagged(self):
+        from healthcompare.explain import explain
+        u = user(members=[Member("You", 40, conditions=["diabetes"])],
+                 deal_breakers=DealBreakers(no_room_rent_cap=True, max_ped_wait_months=36))
+        a = plan("a", room_rent_limit="no_limit", ped_waiting_months=24)
+        b = plan("b", room_rent_limit="no_limit")
+        fit = self.cards(u, a, b)
+        ra = explain(next(c for c in fit if c.plan.id == "a"), fit, u)
+        rb = explain(next(c for c in fit if c.plan.id == "b"), fit, u)
+        self.assertTrue(any(r.kind == "filter" and "24 months" in r.text for r in ra))
+        self.assertTrue(any(r.kind == "unconfirmed" and "Pre-existing" in r.text for r in rb))
+
+    def test_strengths_must_differentiate(self):
+        from healthcompare.explain import explain
+        u = user()
+        a = plan("a", post_hosp_days=180, lifelong_renewal=True, general_copay_pct=0)
+        b = plan("b", post_hosp_days=60, lifelong_renewal=True, general_copay_pct=0)
+        fit = self.cards(u, a, b)
+        texts = " | ".join(r.text for r in explain(next(c for c in fit if c.plan.id == "a"), fit, u) if r.kind == "strength")
+        self.assertIn("Post-hospitalisation", texts)
+        self.assertIn("best among the plans that fit", texts)
+        self.assertNotIn("Lifelong", texts)  # required by regulation
+        self.assertNotIn("Co-pay", texts)    # same as the other plan
+
+    def test_headline_admits_close_calls(self):
+        from healthcompare.explain import headline
+        u = user()
+        fit = self.cards(u, plan("a", general_copay_pct=0), plan("b"))
+        self.assertIn("close call", headline(fit))
