@@ -57,6 +57,8 @@ class Criterion:
     worst: float | None = None
     good: bool | None = None
     options: tuple[str, ...] = ()
+    band: tuple[float, float] | None = None  # NUMBER: ideal range; scores fall off on both sides
+    over: float | None = None  # with band: value above the band that scores 0
     rejection_risk: bool = False
     weight: int = 2  # 1 (nice to know) .. 5 (critical)
     sources: tuple[Source, ...] = (Source.POLICY_WORDING,)
@@ -66,6 +68,14 @@ class Criterion:
         """Normalise a value to 0..1 (1 = best). None if unscorable."""
         if value is None:
             return None
+        if self.kind is Kind.NUMBER and self.band:
+            lo, hi = self.band
+            v = float(value)
+            if v < lo:
+                return max(0.0, (v - self.worst) / (lo - self.worst))
+            if v > hi:
+                return max(0.0, (self.over - v) / (self.over - hi))
+            return 1.0
         if self.kind is Kind.NUMBER:
             assert self.best is not None and self.worst is not None
             span = self.best - self.worst
@@ -100,7 +110,7 @@ CRITERIA: tuple[Criterion, ...] = (
        why="High pendency means slow or stuck reimbursements."),
     _c("claims_paid_30d_pct", C.INSURER, "Claims settled within 30 days", K.NUMBER, unit="%", best=98, worst=75, weight=3, sources=(S.PUBLIC_DISCLOSURE,),
        why="Claim ageing from NL disclosures; how long reimbursement money takes."),
-    _c("icr", C.INSURER, "Incurred claim ratio", K.NUMBER, unit="%", best=75, worst=40, weight=2, sources=_IRDAI,
+    _c("icr", C.INSURER, "Incurred claim ratio", K.NUMBER, unit="%", best=75, worst=40, band=(65, 90), over=115, weight=2, sources=_IRDAI,
        why="Claims paid / premium earned. Very low = stingy payer; very high (>100) = premium hikes likely. ~60-85 is healthy."),
     _c("complaints_per_10k", C.INSURER, "Grievances per 10,000 claims", K.NUMBER, best=5, worst=80, weight=4, sources=(S.PUBLIC_DISCLOSURE,),
        why="Normalised complaint volume; strongest proxy for real-world claim friction."),
@@ -193,8 +203,8 @@ CRITERIA: tuple[Criterion, ...] = (
        why="Plan pregnancy timelines around this; usually 2-4 years."),
     _c("bariatric_waiting_months", C.WAITING, "Bariatric surgery waiting", K.NUMBER, unit="months", best=0, worst=48, weight=1,
        why="Often 3+ years, with BMI conditions attached."),
-    _c("moratorium_months", C.WAITING, "Moratorium period", K.NUMBER, unit="months", best=36, worst=60, weight=3, rejection_risk=True,
-       why="After this many continuous months, the insurer cannot reject for non-disclosure (except proven fraud). IRDAI: 60 months."),
+    _c("moratorium_months", C.WAITING, "Moratorium period", K.NUMBER, unit="months", best=60, worst=96, weight=3, rejection_risk=True,
+       why="After this many continuous months, the insurer cannot reject for non-disclosure (except proven fraud). IRDAI cut it from 96 to 60 months in 2024; anything longer is an old wording."),
     _c("waiting_credit_on_port", C.WAITING, "Waiting periods credited on portability", K.BOOL, good=True, weight=2,
        why="Switching insurers should carry over waiting periods already served."),
 

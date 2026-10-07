@@ -13,13 +13,18 @@ from __future__ import annotations
 
 from datetime import date
 
+from ..criteria import BY_ID, Source
 from ..models import SOURCE_PRECEDENCE
 
+# For insurer track-record metrics the regulator's data is the authority.
+METRIC_PRECEDENCE = ("irdai", "public_disclosure") + tuple(s for s in SOURCE_PRECEDENCE if s not in ("irdai", "public_disclosure"))
 FILED_DOCS = {"policy_wording", "customer_information_sheet", "prospectus"}
 
 
-def _rank(source: str) -> int:
-    return SOURCE_PRECEDENCE.index(source) if source in SOURCE_PRECEDENCE else len(SOURCE_PRECEDENCE)
+def _rank(source: str, criterion: str = "") -> int:
+    crit = BY_ID.get(criterion)
+    order = METRIC_PRECEDENCE if crit and Source.IRDAI_ANNUAL_REPORT in crit.sources else SOURCE_PRECEDENCE
+    return order.index(source) if source in order else len(order)
 
 
 def _as_value(cand: dict, doc_type: str, url: str) -> dict:
@@ -35,12 +40,12 @@ def _as_value(cand: dict, doc_type: str, url: str) -> dict:
     return out
 
 
-def merge_value(existing: dict | None, incoming: dict) -> dict:
+def merge_value(existing: dict | None, incoming: dict, criterion: str = "") -> dict:
     """Pick the better-sourced of two values; keep the other as an alternate if it disagrees."""
     if existing is None:
         return incoming
     def key(v: dict) -> tuple:
-        return (_rank(v.get("citation", {}).get("source", "")), not v.get("verified", False), -v.get("confidence", 0))
+        return (_rank(v.get("citation", {}).get("source", ""), criterion), not v.get("verified", False), -v.get("confidence", 0))
     winner, loser = sorted([existing, incoming], key=key)
     winner = dict(winner)
     alts = [a for a in winner.get("alternates", []) + loser.get("alternates", [])]
@@ -69,7 +74,7 @@ def apply_extractions(plans_doc: dict, extractions: dict[str, list[dict]]) -> di
                 if not cand.get("validated"):
                     continue
                 cid = cand["criterion"]
-                new = merge_value(plan["values"].get(cid), _as_value(cand, doc["doc_type"], url))
+                new = merge_value(plan["values"].get(cid), _as_value(cand, doc["doc_type"], url), cid)
                 if new != plan["values"].get(cid):
                     plan["values"][cid] = new
                     n += 1

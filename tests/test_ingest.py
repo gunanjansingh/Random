@@ -61,3 +61,28 @@ class Reconcile(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NumberParsing(unittest.TestCase):
+    def test_indian_amounts_and_units(self):
+        from healthcompare.ingest.extract import _number
+        self.assertEqual(_number("36"), 36)
+        self.assertEqual(_number("36 months"), 36)
+        self.assertEqual(_number("Rs 1 lakh"), 1_00_000)
+        self.assertEqual(_number("₹1,50,000"), 1_50_000)
+        self.assertEqual(_number("2 crore"), 2_00_00_000)
+        self.assertEqual(_number("20%"), 20)
+
+    def test_ranges_and_words_rejected(self):
+        from healthcompare.ingest.extract import _number
+        for bad in ("2-4", "up to 36", "thirty", "1 to 2 lakh"):
+            with self.assertRaises(ValueError, msg=bad):
+                _number(bad)
+
+
+class MetricPrecedence(unittest.TestCase):
+    def test_irdai_beats_product_page_for_insurer_metrics_only(self):
+        page = {"value": 99, "confidence": 0.6, "verified": False, "citation": {"source": "product_page", "url": "https://a"}}
+        irdai = {"value": 92, "confidence": 0.6, "verified": False, "citation": {"source": "irdai", "url": "https://b"}}
+        self.assertEqual(merge_value(page, irdai, "csr_count")["value"], 92)
+        self.assertEqual(merge_value(page, irdai, "room_rent_limit")["value"], 99)

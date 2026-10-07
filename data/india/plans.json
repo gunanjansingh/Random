@@ -1,5 +1,5 @@
 {
- "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. Premiums are not included yet; they come from the prospectus premium tables.",
+ "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. premium_estimates are indicative public figures (broker reviews, aggregators, insurer illustrations) for reference profiles, adversarially checked but mostly single-source; they are not quotes.",
  "plans": [
   {
    "id": "hdfc-ergo-optima-secure",
@@ -173,7 +173,128 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 14130,
+     "high": 14130,
+     "best": 14130,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/optima-secure-review/"
+     ],
+     "caveat": "Configuration: Optima Secure + unlimited restoration add-on, 5% digital discount applied. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "1A-30-10L",
+     "members": "1A",
+     "ages": [
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "unknown",
+     "low": 15135,
+     "high": 15135,
+     "best": 15135,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://www.beshak.org/insurance/health-insurance/articles/hdfc-optima-secure-product-review/"
+     ],
+     "caveat": "Configuration: Optima Secure (original 2021-launch version; base, no add-ons stated). Indicative figure from beshak.org; not a quote for you.",
+     "as_of": "unknown (article calls the plan 'newly launched', so about 2021-22; one search summary said the data was from May 2023)"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 22272,
+     "high": 22272,
+     "best": 22272,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/optima-secure-review/"
+     ],
+     "caveat": "Configuration: Optima Secure + unlimited restoration add-on, 5% digital discount applied. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-35/30-10L",
+     "members": "2A",
+     "ages": [
+      35,
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "Delhi (brochure says Tier 1, which includes Mumbai)",
+     "low": 24279,
+     "high": 24279,
+     "best": 24279,
+     "gst_basis": "incl-GST",
+     "confidence": "low",
+     "sources": [
+      "https://healthstatic.policybazaar.com/health-insurance/Insurer_Document/HDFC/optima-secure-brochure.pdf"
+     ],
+     "caveat": "Configuration: Optima Secure (revised brochure illustration). Indicative figure from healthstatic.policybazaar.com; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 81829,
+     "high": 81829,
+     "best": 81829,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/optima-secure-review/"
+     ],
+     "caveat": "Configuration: Optima Secure + unlimited restoration add-on, 5% digital discount applied. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 27222,
+     "high": 27222,
+     "best": 27222,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/optima-secure-review/"
+     ],
+     "caveat": "Configuration: Optima Secure + unlimited restoration add-on, 5% digital discount applied. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "niva-bupa-reassure-2",
@@ -383,7 +504,108 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-10L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "unknown (zone not stated)",
+     "low": 10783,
+     "high": 10783,
+     "best": 10783,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://primeinvestor.in/reports/prime-review-niva-bupa-reassure-2-0/"
+     ],
+     "caveat": "Configuration: Platinum+. Indicative figure from primeinvestor.in; not a quote for you.",
+     "as_of": "unknown (review written around the Feb 2023 launch)"
+    },
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 11271,
+     "high": 11271,
+     "best": 11271,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-vs-niva-bupa-reassure-2/"
+     ],
+     "caveat": "Configuration: Platinum+ with mandatory and recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 19176,
+     "high": 19176,
+     "best": 19176,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-vs-niva-bupa-reassure-2/"
+     ],
+     "caveat": "Configuration: Platinum+ with mandatory and recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 68239,
+     "high": 68239,
+     "best": 68239,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-vs-niva-bupa-reassure-2/"
+     ],
+     "caveat": "Configuration: Platinum+ with mandatory and recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 25026,
+     "high": 25026,
+     "best": 25026,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-vs-niva-bupa-reassure-2/"
+     ],
+     "caveat": "Configuration: Platinum+ with mandatory and recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "care-supreme",
@@ -627,7 +849,185 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-10L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "Delhi (Zone 1)",
+     "low": 13821,
+     "high": 13821,
+     "best": 13821,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/10-lakh-health-insurance/"
+     ],
+     "caveat": "Configuration: Care Supreme (add-on inclusion not stated). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026-03 (article title says March 2026)"
+    },
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 15111,
+     "high": 15111,
+     "best": 15111,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Care Supreme + add-ons: Cumulative Bonus Super, Annual Health Checkup, Claim Shield Plus, Wellness Benefit, Air Ambulance. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "1A-30-10L",
+     "members": "1A",
+     "ages": [
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "Zone 1 (Care Zone 1 = Delhi NCR, Surat, Mathura, Aligarh, Alwar, Bharatpur)",
+     "low": 9500,
+     "high": 9500,
+     "best": 9500,
+     "gst_basis": "ex-GST",
+     "confidence": "medium",
+     "sources": [
+      "https://nyvo.in/health-insurance/best-10-lakh-health-insurance"
+     ],
+     "caveat": "Configuration: Care Supreme base. Indicative figure from nyvo.in; not a quote for you.",
+     "as_of": "2026-04"
+    },
+    {
+     "profile": "1A-30-25L",
+     "members": "1A",
+     "ages": [
+      30
+     ],
+     "sum_insured": 2500000,
+     "city_or_zone": "metro (page targets metro families; zone not stated)",
+     "low": 14600,
+     "high": 14600,
+     "best": 14600,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://nyvo.in/health-insurance/best-25-lakh-health-insurance"
+     ],
+     "caveat": "Configuration: Care Supreme base. Indicative figure from nyvo.in; not a quote for you.",
+     "as_of": "2026 (page titled 2026)"
+    },
+    {
+     "profile": "1A-45-25L",
+     "members": "1A",
+     "ages": [
+      45
+     ],
+     "sum_insured": 2500000,
+     "city_or_zone": "metro (page targets metro families; zone not stated)",
+     "low": 25600,
+     "high": 25600,
+     "best": 25600,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://nyvo.in/health-insurance/best-25-lakh-health-insurance"
+     ],
+     "caveat": "Configuration: Care Supreme base. Indicative figure from nyvo.in; not a quote for you.",
+     "as_of": "2026 (page titled 2026)"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 21528,
+     "high": 21528,
+     "best": 21528,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Care Supreme + add-ons: Cumulative Bonus Super, Annual Health Checkup, Claim Shield Plus, Wellness Benefit, Air Ambulance. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 78923,
+     "high": 78923,
+     "best": 78923,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Care Supreme + add-ons: Cumulative Bonus Super, Annual Health Checkup, Claim Shield Plus, Wellness Benefit, Air Ambulance. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A+1C-30/30-10L",
+     "members": "2A+1C",
+     "ages": [
+      30,
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "Tier-1 city (not named)",
+     "low": 13500,
+     "high": 13500,
+     "best": 13500,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://nyvo.in/health-insurance/best-family-floater-plans"
+     ],
+     "caveat": "Configuration: Care Supreme base. Indicative figure from nyvo.in; not a quote for you.",
+     "as_of": "2026 (page titled 2026)"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010), Zone 1",
+     "low": 27161,
+     "high": 27161,
+     "best": 27161,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/care-supreme-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Care Supreme + add-ons: Cumulative Bonus Super, Annual Health Checkup, Claim Shield Plus, Wellness Benefit, Air Ambulance. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "icici-lombard-elevate",
@@ -727,7 +1127,109 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi, Zone A",
+     "low": 9212,
+     "high": 12400,
+     "best": 10806,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/icici-lombard-elevate-health-insurance-review/",
+      "https://joinditto.in/articles/health-insurance/icici-lombard-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Elevate base premium, healthy person, no add-ons; Elevate with Ditto-recommended add-ons. Indicative figure from joinditto.in (2 figures); not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "1A-36-10L",
+     "members": "1A",
+     "ages": [
+      36
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "not stated",
+     "low": 11254,
+     "high": 11254,
+     "best": 11254,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://primeinvestor.in/reports/icici-lombard-elevate/"
+     ],
+     "caveat": "Configuration: Elevate, ₹10L (age band 36-40). Indicative figure from primeinvestor.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/60-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      60
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi, Zone A",
+     "low": 59117,
+     "high": 59117,
+     "best": 59117,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/icici-lombard-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Elevate base premium, healthy, no PED. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 73559,
+     "high": 73559,
+     "best": 73559,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/icici-lombard-elevate-health-insurance-review/"
+     ],
+     "caveat": "Configuration: Elevate with Ditto-recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 24101,
+     "high": 24101,
+     "best": 24101,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/icici-lombard-elevate-health-insurance-review/"
+     ],
+     "caveat": "Configuration: Elevate with Ditto-recommended add-ons (e.g. Claim Protector, Annual Health Checkup). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "aditya-birla-activ-one-max",
@@ -848,7 +1350,107 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 10149,
+     "high": 10149,
+     "best": 10149,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/aditya-birla-activ-one-max-plan-review/"
+     ],
+     "caveat": "Configuration: Activ One MAX (Ditto indicative configuration). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026-09"
+    },
+    {
+     "profile": "1A-30-10L",
+     "members": "1A",
+     "ages": [
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "not stated",
+     "low": 10500,
+     "high": 10500,
+     "best": 10500,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://nyvo.in/health-insurance/best-10-lakh-health-insurance"
+     ],
+     "caveat": "Configuration: Activ One MAX (configuration not stated). Indicative figure from nyvo.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "1A-65-15L",
+     "members": "1A",
+     "ages": [
+      65
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 50164,
+     "high": 50164,
+     "best": 50164,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/health-insurance/senior-citizen-health-insurance/"
+     ],
+     "caveat": "Configuration: Activ One MAX. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026-09"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 66505,
+     "high": 66505,
+     "best": 66505,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/aditya-birla-activ-one-max-plan-review/"
+     ],
+     "caveat": "Configuration: Activ One MAX (Ditto indicative configuration). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026-09"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 21478,
+     "high": 21478,
+     "best": 21478,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/aditya-birla-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: Activ One MAX (Ditto indicative configuration). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "star-super-star",
@@ -1010,7 +1612,88 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 10662,
+     "high": 10662,
+     "best": 10662,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/star-health-super-star-plan-review/"
+     ],
+     "caveat": "Configuration: Super Star with Ditto-recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "1A-55-15L",
+     "members": "1A",
+     "ages": [
+      55
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 24436,
+     "high": 24436,
+     "best": 24436,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/star-health-insurance-for-senior-citizens/"
+     ],
+     "caveat": "Configuration: Super Star base annual premium. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 76926,
+     "high": 76926,
+     "best": 76926,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/star-health-super-star-plan-premium-chart/"
+     ],
+     "caveat": "Configuration: Super Star with Ditto-recommended add-ons. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pin 110001)",
+     "low": 22932,
+     "high": 22932,
+     "best": 22932,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/star-health-super-star-plan-review/"
+     ],
+     "caveat": "Configuration: Super Star with Ditto-recommended add-ons (preventive health check-up, limitless loyalty bonus). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "unknown"
+    }
+   ]
   },
   {
    "id": "tata-aig-medicare-premier",
@@ -1105,7 +1788,191 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 14044,
+     "high": 14044,
+     "best": 14044,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-plans/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "1A-30-10L",
+     "members": "1A",
+     "ages": [
+      30
+     ],
+     "sum_insured": 1000000,
+     "city_or_zone": "not stated (zone not given in result text)",
+     "low": 10319,
+     "high": 10319,
+     "best": 10319,
+     "gst_basis": "ex-GST",
+     "confidence": "low",
+     "sources": [
+      "https://a2622016.axisbank.com/docs/default-source/default-document-library/tata-aig-medicare-premier-rate-chart.pdf"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from a2622016.axisbank.com; not a quote for you.",
+     "as_of": "unknown"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 25412,
+     "high": 25412,
+     "best": 25412,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-plans/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A-35/31-15L",
+     "members": "2A",
+     "ages": [
+      35,
+      31
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pincode 110010)",
+     "low": 26810,
+     "high": 26810,
+     "best": 26810,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-family-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 67226,
+     "high": 67226,
+     "best": 67226,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-plans/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A-63/61-15L",
+     "members": "2A",
+     "ages": [
+      63,
+      61
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pincode 110010)",
+     "low": 69350,
+     "high": 69350,
+     "best": 69350,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-family-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A+1C-35/31/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      31,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pincode 110010)",
+     "low": 34826,
+     "high": 34826,
+     "best": 34826,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-family-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A+1C-35/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      35,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 33013,
+     "high": 33013,
+     "best": 33013,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-plans/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A+2C-38/35/10/5-15L",
+     "members": "2A+2C",
+     "ages": [
+      38,
+      35,
+      10,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (pincode 110010)",
+     "low": 42664,
+     "high": 42664,
+     "best": 42664,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/tata-aig-family-health-insurance-premium-chart/"
+     ],
+     "caveat": "Configuration: MediCare Premier (base). Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    }
+   ]
   },
   {
    "id": "manipalcigna-sarvah-param",
@@ -1181,7 +2048,89 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-27-15L",
+     "members": "1A",
+     "ages": [
+      27
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 15940,
+     "high": 15940,
+     "best": 15940,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/manipal-cigna-sarvah/"
+     ],
+     "caveat": "Configuration: Sarvah Param. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 24551,
+     "high": 24551,
+     "best": 24551,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/manipal-cigna-sarvah/"
+     ],
+     "caveat": "Configuration: Sarvah Param. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A-62/63-15L",
+     "members": "2A",
+     "ages": [
+      62,
+      63
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 74775,
+     "high": 74775,
+     "best": 74775,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/manipal-cigna-sarvah/"
+     ],
+     "caveat": "Configuration: Sarvah Param. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    },
+    {
+     "profile": "2A+1C-36/34/5-15L",
+     "members": "2A+1C",
+     "ages": [
+      36,
+      34,
+      5
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi",
+     "low": 33050,
+     "high": 33050,
+     "best": 33050,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/manipal-cigna-sarvah/"
+     ],
+     "caveat": "Configuration: Sarvah Param. Indicative figure from joinditto.in; not a quote for you.",
+     "as_of": "2026"
+    }
+   ]
   },
   {
    "id": "bajaj-health-guard-gold",

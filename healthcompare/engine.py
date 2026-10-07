@@ -64,20 +64,44 @@ class ApproxPremium:
         return f"~{inr(e.best)} ({rng}; quoted for {who}, {inr(e.sum_insured)}, {e.city_or_zone}; {e.confidence} confidence)"
 
 
-def approx_premium(plan: Plan, user: UserProfile) -> ApproxPremium | None:
-    """Closest published reference quote to the user's family. Not a quote for them."""
-    if not plan.premium_estimates:
-        return None
+MAX_REFERENCE_AGE_GAP = 10  # beyond this a reference price says little about the user's
+
+
+def _shape(user: UserProfile) -> tuple[int, int]:
     adults = sum(1 for m in user.members if m.age >= 18)
-    children = len(user.members) - adults
+    return adults, len(user.members) - adults
 
-    def distance(e: PremiumEstimate) -> tuple:
-        return ((e.adults, e.children) != (adults, children), e.sum_insured != user.sum_insured,
-                abs(max(e.ages) - user.oldest))
 
-    best = min(plan.premium_estimates, key=distance)
-    shape_differs, si_differs, age_gap = distance(best)
-    return ApproxPremium(best, not shape_differs and not si_differs and age_gap <= 5)
+def reference_distance(e: PremiumEstimate, user: UserProfile) -> float:
+    """Lower is closer. Age dominates (premiums climb steeply with age), then family shape, then SI."""
+    adults, children = _shape(user)
+    return (abs(max(e.ages) - user.oldest) / 5 + abs(e.adults - adults) + 0.5 * abs(e.children - children)
+            + (0 if e.sum_insured == user.sum_insured else 0.5))
+
+
+def approx_premium(plan: Plan, user: UserProfile) -> ApproxPremium | None:
+    """Closest published reference price to the user's family. Not a quote for them."""
+    usable = [e for e in plan.premium_estimates if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP]
+    if not usable:
+        return None
+    best = min(usable, key=lambda e: reference_distance(e, user))
+    close = ((best.adults, best.children) == _shape(user) and best.sum_insured == user.sum_insured
+             and abs(max(best.ages) - user.oldest) <= 5)
+    return ApproxPremium(best, close)
+
+
+def common_reference(plans: list[Plan], user: UserProfile) -> tuple[str, dict[str, PremiumEstimate]] | None:
+    """The reference profile priced for the most of `plans`, nearest the user: a like-for-like price row."""
+    by_profile: dict[tuple, dict[str, PremiumEstimate]] = {}
+    for p in plans:
+        for e in p.premium_estimates:
+            if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP:
+                by_profile.setdefault((e.members, tuple(e.ages), e.sum_insured), {})[p.id] = e
+    if not by_profile:
+        return None
+    key = max(by_profile, key=lambda k: (len(by_profile[k]), -reference_distance(next(iter(by_profile[k].values())), user)))
+    members, ages, si = key
+    return f"{members} aged {'/'.join(map(str, ages))}, {inr(si)}", by_profile[key]
 
 
 # --------------------------------------------------------------------------- hard filters
@@ -119,7 +143,9 @@ def check_deal_breakers(plan: Plan, user: UserProfile) -> FilterResult:
         need("maternity_covered", lambda v: v is True, "No maternity cover")
     if db.min_csr_amount is not None:
         need("csr_amount", lambda v: v >= db.min_csr_amount, "Claim settlement by amount only {v}%")
-    if db.preferred_hospitals_cashless:
+    if db.preferred_hospitals_cashless and user.preferred_hospitals and not plan.network_hospitals:
+        r.unverified.append("Network hospitals: list not loaded yet (check on the insurer's site)")
+    elif db.preferred_hospitals_cashless:
         missing = [h for h in user.preferred_hospitals if h not in plan.network_hospitals]
         if missing:
             r.failures.append(f"Not cashless at: {', '.join(missing)}")
@@ -279,12 +305,13 @@ def gotchas(plan: Plan, user: UserProfile) -> list[Gotcha]:
             paid = cap / typical
             g.append(Gotcha("high",
                 f"Room rent capped at {inr(cap)}/day. A typical private room in {user.city} costs about "
-                f"{inr(typical)}, so proportionate deduction would pay only ~{paid:.0%} of the whole "
-                f"bill (doctor, OT, nursing), not just the room."))
+                f"{inr(typical)}, so proportionate deduction would pay only ~{paid:.0%} of most other "
+                f"charges too (doctor, OT, nursing), not just the room. Medicines, implants, diagnostics "
+                f"and ICU are exempt under the IRDAI 2024 Master Circular."))
     elif room in ("single_private_room", "shared_room") and v("proportionate_deduction"):
         g.append(Gotcha("medium",
             f"Eligible room is '{room.replace('_', ' ')}'. Choosing a deluxe/suite room triggers proportionate "
-            "deduction on the whole bill."))
+            "deduction on most other charges (doctor, OT, nursing)."))
 
     # Pre-existing diseases.
     ped_wait = v("ped_waiting_months")
@@ -352,7 +379,7 @@ def gotchas(plan: Plan, user: UserProfile) -> list[Gotcha]:
         g.append(Gotcha("info", "No-claim bonus drops after a claim; do not count it as permanent cover."))
 
     # Hospitals.
-    for h in user.preferred_hospitals:
+    for h in (user.preferred_hospitals if plan.network_hospitals or plan.excluded_hospitals else []):
         if h in plan.excluded_hospitals:
             g.append(Gotcha("high", f"{h} is on this insurer's EXCLUDED list: claims there are not paid except in emergencies."))
         elif h not in plan.network_hospitals:

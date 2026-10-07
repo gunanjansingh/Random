@@ -70,3 +70,17 @@ class RealDataset(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PremiumData(unittest.TestCase):
+    def test_estimates_are_sourced_and_consistent(self):
+        for p in load_plans(DATA / "plans.json"):
+            for e in p.premium_estimates:
+                with self.subTest(plan=p.id, profile=e.profile):
+                    self.assertTrue(e.sources and all(u.startswith("https://") for u in e.sources))
+                    self.assertTrue(e.ages)
+                    self.assertGreaterEqual(e.adults, 1)
+                    self.assertIn(len(e.ages), (e.adults, e.adults + e.children))  # a child's age may be unstated
+                    self.assertLessEqual(e.low, e.best)
+                    self.assertLessEqual(e.best, e.high)
+                    self.assertIn(e.confidence, ("high", "medium", "low"))

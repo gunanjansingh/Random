@@ -146,12 +146,36 @@ class ApproxPremiumTest(unittest.TestCase):
 
     def test_loose_match_is_flagged_not_rescaled(self):
         from healthcompare.engine import approx_premium
-        ap = approx_premium(self.p, user(members=[Member("Mom", 68)]))
+        ap = approx_premium(self.p, user(members=[Member("Dad", 53)]))
         self.assertFalse(ap.close)
         self.assertEqual(ap.estimate.best, 20000)
+
+    def test_no_reference_price_when_ages_too_far_apart(self):
+        from healthcompare.engine import approx_premium
+        self.assertIsNone(approx_premium(self.p, user(members=[Member("Mom", 68)])))
+
+    def test_age_outweighs_family_shape(self):
+        from healthcompare.engine import approx_premium
+        self.p.premium_estimates.append(self.est("SEN", "2A", [62, 60], 60000))
+        ap = approx_premium(self.p, user(members=[Member("A", 34), Member("B", 32)]))
+        self.assertNotEqual(ap.estimate.profile, "SEN")
 
     def test_budget_fails_only_on_close_match_above_low_end(self):
         r = check_deal_breakers(self.p, user(members=[Member("You", 30)], deal_breakers=DealBreakers(max_premium=9000)))
         self.assertFalse(r.eligible)
         r = check_deal_breakers(self.p, user(members=[Member("Mom", 68)], deal_breakers=DealBreakers(max_premium=9000)))
         self.assertTrue(r.eligible)
+
+
+class FixesTest(unittest.TestCase):
+    def test_icr_scored_as_a_band(self):
+        icr = BY_ID["icr"]
+        self.assertEqual(icr.score(80), 1.0)
+        self.assertLess(icr.score(105), icr.score(88))  # loss-making insurer no longer gets full marks
+        self.assertLess(icr.score(45), icr.score(70))
+
+    def test_preferred_hospital_without_network_data_is_unverified_not_failed(self):
+        u = user(preferred_hospitals=["Some Hospital"], deal_breakers=DealBreakers(preferred_hospitals_cashless=True))
+        r = check_deal_breakers(plan(), u)
+        self.assertTrue(r.eligible)
+        self.assertTrue(any("Network" in x for x in r.unverified))

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from . import india
 from .criteria import BY_ID, Category
-from .engine import ClaimScenario, ScoreCard, rank, simulate_claim
+from .engine import ClaimScenario, ScoreCard, common_reference, rank, simulate_claim
 from .india import inr
 from .models import DealBreakers, Member, UserProfile, load_insurers, load_plans
 
@@ -144,7 +144,11 @@ def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile)
             ["Match score /100", *[f"{c.total}" for c in cards]],
             ["Possible range (unknowns)", *[f"{c.score_range[0]:g}-{c.score_range[1]:g}" for c in cards]],
             ["Data coverage", *[f"{c.coverage:.0%}" for c in cards]],
-            ["Annual premium", *[premium_cell(c) for c in cards]]]
+            ["Approx. premium, nearest profile", *[premium_cell(c) for c in cards]]]
+    ref = common_reference([c.plan for c in cards], user)
+    if ref and len(ref[1]) > 1:
+        label, ests = ref
+        rows.append([f"Same-profile ref. ({label})", *[f"~{inr(ests[c.plan.id].best)}" if c.plan.id in ests else "-" for c in cards]])
     for cat in Category:
         rows.append([f"  {cat.value}", *[str(c.by_category.get(cat, "-")) for c in cards]])
     for cid in KEY_ROWS:
@@ -156,7 +160,9 @@ def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile)
         rows.append([("! " if crit.rejection_risk else "  ") + crit.label, *cells])
     print(table(rows))
     print("(! = clause that commonly causes rejections or deductions; ~ = low-confidence value; "
-          "? = not yet extracted, ask the insurer)")
+          "? = not yet extracted, ask the insurer)\n"
+          "(Premiums are indicative public figures for reference profiles, mostly single-source; configurations and add-ons "
+          "differ. Not quotes. Get a quote from the insurer before deciding.)")
 
     scenario = ClaimScenario(bill=5_00_000, room_rent_per_day=8_000, days=5, patient_age=user.oldest)
     print(f"\n=== Claim simulator: {inr(scenario.bill)} bill, {scenario.days} days in a "
@@ -182,7 +188,8 @@ def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile)
         for g in sorted(c.gotchas, key=lambda g: ("high", "medium", "info").index(g.severity)):
             print(f"  [{g.severity.upper():6}] {g.text}")
         for flag in c.irdai_flags:
-            print(f"  [IRDAI ] {flag}")
+            print(f"  [CHECK ] Data looks inconsistent with current IRDAI rules (likely an extraction error or an "
+                  f"older wording, under review): {flag}")
         for u in c.filters.unverified + c.to_verify:
             print(f"  [VERIFY] {u}")
         price = c.premium if c.premium is not None else (c.approx.estimate.best if c.approx and c.approx.close else None)

@@ -152,10 +152,23 @@ Criteria:
 {lines}"""
 
 
+_MULT = {"lakh": 1_00_000, "lakhs": 1_00_000, "lac": 1_00_000, "lacs": 1_00_000, "l": 1_00_000,
+         "crore": 1_00_00_000, "crores": 1_00_00_000, "cr": 1_00_00_000}
+
+
+def _number(raw: str) -> float:
+    """'36' -> 36, 'Rs 1 lakh' -> 100000, '1,50,000' -> 150000. Ranges and words are rejected."""
+    s = raw.lower().replace(",", "").replace("rs.", "").replace("rs", "").replace("inr", "").replace("\u20b9", "")
+    m = re.fullmatch(r"\s*(\d+(?:\.\d+)?)\s*(lakhs?|lacs?|l|crores?|cr|%)?\s*(?:months?|days?|years?|hours?)?\s*", s)
+    if not m:
+        raise ValueError(raw)
+    return float(m.group(1)) * _MULT.get(m.group(2), 1)
+
+
 def _coerce(c: Criterion, raw: str) -> object:
     raw = raw.strip()
     if c.kind is Kind.NUMBER:
-        return float(re.sub(r"[^\d.]", "", raw))
+        return _number(raw)
     if c.kind is Kind.BOOL:
         if raw.lower() not in ("true", "false"):
             raise ValueError(raw)
