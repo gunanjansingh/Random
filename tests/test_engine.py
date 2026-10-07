@@ -301,3 +301,11 @@ class FloaterRulesAndZones(unittest.TestCase):
         self.p.premium_tables = []
         self.p.premium_estimates = [PremiumEstimate("C", "2A", [62, 63], 10_00_000, "Z", 70000, 70000, 70000, "ex-GST", "low", ["https://x"])]
         self.assertIsNone(approx_premium(self.p, user(members=[Member("Mom", 62)])))
+
+
+class VerifiedBeatsUnverified(unittest.TestCase):
+    def test_verified_value_not_disputed_by_unverified_alternate(self):
+        cv = CitedValue(36, confidence=0.9, verified=True, alternates=[CitedValue(24, verified=False)])
+        self.assertFalse(cv.conflicting)
+        cv.alternates.append(CitedValue(48, verified=True))
+        self.assertTrue(cv.conflicting)

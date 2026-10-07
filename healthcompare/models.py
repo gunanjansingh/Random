@@ -52,7 +52,9 @@ class CitedValue:
             if isinstance(a, (int, float)) and isinstance(self.value, (int, float)) and not isinstance(a, bool):
                 return abs(a - self.value) > max(1.0, 0.02 * abs(self.value))
             return a != self.value
-        return any(differs(a.value) for a in self.alternates)
+        # A value verified against the insurer's document is not "in dispute" with unverified web-sourced alternates.
+        alts = [a for a in self.alternates if a.verified] if self.verified else self.alternates
+        return any(differs(a.value) for a in alts)
 
     @classmethod
     def from_raw(cls, raw: object) -> CitedValue:
