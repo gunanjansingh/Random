@@ -82,7 +82,9 @@ def reference_distance(e: PremiumEstimate, user: UserProfile) -> float:
 
 def approx_premium(plan: Plan, user: UserProfile) -> ApproxPremium | None:
     """Closest published reference price to the user's family. Not a quote for them."""
-    usable = [e for e in plan.premium_estimates if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP]
+    adults = _shape(user)[0]
+    usable = [e for e in plan.premium_estimates  # never price one adult off a couple's quote, or vice versa
+              if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP and e.adults == adults]
     if not usable:
         return None
     conf = {"high": 0, "medium": 1, "low": 2}
@@ -97,7 +99,7 @@ def common_reference(plans: list[Plan], user: UserProfile) -> tuple[str, dict[st
     by_profile: dict[tuple, dict[str, PremiumEstimate]] = {}
     for p in plans:
         for e in p.premium_estimates:
-            if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP:
+            if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP and e.adults == _shape(user)[0]:
                 by_profile.setdefault((e.members, tuple(e.ages), e.sum_insured), {})[p.id] = e
     if not by_profile:
         return None
@@ -119,6 +121,24 @@ CITY_ALIASES = {
 }
 
 
+CITY_STATE = {
+    "mumbai": "maharashtra", "thane": "maharashtra", "navi mumbai": "maharashtra", "pune": "maharashtra",
+    "nagpur": "maharashtra", "nashik": "maharashtra", "aurangabad": "maharashtra",
+    "ahmedabad": "gujarat", "surat": "gujarat", "vadodara": "gujarat", "baroda": "gujarat", "rajkot": "gujarat",
+    "hyderabad": "telangana", "secunderabad": "telangana", "warangal": "telangana",
+    "bengaluru": "karnataka", "bangalore": "karnataka", "mysuru": "karnataka", "mysore": "karnataka",
+    "chennai": "tamil nadu", "coimbatore": "tamil nadu", "madurai": "tamil nadu",
+    "kolkata": "west bengal", "howrah": "west bengal", "lucknow": "uttar pradesh", "kanpur": "uttar pradesh",
+    "noida": "uttar pradesh", "greater noida": "uttar pradesh", "ghaziabad": "uttar pradesh", "agra": "uttar pradesh",
+    "varanasi": "uttar pradesh", "jaipur": "rajasthan", "jodhpur": "rajasthan", "udaipur": "rajasthan",
+    "indore": "madhya pradesh", "bhopal": "madhya pradesh", "gwalior": "madhya pradesh",
+    "gurugram": "haryana", "gurgaon": "haryana", "faridabad": "haryana", "patna": "bihar",
+    "kochi": "kerala", "thiruvananthapuram": "kerala", "chandigarh": "chandigarh", "ludhiana": "punjab",
+    "amritsar": "punjab", "bhubaneswar": "odisha", "guwahati": "assam", "visakhapatnam": "andhra pradesh",
+    "vijayawada": "andhra pradesh", "dehradun": "uttarakhand", "ranchi": "jharkhand", "raipur": "chhattisgarh",
+}
+
+
 def _zone_key(z: str) -> str:
     return re.sub(r"(zone|tier|\s|-)", "", z.lower())
 
@@ -127,14 +147,19 @@ def insurer_zone(plan: Plan, city: str) -> tuple[str | None, bool]:
     """The insurer's own zone for `city`: (zone, found by name). Falls back to the 'rest of India' zone."""
     c = city.strip().lower()
     names = [c, *CITY_ALIASES.get(c, [])]
-    rest = None
-    for zone, cities in plan.zone_definitions.items():
-        text = cities.lower()
-        if any(re.search(rf"\b{re.escape(n)}\b", text) for n in names):
-            return zone, True
-        if re.search(r"rest of|all other|other than|remaining", text):
-            rest = zone
-    return rest, False
+
+    def find(words: list[str]) -> str | None:
+        for zone, cities in plan.zone_definitions.items():
+            if any(re.search(rf"\b{re.escape(w)}\b", cities.lower()) for w in words):
+                return zone
+        return None
+
+    if (z := find(names)):  # the city (or its usual alias) is named
+        return z, True
+    if (state := CITY_STATE.get(c)) and (z := find([state])):  # e.g. "Rest of Maharashtra", "Telangana"
+        return z, True
+    rest = [z for z, cities in plan.zone_definitions.items() if re.search(r"rest of india|all other|remaining", cities.lower())]
+    return (rest[-1] if rest else None), False
 
 
 @dataclass
@@ -185,17 +210,28 @@ def table_premium(plan: Plan, user: UserProfile) -> TablePremium | None:
     ind = [t for t in zt if t.cover_type == "individual" and t.family_composition.upper() in ("1A", "")]
     if not ind:
         return None
-    total = 0
-    for m in user.members:
+    rates = []
+    for m in sorted(user.members, key=lambda m: -m.age):
         amt = next((a for t in ind if (a := t.premium(m.age, user.sum_insured)) is not None), None)
         if amt is None:
             return None
-        total += amt
-    if len(user.members) > 1:
-        caveats.append("No floater table for your family in this document: shown as separate individual covers. "
-                       "Floater or family discounts in the pricing rules usually make it cheaper.")
-    return TablePremium(total, zone, "individual rates" if len(user.members) == 1 else f"sum of {len(user.members)} individual rates",
-                        ind[0].source, ind[0].page, caveats)
+        rates.append(amt)
+    src, page = ind[0].source, ind[0].page
+    if len(rates) == 1:
+        return TablePremium(rates[0], zone, "individual rate", src, page, caveats)
+    rule = plan.floater_rule
+    if rule.get("type") == "eldest_full_others_discount":
+        amt = round(rates[0] + sum(rates[1:]) * (1 - rule["discount_pct"] / 100))
+        return TablePremium(amt, zone, f"family floater: eldest at full rate, {rule['discount_pct']:g}% off the others "
+                                       f"({rule.get('source', 'insurer rule')})", src, page, caveats)
+    if rule.get("type") == "member_count_discount":
+        pct = max((t["pct"] for t in rule["tiers"] if len(rates) >= t["min_members"] and children >= t["min_children"]), default=0)
+        amt = round(sum(rates) * (1 - pct / 100))
+        return TablePremium(amt, zone, f"family floater: per-person rates less {pct:g}% floater discount "
+                                       f"({rule.get('source', 'insurer rule')})", src, page, caveats)
+    caveats.append("No floater table for your family in this document: shown as separate individual covers. "
+                   "Floater or family discounts in the pricing rules usually make it cheaper.")
+    return TablePremium(sum(rates), zone, f"sum of {len(rates)} individual rates", src, page, caveats)
 
 
 # --------------------------------------------------------------------------- hard filters

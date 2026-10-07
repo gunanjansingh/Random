@@ -163,6 +163,7 @@ class Plan:
     premium_tables: list[PremiumTable] = field(default_factory=list)
     zone_definitions: dict[str, str] = field(default_factory=dict)  # insurer's zone -> cities, as printed
     pricing_rules: list[str] = field(default_factory=list)  # floater/family discounts etc., as printed
+    floater_rule: dict = field(default_factory=dict)  # how a floater is priced from individual rates, if documented
     floater_discount_pct: float = 0.0
     zone: str | None = None  # pricing zone bought, if the plan prices by city
     zone_cities: dict[str, str] = field(default_factory=dict)
@@ -200,6 +201,7 @@ class Plan:
             premium_tables=[PremiumTable(**t) for t in d.get("premium_tables", [])],
             zone_definitions=d.get("zone_definitions", {}),
             pricing_rules=d.get("pricing_rules", []),
+            floater_rule=d.get("floater_rule", {}),
             floater_discount_pct=d.get("floater_discount_pct", 0.0),
             zone=d.get("zone"),
             zone_cities={k.lower(): v for k, v in d.get("zone_cities", {}).items()},

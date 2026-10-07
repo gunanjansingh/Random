@@ -46,11 +46,13 @@ def _is_subsequence(values: list[int], stream: list[int], adjacent_prefix: int) 
 
 
 def verify_row(premiums: list[int | None], pages: list[list[int]], page: int | None) -> bool:
+    """Tables can continue onto the next page (extra sum-insured columns), so each
+    candidate page is checked together with the page after it."""
     values = [v for v in premiums if v is not None]
     if not values:
         return False
-    candidates = range(len(pages)) if page is None else [i for i in (page - 1, page, page - 2) if 0 <= i < len(pages)]
-    return any(_is_subsequence(values, pages[i], 3) for i in candidates)
+    starts = range(len(pages)) if page is None else [i for i in range(page - 2, page + 4) if 0 <= i < len(pages)]
+    return any(_is_subsequence(values, pages[i] + (pages[i + 1] if i + 1 < len(pages) else []), 3) for i in starts)
 
 
 def verify_table(table: dict, pages: list[list[int]]) -> dict:

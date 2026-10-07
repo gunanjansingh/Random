@@ -260,3 +260,44 @@ class TablePremiumTest(unittest.TestCase):
     def test_unpriced_sum_insured_returns_none(self):
         from healthcompare.engine import table_premium
         self.assertIsNone(table_premium(self.p, user(city="Mumbai", sum_insured=25_00_000)))
+
+
+class FloaterRulesAndZones(unittest.TestCase):
+    def setUp(self):
+        from healthcompare.models import PremiumTable
+        rows = [{"age_from": a, "age_to": a, "age_label": str(a), "premiums": [1000 * (a // 10 + 1)]} for a in range(0, 100)]
+        self.p = plan()
+        self.p.zone_definitions = {"Tier 1": "Delhi, Gurugram", "Tier 5": "Rest of Maharashtra, Rest of Uttar Pradesh",
+                                   "Tier 6": "Rest of India"}
+        self.p.premium_tables = [PremiumTable("Base", z, "individual", "1A", "", "excluding", "https://x", 1, [10_00_000], rows)
+                                 for z in ("Tier 1", "Tier 5", "Tier 6")]
+
+    def test_state_level_zones(self):
+        from healthcompare.engine import insurer_zone
+        self.assertEqual(insurer_zone(self.p, "Pune"), ("Tier 5", True))
+        self.assertEqual(insurer_zone(self.p, "Lucknow"), ("Tier 5", True))
+        self.assertEqual(insurer_zone(self.p, "Bengaluru"), ("Tier 6", False))
+        self.assertEqual(insurer_zone(self.p, "Gurgaon"), ("Tier 1", True))
+
+    def test_eldest_full_others_discounted(self):
+        from healthcompare.engine import table_premium
+        self.p.floater_rule = {"type": "eldest_full_others_discount", "discount_pct": 55}
+        tp = table_premium(self.p, user(city="Delhi", members=[Member("A", 40), Member("B", 35), Member("C", 5)]))
+        self.assertEqual(tp.amount, round(5000 + (4000 + 1000) * 0.45))
+
+    def test_member_count_discount(self):
+        from healthcompare.engine import table_premium
+        self.p.floater_rule = {"type": "member_count_discount", "tiers": [
+            {"min_members": 2, "min_children": 0, "pct": 22}, {"min_members": 3, "min_children": 1, "pct": 28},
+            {"min_members": 4, "min_children": 2, "pct": 32}]}
+        three = table_premium(self.p, user(city="Delhi", members=[Member("A", 40), Member("B", 35), Member("C", 5)]))
+        self.assertEqual(three.amount, round(10000 * 0.72))
+        couple = table_premium(self.p, user(city="Delhi", members=[Member("A", 40), Member("B", 35)]))
+        self.assertEqual(couple.amount, round(9000 * 0.78))
+
+    def test_single_adult_never_priced_from_couple_quote(self):
+        from healthcompare.engine import approx_premium
+        from healthcompare.models import PremiumEstimate
+        self.p.premium_tables = []
+        self.p.premium_estimates = [PremiumEstimate("C", "2A", [62, 63], 10_00_000, "Z", 70000, 70000, 70000, "ex-GST", "low", ["https://x"])]
+        self.assertIsNone(approx_premium(self.p, user(members=[Member("Mom", 62)])))
