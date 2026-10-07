@@ -62,6 +62,8 @@ def ask_current_policy(plans) -> CurrentPolicy | None:
     cp.continuous_years = float(ask("Years of unbroken cover (including any earlier insurer you ported from)", "1"))
     prem = ask("What you pay per year now, in rupees (blank to skip)")
     cp.annual_premium = int(prem) if prem else None
+    days = ask("Days until its renewal date (blank if unsure)")
+    cp.renewal_in_days = int(days) if days else None
     cp.claimed_last_year = yes("Did you claim in the last policy year?")
     cp.conditions_declared = yes("Were all existing illnesses declared when you bought it?", True)
     return cp
@@ -126,7 +128,7 @@ def demo_switch_profile() -> UserProfile:
     """A couple with a 4-year-old Bajaj Health Guard Gold policy at Rs 5L, wanting Rs 10L and no room cap."""
     u = demo_profile()
     u.current_policy = CurrentPolicy(plan_id="bajaj-health-guard-gold", sum_insured=5_00_000, cumulative_bonus=1_00_000,
-                                     continuous_years=4, annual_premium=None, claimed_last_year=False)
+                                     continuous_years=4, annual_premium=None, claimed_last_year=False, renewal_in_days=50)
     return u
 
 
@@ -138,6 +140,15 @@ def switching_report(fit: list[ScoreCard], user: UserProfile, plans: list, top: 
     shown = [c.plan for c in fit[:top]]
     options = ([cur] if cur.id != "current" and cur not in shown else []) + shown
     marks = {"gain": "+ Better", "loss": "- Worse", "wait": "~ Waiting", "keeps": "= Keeps", "caution": "! Note"}
+    if cp.renewal_in_days is not None:
+        d = cp.renewal_in_days
+        if d > 60:
+            print(f"Porting window: opens in {d - 60} days and closes in {d - 30} days (30-60 days before renewal).")
+        elif d >= 30:
+            print(f"Porting window: open now, closes in {d - 30} days (apply at least 30 days before renewal).")
+        else:
+            print(f"Porting window: closed ({d} days to renewal). A new insurer may still accept, but doesn't have to; "
+                  f"otherwise renew, then port at the next renewal. Moving to another plan of your current insurer is still possible.")
     cautions = []
     for p in options:
         a = analyse(p, cp, plans, user)
@@ -156,9 +167,7 @@ def switching_report(fit: list[ScoreCard], user: UserProfile, plans: list, top: 
         print("\nBefore you switch:")
         for t in cautions:
             print(f"  ! {t}")
-    unverified = [k for k, r in PORTABILITY.items() if not r["verified"]]
-    if unverified:
-        print(f"  (Portability rules still being confirmed from IRDAI's own documents: {', '.join(unverified)}.)")
+    print("  (Rules from IRDAI's 2024 master circulars and product regulations; sources in data/india/portability_rules.json.)")
 
 
 def fmt(cid: str, value: object, confidence: float = 1.0) -> str:

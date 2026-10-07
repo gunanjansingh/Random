@@ -272,6 +272,7 @@ class CurrentPolicy:
     annual_premium: int | None = None  # what they pay now
     claimed_last_year: bool = False
     conditions_declared: bool = True  # existing conditions were declared when buying
+    renewal_in_days: int | None = None  # days until the current policy's renewal date
     terms: dict[str, object] = field(default_factory=dict)  # known terms of a plan not in our list (criterion id -> value)
 
     @property

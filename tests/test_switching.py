@@ -48,3 +48,28 @@ class SwitchingTest(unittest.TestCase):
         self.assertEqual(cur.get("general_copay_pct"), 20)
         a = analyse(self.new, cp, self.plans, user(cp))
         self.assertIn("Room rent limit", self.texts(a, "gain"))
+
+
+class ExtraCoverTest(unittest.TestCase):
+    def test_staying_counts_base_increase_porting_counts_bonus(self):
+        from healthcompare.switching import extra_cover
+        cp = CurrentPolicy(sum_insured=5_00_000, cumulative_bonus=1_00_000)
+        u = user(cp)
+        self.assertEqual(extra_cover(cp, u, staying=True), 5_00_000)
+        self.assertEqual(extra_cover(cp, u, staying=False), 4_00_000)
+
+    def test_maternity_not_in_old_plan_gets_no_credit(self):
+        old = plan("old", maternity_covered=False)
+        new = plan("new", maternity_covered=True, maternity_waiting_months=24)
+        cp = CurrentPolicy(plan_id="old", sum_insured=10_00_000, continuous_years=5)
+        u = user(cp, members=[Member("You", 30, planning_pregnancy=True)])
+        a = analyse(new, cp, [old, new], u)
+        self.assertIn("Maternity (24 months, not covered by your current plan so no credit)", " ".join(i.text for i in a.by_kind("wait")))
+
+    def test_migration_within_same_insurer(self):
+        a1, a2 = plan("a1"), plan("a2")
+        a1.insurer_id = a2.insurer_id = "ins"
+        cp = CurrentPolicy(plan_id="a1", sum_insured=10_00_000, continuous_years=4)
+        out = analyse(a2, cp, [a1, a2], user(cp))
+        self.assertIn("migration", " ".join(i.text for i in out.by_kind("keeps")))
+        self.assertFalse(any("Apply to the new insurer" in i.text for i in out.by_kind("caution")))

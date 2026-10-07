@@ -16,22 +16,46 @@ from .explain import show, source_of
 from .india import IRDAI_MORATORIUM_MONTHS, inr
 from .models import CitedValue, CurrentPolicy, Plan, UserProfile
 
-# Portability rules. Filled from IRDAI sources; see docs/DESIGN.md.
+# Portability rules, each confirmed against IRDAI's own documents (full list with
+# quotes: data/india/portability_rules.json).
+PPI = "IRDAI Policyholders' Interests Master Circular 2024"  # irdai.gov.in/document-detail?documentId=5625747
+HMC = "IRDAI Health Master Circular 2024"  # irdai.gov.in/document-detail?documentId=4942918
+PRR = "IRDAI Products Regulations 2024, Sch. III"  # irdai.gov.in/document-detail?documentId=4590475
 PORTABILITY: dict[str, dict] = {
-    "waiting_credit": {"verified": False, "source": "",
-                       "text": "Waiting periods already served count toward the new plan's waiting periods, up to your old sum insured."},
-    "increase_fresh_wait": {"verified": False, "source": "",
-                            "text": "Any increase in sum insured carries fresh waiting periods on the increased part."},
-    "credit_includes_bonus": {"verified": False, "source": "",
-                              "text": "Accrued bonus may count as part of the sum insured that gets waiting-period credit."},
-    "moratorium_continues": {"verified": False, "source": "",
-                             "text": "Continuous cover with the previous insurer counts toward the 5-year moratorium."},
-    "apply_window": {"verified": False, "source": "", "text": "Apply to the new insurer before your renewal date."},
-    "underwriting": {"verified": False, "source": "",
-                     "text": "The new insurer can underwrite afresh: it may accept, load the premium, or decline."},
-    "keep_old_active": {"verified": False, "source": "",
-                        "text": "Keep the old policy active (renew it if needed) until the new insurer issues the policy."},
+    "waiting_credit": {"verified": True, "source": PPI + " 24.6",
+        "text": "Credits for waiting periods (pre-existing disease, specific illnesses) and the moratorium carry over to the "
+                "new insurer, up to your old sum insured plus accrued no-claim bonus."},
+    "credit_includes_bonus": {"verified": True, "source": PPI + " 24.6",
+        "text": "Your accrued bonus counts toward the cover that gets waiting-period credit, but the new insurer is not "
+                "required to keep it as free extra cover: check how it will show on the new policy."},
+    "increase_fresh_wait": {"verified": True, "source": HMC + ", CIS template",
+        "text": "Any increase in sum insured restarts waiting periods on the increased part only."},
+    "moratorium_continues": {"verified": True, "source": PRR + " para 8",
+        "text": "Continuous cover with your old insurer counts toward the 5-year moratorium; on any increased cover the "
+                "5 years start again for the increased amount only."},
+    "apply_window": {"verified": True, "source": PPI + " 24.2",
+        "text": "Apply to the new insurer 30 to 60 days before your renewal date. Later than that, the insurer may still "
+                "accept but doesn't have to."},
+    "entire_family": {"verified": True, "source": PPI + " 24.2",
+        "text": "Port the whole policy with every family member on it."},
+    "underwriting": {"verified": True, "source": PRR + " para 10.2; " + PPI + " 24.5",
+        "text": "The new insurer underwrites you afresh: it may accept, add a premium loading or decline. It must decide "
+                "within 5 days of getting your records from the old insurer (which has 72 hours to send them)."},
+    "no_charges": {"verified": True, "source": PPI + " 24.7", "text": "Porting is free: neither insurer may charge you for it."},
+    "keep_old_active": {"verified": True, "source": HMC + " para 8; " + PRR + " para 1.2",
+        "text": "Don't let the old policy lapse while the port is pending. You can renew within the 30-day grace period "
+                "without losing credits, but there is no cover during that grace period."},
+    "free_look": {"verified": True, "source": "insurer wordings (e.g. HDFC ERGO Optima Secure 1.8)",
+        "text": "The free-look cancellation period does not apply to a ported policy."},
+    "new_benefit_fresh_wait": {"verified": True, "source": PRR + " para 10.2 (credit only for benefits in the previous policy)",
+        "text": "A benefit your old policy didn't have (e.g. maternity) starts its full waiting period."},
+    "renewal_underwriting": {"verified": True, "source": HMC + " para 10(c)",
+        "text": "Renewing with the same insurer: no fresh underwriting, except on any increase in sum insured."},
+    "migration": {"verified": True, "source": PRR + " para 10.1",
+        "text": "Moving to another plan of the same insurer (migration) keeps your credits; the insurer may underwrite only "
+                "if you have had less than 36 months of continuous cover."},
 }
+
 
 # Terms compared between the current plan and each alternative.
 COMPARE = ("room_rent_limit", "proportionate_deduction", "icu_limit", "general_copay_pct", "age_copay_pct",
@@ -82,12 +106,18 @@ def _premium(plan: Plan, user: UserProfile) -> tuple[int | None, str]:
     return None, "get a quote"
 
 
-def _wait_items(cand: Plan, cp: CurrentPolicy, user: UserProfile, staying: bool) -> list[SwitchItem]:
+def extra_cover(cp: CurrentPolicy, user: UserProfile, staying: bool) -> int:
+    """Cover that is new and so starts fresh waits and a fresh moratorium. Staying: the increase in base sum
+    insured (CIS template). Porting: anything above old sum insured plus accrued bonus (PPI MC 24.6)."""
+    base = cp.sum_insured if staying else cp.sum_insured + cp.cumulative_bonus
+    return max(0, user.sum_insured - base)
+
+
+def _wait_items(cand: Plan, cp: CurrentPolicy, user: UserProfile, staying: bool, cur: Plan | None = None) -> list[SwitchItem]:
     """One line for waits already served, one for waits still running on existing cover,
     one for fresh waits on any extra cover."""
     served = cp.months_continuous
-    credited = cp.sum_insured + (cp.cumulative_bonus if PORTABILITY["credit_includes_bonus"]["verified"] else 0)
-    increase = max(0, user.sum_insured - credited)
+    increase = extra_cover(cp, user, staying)
     done, running, fresh = [], [], []
     for cid, label, to_months in WAITS:
         if (cid == "maternity_waiting_months" and not user.planning_pregnancy) or (cid == "ped_waiting_months" and not user.has_ped):
@@ -97,6 +127,9 @@ def _wait_items(cand: Plan, cp: CurrentPolicy, user: UserProfile, staying: bool)
             continue
         months = wait * to_months
         span = f"{wait:g} days" if to_months != 1 else f"{wait:g} months"
+        if cid == "maternity_waiting_months" and cur is not None and cur.get("maternity_covered") is not True:
+            running.append(f"Maternity ({months:g} months, not covered by your current plan so no credit)")
+            continue
         short = label.replace(" waiting", "").replace(" period", "")
         (done if months <= served else running).append(
             short if months <= served else f"{short} ({months - served:g} more months)")
@@ -151,21 +184,30 @@ def analyse(cand_plan: Plan, cp: CurrentPolicy, plans: list[Plan], user: UserPro
         if cur.get("premium_age_lock") and not cand.get("premium_age_lock"):
             a.items.append(SwitchItem("loss", "You lose your locked entry-age premium (premium would follow your "
                                               "current age band with the new insurer).", source_of(cur.values.get("premium_age_lock"))))
-        if cp.cumulative_bonus:
+        if cp.cumulative_bonus and cand_plan.insurer_id != cur_raw.insurer_id:
             a.items.append(SwitchItem("caution", f"Your accrued bonus of {inr(cp.cumulative_bonus)}: "
-                                                 f"{PORTABILITY['credit_includes_bonus']['text']}"))
-    a.items += _wait_items(cand, cp, user, staying)
+                                                 f"{PORTABILITY['credit_includes_bonus']['text']}",
+                                      PORTABILITY["credit_includes_bonus"]["source"]))
+    a.items += _wait_items(cand, cp, user, staying, cur)
 
     left = max(0, IRDAI_MORATORIUM_MONTHS - cp.months_continuous)
-    mor = (f"5-year moratorium: {'complete' if not left else f'{left} months to go'} "
-           f"(after it, a claim can't be rejected for non-disclosure, except fraud).")
-    if staying or PORTABILITY["moratorium_continues"]["verified"]:
-        a.items.append(SwitchItem("keeps", mor))
-    else:
-        a.items.append(SwitchItem("caution", mor + " " + PORTABILITY["moratorium_continues"]["text"]))
+    a.items.append(SwitchItem("keeps", f"5-year moratorium on your existing cover: "
+                                       f"{'complete' if not left else f'{left} months to go'} (after it, a claim can't be "
+                                       f"rejected for non-disclosure, except fraud)."))
+    extra = extra_cover(cp, user, staying)
+    if extra:
+        a.items.append(SwitchItem("wait", f"On the extra {inr(extra)}, the 5-year moratorium starts from zero.",
+                                  PORTABILITY["moratorium_continues"]["source"]))
 
-    if not staying:
-        for key in ("apply_window", "underwriting", "keep_old_active"):
+    migration = not staying and cur_raw.insurer_id and cand_plan.insurer_id == cur_raw.insurer_id
+    if staying:
+        a.items.append(SwitchItem("keeps", PORTABILITY["renewal_underwriting"]["text"], PORTABILITY["renewal_underwriting"]["source"]))
+    elif migration:
+        a.items.append(SwitchItem("keeps", "Same insurer, different plan (migration): " + PORTABILITY["migration"]["text"]
+                                  + (" You have 36+ months, so no fresh underwriting." if cp.months_continuous >= 36 else ""),
+                                  PORTABILITY["migration"]["source"]))
+    else:
+        for key in ("apply_window", "entire_family", "underwriting", "no_charges", "keep_old_active", "free_look"):
             a.items.append(SwitchItem("caution", PORTABILITY[key]["text"], PORTABILITY[key]["source"]))
         if cp.claimed_last_year or not cp.conditions_declared:
             a.items.append(SwitchItem("caution", "Declare every condition and past claim on the new proposal form; "
