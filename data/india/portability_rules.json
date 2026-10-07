@@ -1,0 +1,915 @@
+{
+ "_about": "Indian health-insurance portability, migration and continuity rules as of 7 Oct 2026, researched from IRDAI circulars/regulations and insurer policy wordings, each independently re-checked against its source (check = confirmed | corrected). Key sources: Master Circular on Protection of Policyholders' Interests 2024 (IRDAI/PP&GR/CIR/MISC/117/9/2024, Ch VI para 24), Master Circular on Health Insurance Business 2024 (IRDAI/HLT/CIR/PRO/84/5/2024), IRDAI (Insurance Products) Regulations 2024 Schedule III.",
+ "rules": [
+  {
+   "topic": "timing",
+   "rule": "Apply to the new insurer at least 30 days, and no earlier than 60 days, before the renewal date, porting the entire policy with all family members. An insurer may accept a later application (the proviso refers to approaching 'within 15 days from the renewal date') but is not required to. If it does, the acquiring insurer must ensure there is no break in policy.",
+   "exact_text": "24.2. A policyholder desirous of porting his/her policy to another insurer shall apply to such insurer to port the entire policy along with all the members of the family, if any, at least 30 days before, but not earlier than 60 days from the due date for renewal. Provided that Insurers are free to consider proposal for portability even if the policyholder has approached within 15 days from the renewal date of the existing policy, but in all such cases acquiring insurer shall ensure that there is no break in policy.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (Master Circular on Protection of Policyholders' Interests 2024, Ref IRDAI/PP&GR/CIR/MISC/117/9/2024, Chapter VI para 24.2; same text in Section 1 Part B para 3(vi))",
+   "check": "confirmed",
+   "implication_for_switcher": "The app should show a porting window that opens 60 days and closes 30 days before renewal. Inside the last 30 days, porting depends on the new insurer agreeing, so warn the user not to count on it."
+  },
+  {
+   "topic": "timing",
+   "rule": "The repealed IRDAI (Health Insurance) Regulations 2016, Schedule I cl. 1-2, required a port application at least 45 days, and not more than 60 days, before the premium renewal date. The IRDAI (Insurance Products) Regulations 2024, reg 9(1)(d), repealed them with effect from 1 April 2024 (they commenced on gazette publication on 22 Mar 2024 or 1 Apr 2024, whichever was later). The current window of 30 to 60 days comes from the PPI Master Circular of 5 Sep 2024, para 24.2. Neither the Products Regulations nor the 29 May 2024 Health Master Circular sets a timing window.",
+   "exact_text": "1. A policyholder desirous of porting his/her policy to another insurance company shall apply to such insurance company to port the entire policy along with all the members of the family, if any, at least 45 days before, but not earlier than 60 days from the premium renewal date of his/her existing policy. 2. Insurer may not be liable to offer portability if policyholder (a) fails to approach the new insurer at least 45 days before the premium renewal date, or (b) approaches the new Insurer more than 60 days prior to the premium renewal date. [Repealed by IRDAI (Insurance Products) Regulations 2024, reg 9(1): 'The following regulations shall be repealed from the date these regulations come into force: ... d. IRDAI (Health Insurance) Regulations, 2016']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=602887",
+   "source_kind": "irdai_regulation",
+   "effective_from": "Historical: 2016-07-29 until repeal on 2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Many blogs and insurer FAQs still say 45 days. Applying 45 or more days ahead is still safe, but the regulatory minimum is now 30 days. Do not hard-code 45."
+  },
+  {
+   "topic": "timing",
+   "rule": "Portability is allowed only at renewal, for individual, family floater and group health policies.",
+   "exact_text": "24.1. Insurers shall allow portability in respect of all individual, family floater and group health insurance policies at the time of renewal.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "The app should tie every switch to the current policy's renewal date. Switching partway through a year is not portability; it would mean cancelling and buying a new policy, and continuity credits could be lost."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "On porting, the policyholder is entitled to transfer credits up to the previous sum insured: no-claim bonus, specific waiting periods, the PED waiting period, the moratorium period and so on. This applies once the acquiring insurer accepts the port, which remains subject to its Board-approved underwriting policy (Products Regs Sch III 10.2).",
+   "exact_text": "24.6. The policyholder is entitled to transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, specific waiting periods, waiting period for pre-existing disease, Moratorium period etc. from the policy of Existing Insurer to the new policy issued by the Acquiring Insurer. [Master Circular on Health Insurance Business 29.05.2024, Ch. I para 12(d): 'The policyholder is entitled to transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, specific waiting periods, waiting period for pre-existing disease , Moratorium period etc from the Existing Insurer to the Acquiring Insurer in the previous policy.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular IRDAI/HLT/CIR/PRO/84/5/2024 para 12(d)); restated 2024-09-05 (PPHI Master Circular para 24.6)",
+   "check": "confirmed",
+   "implication_for_switcher": "Time already served on PED and specific-disease waiting periods carries over, but only up to the old sum insured. The app should calculate remaining waiting periods from the user's continuous cover history."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "In the Products Regulations, portability means transferring credits for PED and specific waiting periods. It applies to the extent of the sum insured and the benefits in the previous policy, subject to the insurer's Board-approved underwriting policy.",
+   "exact_text": "1.5. \"Portability\" means a facility provided to the health insurance policyholders (including all members under family cover), to transfer the credits gained for, pre-existing diseases and specific waiting periods from one insurer to another insurer. ... 10.2 All indemnity based health insurance policies issued by general and health insurers except Personal Accident and Travel Policies, shall allow the portability of policies to the extent of the sum insured and the benefits available in the previous policy, irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (IRDAI (Insurance Products) Regulations 2024, Schedule III paras 1.5 and 10.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "A benefit the old policy did not have, such as maternity or bariatric surgery, gets no credit and its waiting period starts fresh in the new policy. The app should flag new benefits as 'fresh waiting period'."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "Niva Bupa ReAssure 2.0 (UIN NBHHLIP27054V032627): the PED exclusion runs for 36 months of continuous coverage. It applies afresh to any sum-insured increase. With continuous cover without a break, as defined under the portability norms, the waiting period is reduced by the length of prior coverage.",
+   "exact_text": "5.1.1 Pre-existing Diseases (Code-Excl01): a. Expenses related to the treatment of a Pre-existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of continuous coverage after the date of inception of the first Policy. b. In case of enhancement of Sum Insured the exclusion shall apply afresh to the extent of Sum Insured increase. c. If the Insured Person is continuously covered without any break as defined under the portability norms of the extant IRDAI (Insurance Products) Regulations, 2024 then waiting period for the same would be reduced to the extent of prior coverage.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Niva Bupa ReAssure 2.0, UIN NBHHLIP27054V032627 (wording PDF dated 2026-09-02, fetched 2026-10-07)",
+   "check": "confirmed",
+   "implication_for_switcher": "Remaining waiting period = new policy's waiting period minus months of continuous prior cover (floor 0). If the new policy has a longer waiting period than the old one, the user serves the difference."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "No current IRDAI text (2024 Products Regs, Health MC, PPHI MC) sets a 30-day initial waiting rule. Standard insurer wording (Excl03) waives it after more than 12 months of continuous coverage and applies it to any enhanced sum insured.",
+   "exact_text": "5.1.3. 30-day waiting period (Code- Excl03): a. Expenses related to the treatment of any Illness within 30 days from the first Policy commencement date shall be excluded except claims arising due to an Accident, provided the same are covered. b. This exclusion shall not, however, apply if the Insured Person has continuous coverage for more than twelve months c. The within referred waiting period is made applicable to the enhanced Sum Insured in the event of granting higher Sum Insured subsequently.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Niva Bupa ReAssure 2.0 wording (fetched 2026-10-07)",
+   "check": "confirmed",
+   "implication_for_switcher": "With more than 12 months of continuous cover, expect no fresh 30-day wait on the ported sum insured. With 12 months or less, and on any increase in sum insured, the 30-day wait may apply. Check the target policy's own wording."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "The IRDAI CIS format says that when the sum insured is increased, any waiting period starts afresh only for the enhanced portion. The insurer may underwrite the increase.",
+   "exact_text": "Change in Sum Insured: Sum Insured can be changed (increased/decreased) only at the time of renewal or at any time, subject to underwriting by the company. For increase in SI, the waiting period if any shall start afresh only for the enhanced portion of the sum insured",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Annexure-1 Customer Information Sheet format, Annexure to Master Circular on Health Insurance Business)",
+   "check": "confirmed",
+   "implication_for_switcher": "Show two layers: the ported sum insured with credits, and the new top-up layer with full fresh waiting periods (PED, specific-disease and 30-day). Raising cover while porting does not buy waiting-period credit on the extra amount."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "At renewal with the same insurer, no fresh underwriting unless the sum insured increases, and then only on the increase. A port-in is made on a fresh proposal form and is subject to the acquiring insurer's Board-approved underwriting policy.",
+   "exact_text": "c. An Insurer shall not resort to fresh underwriting unless there is an increase in sum insured. In case increase in sum insured is requested by the policyholder, the Insurer may underwrite only to the extent of increased sum insured.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular Ch. I para 10(c))",
+   "check": "confirmed",
+   "implication_for_switcher": "Staying is the underwriting-safe default: no fresh underwriting at renewal. Switching exposes the user to the new insurer's full underwriting, which matters most for users who have developed conditions since joining."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "Portability of indemnity health policies is subject to the acquiring insurer's Board-approved underwriting policy. The insurer may decline, or accept on its own terms. Current IRDAI texts contain no deemed-acceptance clause; the repealed 2016 Sch I cl. 13 had one. They require only a decision within 5 days of receiving the data (PPI MC 24.5).",
+   "exact_text": "10.2 All indemnity based health insurance policies issued by general and health insurers except Personal Accident and Travel Policies, shall allow the portability of policies to the extent of the sum insured and the benefits available in the previous policy, irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "A port request can be refused. The app should tell users to keep the current policy alive until the new insurer actually issues its policy."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "Star Health says portability acceptance is subject to underwriting review, and lists multiple claims or policy lapses among the reasons for rejection.",
+   "exact_text": "Can my portability request be denied? Yes. Acceptance of Portability is subject to underwriting review by the insurer. ... Your request to port the medical insurance plan online may be rejected due to: ... Multiple claim history ... Missing the 30-day window before renewal ... Having a history of multiple claims or policy lapses",
+   "source_url": "https://www.starhealth.in/portability-plans/",
+   "source_kind": "insurer_page",
+   "effective_from": "Page as fetched 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Users with recent claims or chronic conditions face a real risk of being declined or offered worse terms. The app should not show a port-in as guaranteed."
+  },
+  {
+   "topic": "premium_loading",
+   "rule": "No current IRDAI text I found bars an acquiring insurer from loading a port-in premium on underwriting grounds. Sch III 9.4 bars loading an individual policy based on its own claims experience, and it applies to renewal premiums. PPI MC 24.7 bars 'charges' for porting, not underwriting loadings. In the repealed HIR 2016 Sch I cl. 14, the words 'loading or' were deleted by the 2019 amendment, effective 21.11.2019.",
+   "exact_text": "9.4 For individual products, the loadings on renewal premium shall be at portfolio and not based upon any individual policy claim experience. However, discount in premium may be provided by insurers to individual policyholders for good claims experience. [Historical, HIR 2016 Sch I cl 14: 'In order to accept a policy which is being ported in, the insurer shall not levy any additional [***] charges exclusively for the purpose of porting.' with footnote: 'The words \"loading or\", omitted by ... (Health Insurance) (Amendment) Regulations, 2019 ... (w.e.f 21.11.2019).']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Products Regs Sch III 9.4); 2016 text historical",
+   "check": "confirmed",
+   "implication_for_switcher": "When comparing premiums, treat the new insurer's quote as provisional until underwriting is done. A loading or condition-specific terms are possible on port-in but not at renewal with the current insurer."
+  },
+  {
+   "topic": "other",
+   "rule": "The acquiring insurer gets policy and claim data through the IIB portal. The existing insurer must furnish it within 72 hours. The acquiring insurer must decide within 5 days of receiving it.",
+   "exact_text": "24.4. On receipt of the Portability Form, the acquiring insurer shall seek the necessary details of policy and previous claim information, if any, from the existing insurer through the portal maintained by Insurance Information Bureau of India (IIB) https://iib.gov.in/ portal. 24.5. The existing insurer, shall furnish the requisite data for porting insurance policies within 72 hours of the receipt of the request. The Acquiring insurer shall decide and communicate on the proposal immediately but not more than 5 days of receipt of information from Existing insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health MC para 12(b),(c)); restated 2024-09-05 (PPHI MC paras 24.4-24.5)",
+   "check": "confirmed",
+   "implication_for_switcher": "A complete application should get a decision in roughly 72 hours plus 5 days, about 8 days. The app can track this and prompt the user to escalate if it is exceeded. The older '7 working days' and '15 days' figures are outdated."
+  },
+  {
+   "topic": "documents",
+   "rule": "The acquiring insurer gives the policyholder a Portability Form that authorises it to get policy and claim information from the existing insurer. The policyholder submits it with the proposal form. The current master circular prescribes no form format.",
+   "exact_text": "24.3. The acquiring insurer shall furnish to the policyholder, the Portability Form authorizing it to obtain policy and claim related information from the existing insurer. The policyholder shall fill in the portability form along with proposal form and submit the same to the acquiring insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "The minimum paperwork is the portability form and a fresh proposal form, which needs full health disclosure. IRDAI does not prescribe the form's layout, so each insurer has its own."
+  },
+  {
+   "topic": "documents",
+   "rule": "SBI General's portability document list: signed proposal form, signed portability form, all previous years' policy copies, and claim history with claim documents.",
+   "exact_text": "List of documents • Duly filled & signed Proposal form, • Duly filled & signed Portability form, • All Previous Year policy copies, • Claim history (if any) for all the Previous Year policies along with Claim documents",
+   "source_url": "https://content.sbigeneral.in/uploads/Portability_Document_List_13b4784c5e.pdf",
+   "source_kind": "insurer_page",
+   "effective_from": "Document dated 2026-06-18",
+   "check": "confirmed",
+   "implication_for_switcher": "The app can give a checklist: current and past policy schedules, which prove continuity, plus any claim papers. Some insurers, such as Star Health, also ask for a no-claim declaration and medical records if needed."
+  },
+  {
+   "topic": "other",
+   "rule": "No charges may be levied on the policyholder for porting in or out. In the port-in year the acquiring insurer may not pay commission or incentive to its own employees, to its distribution channel, or to the channel's employees on port-in policies.",
+   "exact_text": "24.7. On the port-in policies during the port-in year, acquiring insurer shall not pay any commission or incentive to its own employees or distribution channel or employees of the distribution channel. No charges shall be levied on the policyholder for porting-in or porting-out.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "The user pays no porting fee. For the app's business model: if it works as an intermediary, it earns nothing in the first year on port-ins, so it has no commission motive to push porting over migration or staying."
+  },
+  {
+   "topic": "moratorium",
+   "rule": "After 60 continuous months of coverage (including ported and migrated time), no policy or claim can be contested for non-disclosure or misrepresentation, except for established fraud. This applies to the first policy's sum insured. Enhanced limits get their own 60 months from the date of enhancement.",
+   "exact_text": "8. Moratorium ... After completion of sixty continuous months of coverage (including portability and migration) in health insurance policy, no policy and claim shall be contestable by the insurer on grounds of non-disclosure, misrepresentation, except on grounds of established fraud. This period of sixty continuous months is called as moratorium period. The moratorium would be applicable for the sums insured of the first policy. Wherever, the sum insured is enhanced, completion of sixty continuous months would be applicable from the date of enhancement of sums insured only on the enhanced limits. [Health MC para 13 Note: 'The accrued credits gained under the ported and migrated policies shall be counted for the purpose of calculating the Moratorium period.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Products Regs Sch III para 8); Health MC 2024-05-29 para 13",
+   "check": "confirmed",
+   "implication_for_switcher": "Someone with 5+ years of continuous cover keeps moratorium protection on the original sum insured after porting. Any extra sum insured bought at the switch starts a new 60-month clock. The app should show moratorium status separately for the base and added sum insured."
+  },
+  {
+   "topic": "ped_disclosure",
+   "rule": "The acquiring and existing insurers must jointly ensure that the full underwriting details and claim history are transferred. A policy or claim cannot be contested for non-disclosure or misrepresentation, except for established fraud, only after the 60-month moratorium is complete. Before then it can be contested.",
+   "exact_text": "a. A Policyholder has the choice to port his/ her policies from one Insurer to another. The Acquiring and the Existing Insurers shall jointly, ensure that the entire underwriting details and claim history of the Policyholders are seamlessly transferred. ... 13) Policy/Claim cannot be contested: No policy and claim of health insurance shall be contestable on any grounds of non-disclosure and/or misrepresentation except for established fraud, after the completion of the Moratorium Period, i.e. 60 months of continuous coverage",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health MC Ch. I paras 12(a) and 13)",
+   "check": "confirmed",
+   "implication_for_switcher": "The new insurer will see the claim history anyway. Users with under 60 months of continuous cover must disclose every condition in the new proposal form, or a later claim can be rejected. The app should push full disclosure."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Continuity depends on there being no 'break in policy'. On a late application, the acquiring insurer must ensure there is no break. The 2016 rule that let the existing policy be extended short-term on a pro-rata premium while a port was pending was repealed on 1-Apr-2024 and does not appear in the current texts.",
+   "exact_text": "1.2. \"Break in policy\" means the period of gap that occurs at the end of the existing policy term/installment premium due date, when the premium due for renewal on a given policy or installment premium due is not paid on or before the premium renewal date or grace period. [PPHI MC 24.2 proviso: '...in all such cases acquiring insurer shall ensure that there is no break in policy.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Products Regs Sch III 1.2); 2024-09-05 (PPHI MC 24.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "If the new policy is not issued by the renewal or grace deadline, the user should renew the old policy to keep credits. Letting the old policy lapse first risks losing all waiting-period and moratorium credit."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "The grace period is 15 days for monthly instalments and 30 days for quarterly, half-yearly or annual payment. Renewing within it protects all accrued credits. Coverage during the grace period is mandated only where premium is paid in instalments during the policy period.",
+   "exact_text": "a) The grace period of fifteen days (where premium is paid on a monthly instalments) and thirty days (where premium is paid in quarterly/half-yearly/annual instalments) is available on the premium due date, to pay the premium. b) If the policy is renewed during grace period, all the credits (sum insured, No Claim Bonus, Specific Waiting periods, waiting periods for pre-existing diseases, Moratorium period etc.) accrued under the policy shall be protected. [Products Regs Sch III 1.3: 'Coverage need not be available during the period for which no premium is received ... Provided the insurers shall offer coverage during the grace period, if the premium is paid in instalments during the policy period.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health MC para 8); 2024-04-01 (Products Regs Sch III 1.3)",
+   "check": "confirmed",
+   "implication_for_switcher": "The grace period protects credits on a renewal with the current insurer. For an annual-premium policy it is not cover: a hospitalisation during the grace gap may not be paid. Do not plan a switch that relies on the grace window."
+  },
+  {
+   "topic": "cumulative_bonus",
+   "rule": "NCB is given at renewal as a cumulative bonus (sum insured added without extra premium) and/or a premium discount, as the policyholder chooses. On porting, 'No Claim Bonus' credit transfers, but no IRDAI text says whether the acquiring insurer must keep it as free sum insured.",
+   "exact_text": "14) No Claim Bonus: The Insurer may reward the policyholders who do not make claim in the form of No Claim Bonus (NCB). Such NCB shall be paid as per the choice/ express consent of the policyholder in the following forms at the time of every renewal: a) Cumulative Bonus: Addition in the Sum Insured without an associated increase in premium. and/or b) Discount in renewal Premium [and para 12(d): 'transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, ...']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29",
+   "check": "confirmed",
+   "implication_for_switcher": "Treat accumulated bonus as at risk when switching. Ask the new insurer, in writing, whether it will (a) keep the bonus as free sum insured, or (b) give waiting-period credit only up to old base plus bonus, with the user buying that as base cover at full premium."
+  },
+  {
+   "topic": "cumulative_bonus",
+   "rule": "Under the repealed 2016 Regulations (Sch I cl. 18), portability covered the previous sum insured plus cumulative bonus at the insured's request, priced at the higher sum insured, as in the Rs 2 lakh + Rs 50,000 = Rs 2.5 lakh example. If no Rs 2.5 lakh slab existed, the insurer offered the next slab, but portability credit stayed capped at Rs 2.5 lakh. The current Products Regs and the Health and PPI master circulars contain no such example or rule.",
+   "exact_text": "18. The portability shall be applicable to the sum insured under the previous policy and also to an enhanced sum insured, if requested for by the insured, to the extent of cumulative bonus acquired from the previous insurer(s) under the previous policies. For e.g. - If a person had a SI of Rs 2 lakhs and accrued bonus of Rs 50, 000 with insurer A; when he shifts to insurer B and the proposal is accepted, insurer B has to offer him SI of Rs 2.50 lakhs by charging the premium applicable for Rs 2.50 lakhs. ... However, portability would be available only up to Rs 2.50 lakhs.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=602887",
+   "source_kind": "irdai_regulation",
+   "effective_from": "Historical: 2016-07-29 until repeal 2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Many insurers likely still work this way: the bonus becomes base sum insured you pay for, and only that amount carries waiting-period credit. Model it as the conservative default."
+  },
+  {
+   "topic": "cumulative_bonus",
+   "rule": "Star Health's portability page says the accrued cumulative or no-claim bonus is added to the new policy's sum insured.",
+   "exact_text": "When porting the policy, the accrued bonus otherwise known as cumulative bonus or no-claim bonus is also added to the Sum Insured of a new policy. This ensures that you never miss out the earned bonus of the existing policy.",
+   "source_url": "https://www.starhealth.in/portability-plans/",
+   "source_kind": "insurer_page",
+   "effective_from": "Page as fetched 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Bonus treatment differs by insurer, and the marketing pages are vague on whether the bonus is free or charged. The app should record each insurer's actual policy (free vs charged) per product."
+  },
+  {
+   "topic": "migration",
+   "rule": "Migration means moving to another product with the same insurer, up to the previous sum insured and benefits. Credits transfer: sum insured, NCB, specific and PED waiting periods, and the moratorium. The insurer may underwrite only if the insured has not been continuously covered for 36 months.",
+   "exact_text": "10.1 General insurers and health insurers offering indemnity based health insurance policy except Personal Accident and Travel Policies, shall provide an option of migration to an alternative health insurance product to the extent of the sum insured and the benefits available in the previous policy. The insurer may underwrite the proposal in case of migration, if the insured is not continuously covered for 36 months. [Health MC para 11: 'In case of migration of one policy to another with the same Insurer, the policyholder (including all members under family cover and group insurance policies) can transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, Specific Waiting periods, waiting period for pre-existing diseases, Moratorium period etc. in the previous policy to the migrated policy.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Products Regs Sch III 10.1); 2024-05-29 (Health MC para 11)",
+   "check": "confirmed",
+   "implication_for_switcher": "For anyone with 36+ months of continuous cover, migrating to a better product with the same insurer avoids underwriting, which porting does not. The app should show 'migrate within current insurer' as an alternative to porting."
+  },
+  {
+   "topic": "other",
+   "rule": "Mandatory portability covers indemnity health policies of general and health insurers, excluding personal accident and travel. Life insurers 'may' allow portability. Benefit-based (fixed-sum) policies fall outside the indemnity portability mandate.",
+   "exact_text": "10.2 All indemnity based health insurance policies issued by general and health insurers except Personal Accident and Travel Policies, shall allow the portability of policies ... 10.3 Life insurers may allow portability, wherever possible, as per the policy terms. [PPHI MC Part B heading: '3 Portability in case of Health Indemnity Policies']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Do not offer porting credit for critical-illness, hospital-cash or other benefit-based covers. Switching those means fresh waiting periods."
+  },
+  {
+   "topic": "other",
+   "rule": "Insurers must allow portability of individual, family floater and group health policies at renewal. Portability applies irrespective of individual or group policy, subject to the acquiring insurer's Board-approved underwriting. No current IRDAI text guarantees 'no fresh waiting period' when moving from an employer group policy to a retail one, and none sets a special group-exit procedure.",
+   "exact_text": "24.1. Insurers shall allow portability in respect of all individual, family floater and group health insurance policies at the time of renewal. [Products Regs Sch III 10.2: '...shall allow the portability of policies to the extent of the sum insured and the benefits available in the previous policy, irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers.']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPHI MC 24.1); 2024-04-01 (Products Regs 10.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "Employees leaving a group cover can ask a retail insurer to port, with credit up to the group sum insured. Acceptance and terms depend on underwriting. Secondary claims of a guaranteed 'no waiting period' are not supported by the IRDAI text."
+  },
+  {
+   "topic": "other",
+   "rule": "No current IRDAI text deals with splitting a floater into individual policies on porting. Porting must cover the entire policy with all family members. The repealed 2020 guidelines gave floater members a migration option to an individual or floater policy, and migration is with the same insurer.",
+   "exact_text": "24.2. A policyholder desirous of porting his/her policy to another insurer shall apply to such insurer to port the entire policy along with all the members of the family, if any ... [Repealed 2020 guideline, IRDAI/HLT/REG/CIR/003/01/2020 para 2(i): 'Every individual policyholder (including members under family floater policy) covered under an indemnity based individual health insurance policy shall be provided an option of migration at the explicit option exercised by the policyholder; a. to an individual health insurance policy or a family floater policy...' - consolidated into IRDAI/HLT/REG/CIR/194/07/2020, which the 2024 Health MC Annexure-6 repealed]",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (current); 2020-01-01 guideline repealed 2024-05-29",
+   "check": "confirmed",
+   "implication_for_switcher": "Splitting a floater while porting depends on the insurer. Niva Bupa's wording, for example, has its own split rules. The app should not promise per-member credit on a split; tell users to confirm with the new insurer."
+  },
+  {
+   "topic": "other",
+   "rule": "The PED waiting period (for disclosed PEDs) is at most 36 months of continuous coverage. A specific waiting period is a period of up to 36 months from the commencement of the policy. Insurers may set shorter periods. Overseas travel policies are excepted.",
+   "exact_text": "7. Pre-existing diseases and specific waiting period: Waiting period for pre-existing diseases disclosed by the persons to be insured, shall be maximum up to 36 months of continuous coverage under the Health Insurance policy. Insurers may endeavor to have lesser pre-existing disease waiting period and specific waiting period in the health insurance products. [1.7: '\"Specific waiting period\" means a period up to 36 months from the commencement of a health insurance policy during which period specified diseases/treatments (except due to an accident) are not covered...']",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "With 36+ months of continuous cover, ported PED and specific-disease waiting periods should be fully served on the ported sum insured. Older policies with 48-month PED periods do not let a new insurer impose more than 36."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "Go Digit Supreme Care applies a fresh waiting period to optional covers such as bariatric surgery and maternity when the ported policy did not have that cover.",
+   "exact_text": "e) If you are porting an existing policy under Portability Guidelines, from some other General or Health Insurance Company where this cover was not there or if you are adding this cover while renewing our health policy, a fresh waiting period as opted by You and mentioned in Your Policy Schedule / Certificate of Insurance will be applied.",
+   "source_url": "https://www.godigit.com/content/dam/godigit/directportal/en/downloads/health/policy-wordings-digit-supreme-care-policy.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Digit Supreme Care, UIN GODHLGP24055V012324 (PDF modified 2026-01-09); the UIN pattern suggests a group product",
+   "check": "confirmed",
+   "implication_for_switcher": "Benefits added by switching (maternity, OPD, bariatric and so on) have full waiting periods. The app should compare like-for-like benefits when describing what carries over."
+  },
+  {
+   "topic": "other",
+   "rule": "Star Health disclosed on 26 Aug 2026 that on 25 Aug 2026 it received an IRDAI order. The order directs it to follow IRDAI norms on portability and claim settlement, to review certain portability cases for FY2024-25 and FY2025-26, to take action where necessary, and to report compliance within 4 months. No penalty was imposed. I did not find the order on irdai.gov.in.",
+   "exact_text": "The Company has been advised to follow the norms specified by IRDAI from time to time regarding portability of the policies and settlement of claims including review of certain portability cases for FY 2024-25 and FY 2025-26, and to take appropriate action where considered necessary in line with applicable policy terms. ... Any resulting financial impact is expected to be limited and associated with a defined category of portability claims pertaining to FY 2024-25 and FY 2025-26.",
+   "source_url": "https://www.bseindia.com/xml-data/corpfiling/AttachHis/27288a59-aa5c-4a9a-bf5a-857eefaaa85b.pdf",
+   "source_kind": "insurer_page",
+   "effective_from": "2026-08-25 (order received); disclosed 2026-08-26",
+   "check": "confirmed",
+   "implication_for_switcher": "Claims on ported policies are an active compliance issue. Users with a port-in claim denied in FY2024-26 (by Star Health or others) may have grounds for a grievance or Ombudsman complaint. The specific violations are not public."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "The grace period is 15 days for monthly premium mode and 30 days otherwise. Renewing within it preserves waiting-period and PED continuity. Cover need not run for unpaid days, except that insurers must give cover during the grace period when premium is paid in instalments during the policy period.",
+   "exact_text": "\"Grace period\" means the specified period of time, immediately following the premium due date during which premium payment can be made to renew or continue a policy in force without loss of continuity benefits pertaining to waiting periods and coverage of pre-existing diseases. Coverage need not be available during the period for which no premium is received. The grace period for payment of the premium for all types of insurance policies shall be: fifteen days where premium payment mode is monthly and thirty days in all other cases. Provided the insurers shall offer coverage during the grace period, if the premium is paid in instalments during the policy period.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (IRDAI (Insurance Products) Regulations 2024, Schedule III para 1.3; notified 20-Mar-2024, in force from the later of Gazette publication or 1-Apr-2024)",
+   "check": "confirmed",
+   "implication_for_switcher": "A person on an annual policy who misses the renewal date has 30 days to pay and keep every credit. A hospitalisation during those 30 days is normally not covered. A monthly payer gets only 15 days. Do not cancel or let the old policy lapse until the new one is in force."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "The grace period is 15 days for monthly instalments and 30 days for quarterly, half-yearly or annual payment. Renewal within it protects all credits (SI, NCB, specific and PED waiting periods, moratorium), for both indemnity and benefit products. Coverage during the grace period is mandated only when premium is paid in instalments during the policy period.",
+   "exact_text": "8) Grace Period for payment of premium: a) The grace period of fifteen days (where premium is paid on a monthly instalments) and thirty days (where premium is paid in quarterly/half-yearly/annual instalments) is available on the premium due date, to pay the premium. b) If the policy is renewed during grace period, all the credits (sum insured, No Claim Bonus, Specific Waiting periods, waiting periods for pre-existing diseases, Moratorium period etc.) accrued under the policy shall be protected. The same is applicable for both Indemnity and Benefit products. 9) Availability of insurance coverage during grace period: If the premium is paid in instalments during the policy period, coverage will be available for the grace period also.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Master Circular on Health Insurance Business, IRDAI/HLT/CIR/PRO/84/5/2024, Chapter I paras 8-9; repeated in Master Circular on Protection of Policyholders' Interests IRDAI/PP&GR/CIR/MISC/117/9/2024 of 5-Sep-2024, Section 1 Part B IV.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "The app can treat 'renewed within 30 days of expiry (15 days for monthly payers)' as continuous. Claims during that window should be flagged as not payable for annual payers."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "Star Super Star: the policy terminates at the end of the policy period and can be renewed within a 30-day grace period. There is no cover during the grace period, but renewing within it protects all credits.",
+   "exact_text": "9. Renewal of policy: ... i. At the end of the Policy Period, the policy shall terminate and can be renewed within the Grace Period of 30 days. ii. While coverage is not available during the Grace Period, if the policy is renewed during the Grace Period, all the credits (Sum Insured, No Claim Bonus, Specific Waiting Periods, Waiting period for Pre-Existing Diseases, Moratorium period etc.) accrued under the policy shall be protected.",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Super_Star_V_3_80e5dd8988.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Wording UIN SHAHLIP27049V022627 (POL/SS/V.5/2026), linked from https://www.starhealth.in/downloads/; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "A Star policyholder hospitalised after expiry but before renewing pays out of pocket, even if they renew later within the 30 days."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "HDFC ERGO my:Optima Secure (HDFHLIP25041V062425): for instalment premiums, cover continues during the grace period. With non-instalment payment there is no cover for the unpaid period. Grace is 30 days for multi-year, yearly, half-yearly and quarterly payment and 15 days for monthly. Paying within the grace period keeps continuity credit for waiting periods. An instalment not paid within the grace period cancels the policy.",
+   "exact_text": "b. If premium is paid in instalments then coverage will be available during the grace period also. (Note: In case of non-instalment premium payment, coverage shall not be available for the period for which no premium is received). c. The Insured Person will get the accrued continuity benefit in respect of the \"Waiting Periods\", \"Specific Waiting Periods\" in the event of payment of premium within the stipulated Grace Period ... e. In case of instalment premium due not received within the Grace Period, the Policy will get cancelled",
+   "source_url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Wording UIN HDFHLIP25041V062425; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Same pattern as the regulation: an annual payer has no cover in the grace window, while a mid-term instalment payer does. A missed instalment cancels the policy once its grace period ends."
+  },
+  {
+   "topic": "grace_period",
+   "rule": "Tata AIG MediCare Premier: instalment payers are covered during an in-term grace period. After the policy period ends, there is no cover during the 30-day renewal grace period for any payment mode. A single-premium policy not renewed within grace terminates at the end of the grace period.",
+   "exact_text": "iii. Single premium payment mode Policy can be renewed within the Grace Period of 30 days to maintain continuity of benefits without break in policy. Coverage is not available during the grace period after the end of the policy period. If not renewed under the Grace Period, the Policy shall terminate at the end of the Grace period. ... v. Coverage during such grace period (in case of instalment premium): a. Within the policy period - coverage will be available from the due date of instalment premium till the date of receipt of premium by Company within the grace period. b. At the end of the policy period - the policy shall terminate and can be renewed within the Grace Period of 30 days to maintain continuity of benefits without break in policy. Coverage is not available during the grace period after the end of the policy period.",
+   "source_url": "https://www.tataaig.com/s3/tata_aig_medicare_premier_policy_wordings_781aa2fd94.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Wording UIN TATHLIP26052V052526; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Even a monthly payer is not covered in the grace window after the policy term ends. Missing the 30 days ends the policy and all its continuity."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "A 'break in policy' is the gap when a renewal or instalment premium is not paid on or before the due date or within the grace period. The insurer must condone a delay up to the grace period and not treat it as a break. Specific-waiting-period cover after completion requires the policy to have been renewed continuously without a break.",
+   "exact_text": "1.2. \"Break in policy\" means the period of gap that occurs at the end of the existing policy term/installment premium due date, when the premium due for renewal on a given policy or installment premium due is not paid on or before the premium renewal date or grace period. ... 1.7. \"Specific waiting period\" means a period up to 36 months from the commencement of a health insurance policy during which period specified diseases/treatments (except due to an accident) are not covered. On completion of the period, diseases/treatments shall be covered provided the policy has been continuously renewed without any break. ... 9.3 The insurer shall condone a delay in renewal up to the grace period from the due date of renewal without considering such condonation as a break in policy.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Insurance Products Regulations 2024, Schedule III paras 1.2, 1.7, 9.3)",
+   "check": "confirmed",
+   "implication_for_switcher": "Paying even one day after the grace period ends is a break. Specific-disease and PED waiting periods then restart from the new policy's start date, and the moratorium clock resets. A switcher must keep the old policy alive until the new one starts."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "HDFC ERGO Optima Secure: the PED wait runs from the first policy with the insurer, is reduced for prior continuous coverage without a break, and porting credit requires being presently and continuously covered without lapses.",
+   "exact_text": "i. Expenses related to the treatment of a pre-existing disease (PED) and its direct complications shall be excluded until the expiry of 36 months (Unless specified otherwise in the Policy Schedule) of continuous coverage after the date of inception of the first policy with insurer. ii. In case of enhancement of Sum Insured the exclusion shall apply afresh to the extent of Sum Insured increase. iii. If the Insured Person is continuously covered without any break as defined under the portability norms of the extant IRDAI (Health Insurance) Regulations, then waiting period for the same would be reduced to the extent of prior coverage. ... If such person is presently covered and has been continuously covered without any lapses under any health insurance policy with an Indian General/Health insurer, the proposed Insured Person will get the accrued continuity benefits in waiting periods as per IRDAI guidelines on portability.",
+   "source_url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Wording UIN HDFHLIP25041V062425 (Section C.1 Excl01 and Section D 1.10); downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Someone whose old policy has already lapsed beyond grace normally cannot carry any credit to the new insurer and starts all waiting periods from zero."
+  },
+  {
+   "topic": "moratorium",
+   "rule": "The moratorium is 60 continuous months of coverage, counting portability and migration. After it, no policy or claim can be contested for non-disclosure or misrepresentation, except for established fraud. It applies to the first policy's sum insured. An enhancement gets its own 60 months from the date of enhancement, on the enhanced limit only.",
+   "exact_text": "8. Moratorium (applicable for health insurance policies issued by general and health insurers): After completion of sixty continuous months of coverage (including portability and migration) in health insurance policy, no policy and claim shall be contestable by the insurer on grounds of non-disclosure, misrepresentation, except on grounds of established fraud. This period of sixty continuous months is called as moratorium period. The moratorium would be applicable for the sums insured of the first policy. Wherever, the sum insured is enhanced, completion of sixty continuous months would be applicable from the date of enhancement of sums insured only on the enhanced limits.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Insurance Products Regulations 2024, Schedule III para 8)",
+   "check": "confirmed",
+   "implication_for_switcher": "Porting or migrating without a gap keeps the moratorium clock running. Raising the sum insured while switching starts a new 5-year contestability clock on the extra amount only. A gap resets the whole clock."
+  },
+  {
+   "topic": "moratorium",
+   "rule": "Accrued credits under ported and migrated policies count toward the 60-month moratorium.",
+   "exact_text": "13) Policy/Claim cannot be contested: No policy and claim of health insurance shall be contestable on any grounds of non-disclosure and/or misrepresentation except for established fraud, after the completion of the Moratorium Period, i.e. 60 months of continuous coverage Note :The accrued credits gained under the ported and migrated policies shall be counted for the purpose of calculating the Moratorium period.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Master Circular on Health Insurance Business, Chapter I para 13)",
+   "check": "confirmed",
+   "implication_for_switcher": "A person with 4 years at the old insurer who ports without a break needs only about 1 more year with the new insurer to reach the moratorium on the original sum insured."
+  },
+  {
+   "topic": "timing",
+   "rule": "Insurers must allow porting of individual, family floater and group health policies at renewal. The policyholder applies to the acquiring insurer to port the entire policy with all family members, at least 30 days and not earlier than 60 days before the renewal due date. Insurers may consider a proposal made 'within 15 days from the renewal date', but must then ensure there is no break in policy.",
+   "exact_text": "24.1. Insurers shall allow portability in respect of all individual, family floater and group health insurance policies at the time of renewal. 24.2. A policyholder desirous of porting his/her policy to another insurer shall apply to such insurer to port the entire policy along with all the members of the family, if any, at least 30 days before, but not earlier than 60 days from the due date for renewal. Provided that Insurers are free to consider proposal for portability even if the policyholder has approached within 15 days from the renewal date of the existing policy, but in all such cases acquiring insurer shall ensure that there is no break in policy.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (Master Circular on Protection of Policyholders' Interests, IRDAI/PP&GR/CIR/MISC/117/9/2024, Section 2 Chapter VI para 24; same text in Section 1 Part B para 3(vi))",
+   "check": "confirmed",
+   "implication_for_switcher": "Show a porting window that opens 60 days before renewal and closes 30 days before it. Inside 30 days porting is at the new insurer's discretion. Porting mid-term is not provided for."
+  },
+  {
+   "topic": "documents",
+   "rule": "The acquiring insurer provides a Portability Form, which is submitted with the proposal form. The data request goes through IIB. The existing insurer has 72 hours to respond, and the acquiring insurer then has 5 days to decide.",
+   "exact_text": "24.3. The acquiring insurer shall furnish to the policyholder, the Portability Form authorizing it to obtain policy and claim related information from the existing insurer. The policyholder shall fill in the portability form along with proposal form and submit the same to the acquiring insurer. 24.4. On receipt of the Portability Form, the acquiring insurer shall seek the necessary details of policy and previous claim information, if any, from the existing insurer through the portal maintained by Insurance Information Bureau of India (IIB) https://iib.gov.in/ portal. 24.5. The existing insurer, shall furnish the requisite data for porting insurance policies within 72 hours of the receipt of the request. The Acquiring insurer shall decide and communicate on the proposal immediately but not more than 5 days of receipt of information from Existing insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPI Master Circular para 24.3-24.5; the 72-hour and 5-day limits also appear in Health Master Circular 29-May-2024, Chapter I para 12(b)-(c))",
+   "check": "confirmed",
+   "implication_for_switcher": "Full claim history goes to the new insurer, so undisclosed past claims will show up. The decision should come within about a week of applying, which is why the 30-day minimum lead time exists."
+  },
+  {
+   "topic": "other",
+   "rule": "No charges may be levied on the policyholder for porting in or porting out.",
+   "exact_text": "No charges shall be levied on the policyholder for porting-in or porting-out.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPI Master Circular para 24.7 and Section 1 Part B para 3(vii))",
+   "check": "confirmed",
+   "implication_for_switcher": "Any 'porting fee' is not allowed. The only cost difference is the new insurer's premium."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "On porting, credits transfer to the extent of sum insured and NCB, including specific waiting periods, PED waiting period and moratorium.",
+   "exact_text": "24.6. The policyholder is entitled to transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, specific waiting periods, waiting period for pre-existing disease, Moratorium period etc. from the policy of Existing Insurer to the new policy issued by the Acquiring Insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPI Master Circular para 24.6; equivalent text in Health Master Circular 29-May-2024, Chapter I para 12(d))",
+   "check": "confirmed",
+   "implication_for_switcher": "Time already served on PED and specific-disease waiting periods carries over, up to the old sum insured plus bonus. Only the part of the new insurer's waiting period not yet covered remains."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "All indemnity health policies from general and health insurers, other than personal accident and travel, must allow portability up to the previous sum insured and benefits, for individual and group policies alike. This is subject to the insurers' Board-approved underwriting policy.",
+   "exact_text": "10.2 All indemnity based health insurance policies issued by general and health insurers except Personal Accident and Travel Policies, shall allow the portability of policies to the extent of the sum insured and the benefits available in the previous policy, irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Insurance Products Regulations 2024, Schedule III para 10.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "Porting is a right to apply with credit, not a guarantee of acceptance. The new insurer can still underwrite, which may mean loading, declining or asking for medicals, under its own policy. Keep the old policy until the new one is issued."
+  },
+  {
+   "topic": "migration",
+   "rule": "Migration to another policy with the same insurer transfers credits for SI, NCB, specific waiting periods, PED waiting period and moratorium, for all family members and group-policy members.",
+   "exact_text": "11) Migration in case of Indemnity policies: In case of migration of one policy to another with the same Insurer, the policyholder (including all members under family cover and group insurance policies) can transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, Specific Waiting periods, waiting period for pre-existing diseases, Moratorium period etc. in the previous policy to the migrated policy.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular, Chapter I para 11; repeated in PPI Master Circular 5-Sep-2024, Section 1 Part B IV.6)",
+   "check": "confirmed",
+   "implication_for_switcher": "Upgrading to a newer plan with the same insurer keeps the same credits as porting, and is usually simpler because the insurer already has the history."
+  },
+  {
+   "topic": "migration",
+   "rule": "General and health insurers must offer migration to an alternative product with the same insurer, up to the previous sum insured and benefits. They may underwrite a migration only if the insured has not been continuously covered for 36 months.",
+   "exact_text": "10.1 General insurers and health insurers offering indemnity based health insurance policy except Personal Accident and Travel Policies, shall provide an option of migration to an alternative health insurance product to the extent of the sum insured and the benefits available in the previous policy. The insurer may underwrite the proposal in case of migration, if the insured is not continuously covered for 36 months.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Insurance Products Regulations 2024, Schedule III para 10.1; replaces the earlier 4-year no-underwriting threshold in the repealed 2020 guidelines)",
+   "check": "confirmed",
+   "implication_for_switcher": "After 36 continuous months with an insurer, migrating to its other plans at the same sum insured should not trigger fresh underwriting. Before 36 months, it can."
+  },
+  {
+   "topic": "migration",
+   "rule": "Insurer wordings (Tata AIG, HDFC ERGO) require a migration application at least 30 days before renewal and give credit only for continuous cover without lapses. The 2024 IRDAI texts set no migration lead time.",
+   "exact_text": "8. Migration The insured person will have the option to migrate the policy to other health insurance products/plans offered by the company by applying for migration of the policy at least 30 days before the policy renewal date as per IRDAI guidelines. If such person is presently covered and has been continuously covered without any lapses under any health insurance product/plan offered by the company, the insured person will get the accrued continuity benefits to the extent of the Sum Insured, No Claim Bonus, Specific Waiting periods, waiting period for preexisting diseases, Moratorium period etc. in the previous policy to the migrated policy, as applicable.",
+   "source_url": "https://www.tataaig.com/s3/tata_aig_medicare_premier_policy_wordings_781aa2fd94.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Tata AIG MediCare Premier UIN TATHLIP26052V052526 (also HDFC ERGO my:Optima Secure UIN HDFHLIP25041V062425 clause 1.11, same 30 days); downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "For a same-insurer upgrade, apply at least 30 days before renewal. The 2024 regulation and circulars set no migration lead time, so this is insurer practice and may vary."
+  },
+  {
+   "topic": "migration",
+   "rule": "Customers of a withdrawn product get two options. They can take a one-time renewal of the existing product, if renewal falls within 90 days of the withdrawal. Or they can migrate to another suitable product (an existing one or a modified version of the withdrawn one) of their choice. Example wording (HDFC ERGO): the insurer gives notice 90 days before policy expiry, and migration carries accrued continuity benefits if the policy has had no break.",
+   "exact_text": "5. The existing customers of a withdrawn product shall be provided the following options: a. A one-time option to renew the existing product, if renewal falls within the 90 days from the date of withdrawal of the product; or b. Migrate to any other suitable product (any other existing product or modified version of the withdrawn product) as per the choice of the policyholder",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular, Chapter II D.II para 5)",
+   "check": "confirmed",
+   "implication_for_switcher": "A withdrawn plan does not cost the customer their credits. If the insurer forces a move, compare its offered replacement with porting elsewhere, since both keep credits."
+  },
+  {
+   "topic": "migration",
+   "rule": "For products modified to comply with the 2024 rules (by 30-09-2024), the PMC must protect accrued waiting-period and moratorium credits and carry them into the new policy.",
+   "exact_text": "The PMC shall ensure that the benefits such as waiting period, Moratorium period accrued to the credit of the policyholder are protected and carried forward to the new policy issued.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular, Effective date para (2); product modifications due by 30-Sep-2024)",
+   "check": "confirmed",
+   "implication_for_switcher": "A policy re-issued under a new version (UIN) of the same product should not lose credits. Treat this as continuous."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "The PED waiting period for disclosed PEDs is at most 36 months of continuous coverage. A specific waiting period is up to 36 months from the policy's commencement.",
+   "exact_text": "7. Pre-existing diseases and specific waiting period: Waiting period for pre-existing diseases disclosed by the persons to be insured, shall be maximum up to 36 months of continuous coverage under the Health Insurance policy. Insurers may endeavor to have lesser pre-existing disease waiting period and specific waiting period in the health insurance products.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Insurance Products Regulations 2024, Schedule III para 7 and definition 1.7)",
+   "check": "confirmed",
+   "implication_for_switcher": "The remaining wait after porting is the new plan's wait (36 months or less) minus continuous months already covered, floored at zero. Someone with 36 or more continuous months has no PED wait on the old sum insured."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "Tata AIG Excl03: the 30-day initial wait does not apply after more than 12 months of continuous coverage, and does apply to any enhanced sum insured.",
+   "exact_text": "i. 30 Days Waiting Period (Code-Excl03): a. Expenses related to the treatment of any illness within 30 days from the first policy commencement date shall be excluded except claims arising due to an accident, provided the same are covered. b. This exclusion shall not, however, apply if the Insured Person has Continuous Coverage for more than twelve months. c. The within referred waiting period is made applicable to the enhanced sum insured in the event of granting higher sum insured subsequently.",
+   "source_url": "https://www.tataaig.com/s3/tata_aig_medicare_premier_policy_wordings_781aa2fd94.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Tata AIG MediCare Premier UIN TATHLIP26052V052526; standard IRDAI exclusion wording Excl03; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Someone porting after more than a year of continuous cover should not face the 30-day illness wait on the old sum insured. It still applies to any extra sum insured they buy."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "At renewal an insurer may not underwrite afresh unless the sum insured increases. If the policyholder asks for an increase, the insurer may underwrite only the increase.",
+   "exact_text": "c. An Insurer shall not resort to fresh underwriting unless there is an increase in sum insured. In case increase in sum insured is requested by the policyholder, the Insurer may underwrite only to the extent of increased sum insured.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health Master Circular, Chapter I para 10(c); see also Insurance Products Regulations 2024 Schedule III para 9.5)",
+   "check": "confirmed",
+   "implication_for_switcher": "Raising the sum insured invites underwriting, such as medicals, loading or decline, but only on the increase. The existing sum insured and its credits stay protected."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "The mandatory CIS template says the sum insured can be changed at renewal, or at any time subject to underwriting. On an increase, waiting periods restart only for the enhanced portion, and the 5-year moratorium runs from the enhancement date on the enhanced limits only.",
+   "exact_text": "Change in Sum Insured: Sum Insured can be changed (increased/decreased) only at the time of renewal or at any time, subject to underwriting by the company. For increase in SI, the waiting period if any shall start afresh only for the enhanced portion of the sum insured ... The moratorium would be applicable for the sums insured of the first policy and subsequently completion of Five continuous years would be applicable from date of enhancement of sums insured only on the enhanced limits.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Annexure 1 CIS template to the Health Master Circular, item 12 'Things to remember')",
+   "check": "confirmed",
+   "implication_for_switcher": "Model the sum insured in two tranches. The old sum insured carries the credited (shorter or zero) waiting period. The added sum insured has full waiting periods and a new 5-year moratorium."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "Star Super Star (SHAHLIP27049V022627): the basic sum insured can be revised only at renewal, with underwriter approval. An enhanced sum insured gets Excl01 (PED), Excl02 (specific disease) and Excl03 (30-day) afresh on the difference, from the date of enhancement.",
+   "exact_text": "27. Revision of Basic Sum Insured: is permissible only at the time of renewal, subject to underwriter's approval. If the policy is renewed for enhanced Sum Insured, then Exclusion Code- Excl 01, Exclusion Code- Excl 02 and Exclusion Code- Excl 03 will apply afresh to this enhanced Sum Insured (that is for the difference between the expiring basic Sum Insured and renewed basic Sum Insured) from the effective date of such enhancement.",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Super_Star_V_3_80e5dd8988.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Star Super Star UIN SHAHLIP27049V022627 (POL/SS/V.5/2026); downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Example: porting a Rs 5 lakh cover into Rs 10 lakh. Rs 5 lakh keeps its credit, while the extra Rs 5 lakh starts a fresh 30-day, specific-disease and PED wait."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "HDFC ERGO group wording: the portability or migration benefit is limited to the previous SI plus accrued cumulative bonus, and does not apply to any additional increased SI.",
+   "exact_text": "iv. Portability/migration benefit will be offered to the extent of sum of previous sum insured and accrued Cumulative bonus, portability/migration benefit shall not apply to any other additional increased Sum Insured.",
+   "source_url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/hdfc-group-health-insurance-pw.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "HDFC Group Health Insurance UIN HDFHLGP21116V012021; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "The credited amount on porting is old base sum insured plus earned bonus. Anything above that has no credit. Example: base Rs 5 lakh plus Rs 2.5 lakh bonus ported into Rs 10 lakh means Rs 7.5 lakh is credited and Rs 2.5 lakh is fresh."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "In HDFC ERGO my:Optima Secure, all waiting periods and exclusions apply to each insured person individually, and claims are assessed accordingly.",
+   "exact_text": "All the Waiting Periods and exclusions listed below shall be applicable individually for each Insured Person and claims shall be assessed accordingly.",
+   "source_url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "HDFC ERGO my:Optima Secure UIN HDFHLIP25041V062425, Section C.1 (Tata AIG MediCare Premier TATHLIP26052V052526 says the same: 'All the waiting periods shall be applicable individually for each Insured Person.'); downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Compute credit per member from that member's own continuous-coverage start date, not the floater's start date. A spouse added in year 3 has less credit than the original proposer."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "Niva Bupa ReAssure 2.0: members added by endorsement or at renewal start PED, exclusions, loading and waiting periods afresh. An SI enhancement at renewal is underwritten, and all waiting periods apply afresh to the enhanced limit.",
+   "exact_text": "b. Addition of Insured Persons on Renewal: If a new member is added in the Policy, either by way of endorsement or at the time of Renewal, the Pre-existing Disease clause, exclusions, loading (if any) and Waiting Periods will be applicable afresh for that member. c. Changes to Sum Insured on Renewal: You may opt for enhancement of Sum Insured at the time of Renewal, subject to underwriting. All Waiting Periods as defined in the Policy shall apply afresh for this enhanced limit from the effective date of such enhancement.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Niva Bupa ReAssure 2.0 UIN NBHHLIP27054V032627, clause 6.2.3; downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "A new family member added during a switch gets no credit, unless they were themselves continuously insured elsewhere and that cover is ported for them."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "The policyholder must apply to port the entire policy along with all family members (PPI MC 24.2). The regulatory definition of portability covers all members under family cover.",
+   "exact_text": "1.5. \"Portability\" means a facility provided to the health insurance policyholders (including all members under family cover), to transfer the credits gained for, pre-existing diseases and specific waiting periods from one insurer to another insurer.",
+   "source_url": "https://irdai.gov.in/web/guest/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Schedule III def 1.5; the 'port the entire policy along with all the members of the family' wording is in PPI Master Circular para 24.2, 5-Sep-2024)",
+   "check": "confirmed",
+   "implication_for_switcher": "Plan for the whole family to move together. Splitting one member out of a floater to port separately is not clearly provided for (see open points)."
+  },
+  {
+   "topic": "group_to_individual",
+   "rule": "Insurers must allow portability of group health policies, as well as individual and family floater policies, at the time of renewal (PPHI MC 24.1). Products Regs Sch III 10.2 requires portability of indemnity policies 'irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers'. That underwriting caveat applies to every port, not specifically to group-to-individual moves. Migration (same insurer) expressly includes members of group policies (Sch III 1.4). No current IRDAI text expressly gives an employee who leaves a group mid-term a right to port into an individual policy with another insurer. The repealed 2020 guidelines had an explicit group-exit migration right; now acceptance, credited SI and loading depend on the insurer's underwriting policy and product terms.",
+   "exact_text": "24.1. Insurers shall allow portability in respect of all individual, family floater and group health insurance policies at the time of renewal. [and Schedule III, Insurance Products Regulations 2024:] 1.4. \"Migration\" means a facility provided to policyholders (including all members under family cover and group policies), to transfer the credits gained for pre-existing diseases and specific waiting periods from one health insurance policy to another with the same insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPI Master Circular para 24.1); 2024-04-01 for Regulations Schedule III defs 1.4 and 10.2",
+   "check": "corrected",
+   "implication_for_switcher": "An employee leaving an employer cover can ask the group insurer to migrate them to its retail plan, or ask another insurer to port, and claim credit for continuous group cover. Acceptance, loading and the credited sum insured depend on underwriting. Apply before the employer cover ends so there is no gap."
+  },
+  {
+   "topic": "other",
+   "rule": "In HDFC ERGO my:Optima Secure, the free-look period applies to new individual policies only, not to renewals and not when a policy is ported or migrated.",
+   "exact_text": "1.8. Free look Period The Free Look Period shall be applicable on new individual health insurance policies and not on renewals or at the time of porting/migrating the policy.",
+   "source_url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "HDFC ERGO my:Optima Secure UIN HDFHLIP25041V062425 (same sentence in Tata AIG Group MediCare wording); downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "A switcher may not get the 30-day 'return it if unhappy' option on a ported policy. Compare plans before porting, not after."
+  },
+  {
+   "topic": "timing",
+   "rule": "Apply to the new insurer at least 30 days and no more than 60 days before renewal, porting the entire policy with all family members.",
+   "exact_text": "24.2. A policyholder desirous of porting his/her policy to another insurer shall apply to such insurer to port the entire policy along with all the members of the family, if any, at least 30 days before, but not earlier than 60 days from the due date for renewal.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (Master Circular on Protection of Policyholders' Interests 2024, Ref IRDAI/PP&GR/CIR/MISC/117/9/2024, Chapter VI)",
+   "check": "confirmed",
+   "implication_for_switcher": "Start the switch 30 to 60 days before renewal. Many websites, and IRDAI's own consumer page, still say 45 days. The current circular says 30. Applying 45 to 60 days ahead satisfies both readings and leaves time for medical tests."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Insurers are free, but not obliged, to consider a porting proposal made 'within 15 days from the renewal date'. When they do, the acquiring insurer must ensure there is no break in policy.",
+   "exact_text": "Provided that Insurers are free to consider proposal for portability even if the policyholder has approached within 15 days from the renewal date of the existing policy, but in all such cases acquiring insurer shall ensure that there is no break in policy.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "Applying late leaves acceptance to the new insurer's discretion. Do not plan around it. The phrase 'within 15 days from the renewal date' is ambiguous (see open points)."
+  },
+  {
+   "topic": "timing",
+   "rule": "Portability is allowed only at renewal, for individual, family floater and group health policies.",
+   "exact_text": "24.1. Insurers shall allow portability in respect of all individual, family floater and group health insurance policies at the time of renewal.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "If you miss the window and renew with the old insurer, your next chance to port with credits is the following renewal. Buying a fresh policy in between restarts all waiting periods."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "Portability is subject to the acquiring insurer's Board-approved underwriting policy, which can accept, decline or impose terms. It applies up to the previous policy's sum insured and benefits. The Products Regulations came into force on the later of gazette publication (22 Mar 2024) and 1 Apr 2024, which is 1 Apr 2024.",
+   "exact_text": "10.2 All indemnity based health insurance policies issued by general and health insurers except Personal Accident and Travel Policies, shall allow the portability of policies to the extent of the sum insured and the benefits available in the previous policy, irrespective of individual or group policy subject to the Board approved underwriting policy of the insurers.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (IRDAI (Insurance Products) Regulations 2024, Schedule III cl. 10.2; in force from publication 22-03-2024 or 1-04-2024, whichever later)",
+   "check": "confirmed",
+   "implication_for_switcher": "Porting is not guaranteed. Older people and people with declared conditions can be declined or offered worse terms. Do not let the old policy go until the new insurer has accepted in writing."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "At renewal with the current insurer, no fresh underwriting unless the SI increases, and then only on the increase.",
+   "exact_text": "c. An Insurer shall not resort to fresh underwriting unless there is an increase in sum insured. In case increase in sum insured is requested by the policyholder, the Insurer may underwrite only to the extent of increased sum insured.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Master Circular on Health Insurance Business, Ref IRDAI/HLT/CIR/PRO/84/5/2024, Ch. I para 10(c))",
+   "check": "confirmed",
+   "implication_for_switcher": "Staying means no new medical review. Switching puts your current health under review by a new insurer. This matters most if you have developed conditions since you first bought the policy."
+  },
+  {
+   "topic": "premium_loading",
+   "rule": "For individual products, renewal-premium loadings must be at portfolio level, not based on an individual policy's claims; discounts for good claims experience are allowed. This binds renewals. A port-in is underwritten under the acquiring insurer's Board-approved policy (10.2).",
+   "exact_text": "9.4 For individual products, the loadings on renewal premium shall be at portfolio and not based upon any individual policy claim experience. However, discount in premium may be provided by insurers to individual policyholders for good claims experience.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Your past claims cannot raise your own renewal premium where you are now. A new insurer can price your conditions individually when you port (see the Niva Bupa loading rule)."
+  },
+  {
+   "topic": "premium_loading",
+   "rule": "Niva Bupa ReAssure 2.0: a risk loading may be applied after underwriting, capped at 100% per condition and 150% per individual, and it continues at all renewals.",
+   "exact_text": "a. We may ask for additional premium after due risk evaluation (it's what referred to as Underwriting) based on all information provided by you. We will issue policy to you only after you pay us the additional premium and provide us consent. b. We will never ask for more than 100% for any particular health condition and never more than 150% for any individual. c. Once applied, Risk loading continues even for all renewals.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Policy wording for UIN NBHHLIP27054V032627 (clause 6.2.2), as downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "A declared condition can raise the new premium by up to 100% for that condition, or 150% in total, and the loading is permanent. Caps differ by insurer and product. Compare the loaded premium, not the brochure price."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "Star Comprehensive (SHAHLIP26044V092526) lists as exclusion Excl 38 any existing disease that the insured disclosed and that is named in the policy schedule under Permanent Exclusion, based on the insured's consent.",
+   "exact_text": "Existing disease/s, disclosed by the insured and mentioned in the policy schedule under Permanent Exclusion (based on insured's consent) - Code Excl 38",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Star_Comprehensive_Insurance_Policy_V_21_3a414ab104.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "Star Comprehensive wording UIN SHAHLIP26044V092526, POL/COMP/V.24/2025, as downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Instead of a loading, the new insurer may offer cover that never pays for your declared condition, even though your old policy covered it after the waiting period. Read the offer's schedule before you accept."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "Under the current rules the policyholder may transfer credits for sum insured, No Claim Bonus, specific waiting periods, PED waiting period and moratorium (PPHI MC 24.6), and no charges may be levied for porting (24.7). Premium, product features, and any acceptance or loading are set by the acquiring insurer's product and its Board-approved underwriting policy (Products Regs Sch III 10.2). Waiting-period credit is not the only thing protected.",
+   "exact_text": "Apart from the waiting period credit, all other terms of the new policy including the premium are at the discretion of the new insurance company",
+   "source_url": "https://policyholder.gov.in/portability-of-health-insurance",
+   "source_kind": "secondary",
+   "effective_from": "Undated content (page footer says 'Last updated on October 06, 2026', but the text predates the 2024 rules: it still says 45 days)",
+   "check": "corrected",
+   "implication_for_switcher": "Expect different premium, sub-limits, co-pays and exclusions at the new insurer. Only the credits are carried over. Note: this is an official IRDAI site (policyholder.gov.in), not a circular, and parts are out of date. The page was read from a copy fetched earlier today, because direct access was blocked."
+  },
+  {
+   "topic": "underwriting",
+   "rule": "The acquiring and existing insurers must jointly ensure that the entire underwriting details and claim history are transferred. The existing insurer must provide the requested information within 72 hours, through the Insurance Information Bureau (IIB) portal.",
+   "exact_text": "a. A Policyholder has the choice to port his/ her policies from one Insurer to another. The Acquiring and the Existing Insurers shall jointly, ensure that the entire underwriting details and claim history of the Policyholders are seamlessly transferred.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (Health MC Ch. I para 12(a))",
+   "check": "confirmed",
+   "implication_for_switcher": "The new insurer will see every past claim. If a claim was for a condition you leave out of the new proposal form, the mismatch can be used later to reject a claim or void the policy."
+  },
+  {
+   "topic": "timing",
+   "rule": "The existing insurer must furnish data within 72 hours via IIB. The acquiring insurer must decide and communicate within 5 days of receiving it.",
+   "exact_text": "24.5. The existing insurer, shall furnish the requisite data for porting insurance policies within 72 hours of the receipt of the request. The Acquiring insurer shall decide and communicate on the proposal immediately but not more than 5 days of receipt of information from Existing insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (same TATs also in Health MC 29-05-2024 para 12(b),(c))",
+   "check": "confirmed",
+   "implication_for_switcher": "On paper a straightforward port is decided in about 8 days from a complete application. Medical tests and requests for more information add time, so the 30-day minimum lead time matters."
+  },
+  {
+   "topic": "timing",
+   "rule": "For health proposals generally, the insurer must call for any further details in one go within 7 days, decide within 7 days, and give reasons if it does not accept. For a port-in specifically, the acquiring insurer must decide within 5 days of receiving the existing insurer's data (PPI MC 24.5).",
+   "exact_text": "i. On receipt of the proposal form, the insurer shall process the proposal with speed and efficiency. In case of requirement of further details/clarifications on details given in the proposal form, the same should be called for in one-go and not on piecemeal basis within 7 days from the date of receipt of the proposal form. ... iii. The insurer shall take decision on the proposal form within 7 days. ... iv. In case of non-acceptance of proposal, insurer shall inform the prospect its decision within 7 days along the reasons for non-acceptance.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (PPI Master Circular, Section 1 Part B, 'Processing of proposal forms')",
+   "check": "confirmed",
+   "implication_for_switcher": "If the port is declined, ask for the reasons in writing. You are entitled to them, and they help you approach another insurer or raise a grievance."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Renewing within the grace period keeps credits. Cover need not be available for unpaid grace days, and is guaranteed only when premium is paid in instalments during the policy period.",
+   "exact_text": "\"Grace period\" means the specified period of time, immediately following the premium due date during which premium payment can be made to renew or continue a policy in force without loss of continuity benefits pertaining to waiting periods and coverage of pre-existing diseases. Coverage need not be available during the period for which no premium is received. ... Provided the insurers shall offer coverage during the grace period, if the premium is paid in instalments during the policy period.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Schedule III, definition 1.3)",
+   "check": "confirmed",
+   "implication_for_switcher": "If you let the renewal date pass while the port is pending and rely on the grace period, a hospital stay in those days may not be covered. Credits survive only if you renew or the new policy starts before the grace period ends."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Star Comprehensive: at renewal the policy can be renewed within a 30-day grace period. Cover is not available during that renewal grace period, but renewing within it protects all credits. For mid-term instalment payers the same wording does give cover during the grace period (15 days for monthly, 30 days otherwise).",
+   "exact_text": "While coverage is not available during the Grace Period, if the policy is renewed during the Grace Period, all the credits (Sum Insured, No Claim Bonus, Specific Waiting Periods, Waiting period for Pre-Existing Diseases, Moratorium period etc.) accrued under the policy shall be protected.",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Star_Comprehensive_Insurance_Policy_V_21_3a414ab104.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN SHAHLIP26044V092526, V.24/2025",
+   "check": "corrected",
+   "implication_for_switcher": "The grace period protects your credits, not your hospital bills. Treat the renewal date, not the end of the grace period, as the deadline for having the new policy in hand."
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Waiting-period credit requires continuous cover with no break in policy, meaning the renewal or instalment premium was paid by the due date or within the grace period.",
+   "exact_text": "1.2. \"Break in policy\" means the period of gap that occurs at the end of the existing policy term/instalment premium due date, when the premium due for renewal on a given policy or instalment premium due is not paid on or before the premium renewal date or grace period.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Schedule III, definition 1.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "If the old policy lapses past its grace period before the new one starts, the new insurer can treat you as a fresh customer. Pre-existing disease and specific waiting periods then start again. Insurer wordings make credit depend on continuity, e.g. Niva Bupa Excl01(c): 'If the Insured Person is continuously covered without any break ... then waiting period for the same would be reduced to the extent of prior coverage', and Star's portability page: 'provided the previous policy has been maintained without any break.'"
+  },
+  {
+   "topic": "lapse_gap",
+   "rule": "Niva Bupa's migration article (published 19 Jun 2023, modified 1 Sep 2026) says not to let the old policy lapse while waiting for confirmation, because hospitals will not treat an application in progress as proof of cover. The same page still gives an out-of-date '45 to 60 days' window for porting.",
+   "exact_text": "Do not let the old policy lapse while waiting for confirmation on the new one. A gap in coverage leaves you unprotected, and hospitals will not treat an application in progress as proof of cover.",
+   "source_url": "https://www.nivabupa.com/health-insurance-articles/health-insurance-migration.html",
+   "source_kind": "insurer_page",
+   "effective_from": "Article dated 2023-06-19, modified 2026-09-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Keep the old policy active until the new insurer has issued the policy. This is an insurer blog and is written about migration. The same page also gives an out-of-date 45-to-60-day porting window."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "On porting, credits for sum insured, NCB, specific waiting periods, PED waiting period and moratorium may be transferred.",
+   "exact_text": "24.6. The policyholder is entitled to transfer the credits gained to the extent of the Sum Insured, No Claim Bonus, specific waiting periods, waiting period for pre-existing disease, Moratorium period etc. from the policy of Existing Insurer to the new policy issued by the Acquiring Insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05 (same wording in Health MC 29-05-2024 para 12(d))",
+   "check": "confirmed",
+   "implication_for_switcher": "You get credit for the time already served. You do not get a copy of the old policy. If the new policy has longer waiting periods, you still serve the rest. The new insurer's own features, limits and exclusions apply."
+  },
+  {
+   "topic": "waiting_period_credit",
+   "rule": "Niva Bupa ReAssure 2.0 has a 36-month PED wait (Excl01) and a 24-month listed-conditions wait (Excl02). Each is reduced by prior continuous coverage without a break, and each applies afresh to any sum-insured increase.",
+   "exact_text": "a. Expenses related to the treatment of a Pre-existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of continuous coverage after the date of inception of the first Policy. b. In case of enhancement of Sum Insured the exclusion shall apply afresh to the extent of Sum Insured increase. c. If the Insured Person is continuously covered without any break as defined under the portability norms of the extant IRDAI (Insurance Products) Regulations, ... then waiting period for the same would be reduced to the extent of prior coverage.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN NBHHLIP27054V032627 (Excl01), as downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Compare the old and new waiting periods side by side. A move from a 2-year to a 3-year pre-existing disease wait after 2 years of cover leaves about 1 more year uncovered for those conditions."
+  },
+  {
+   "topic": "sum_insured_enhancement",
+   "rule": "Credits carry over to the extent of the previous sum insured and accrued No Claim Bonus. PPHI MC 24.6 lists both SI and NCB, and insurer wordings such as HDFC ERGO credit previous SI plus accrued cumulative bonus. Any SI above that is an enhancement. Its moratorium runs afresh for 60 months on the enhanced limits only (Sch III cl.8). Waiting periods apply afresh to the enhanced portion (CIS template and insurer wordings), and the increase may be underwritten.",
+   "exact_text": "The moratorium would be applicable for the sums insured of the first policy. Wherever, the sum insured is enhanced, completion of sixty continuous months would be applicable from the date of enhancement of sums insured only on the enhanced limits.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Schedule III cl. 8; portability 'to the extent of the sum insured' in cl. 10.2)",
+   "check": "corrected",
+   "implication_for_switcher": "A larger cover at the new insurer is not fully usable from day one. The added amount is new cover with fresh waits and can be contested for non-disclosure for 5 years. The increase is also underwritten."
+  },
+  {
+   "topic": "moratorium",
+   "rule": "After 60 months of continuous coverage, no policy or claim can be contested for non-disclosure or misrepresentation, except for established fraud. Credits accrued under ported and migrated policies count toward the 60 months.",
+   "exact_text": "13) Policy/Claim cannot be contested: No policy and claim of health insurance shall be contestable on any grounds of non-disclosure and/or misrepresentation except for established fraud, after the completion of the Moratorium Period, i.e. 60 months of continuous coverage. Note: The accrued credits gained under the ported and migrated policies shall be counted for the purpose of calculating the Moratorium period.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4942918",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-05-29 (also Products Regs Sch. III cl. 8, from 2024-04-01)",
+   "check": "confirmed",
+   "implication_for_switcher": "Switching does not restart the 5-year clock on the sum insured you carry over. It does restart for any increase. The porting proposal is still a new declaration, and if you are under 5 years in total it can be used against you."
+  },
+  {
+   "topic": "ped_disclosure",
+   "rule": "Niva Bupa: PED cover after 36 months requires the PED to have been declared and accepted. Misrepresentation or non-disclosure of a material fact voids the policy and forfeits the premium.",
+   "exact_text": "d. Coverage under the Policy after the expiry of 36 months for any Pre-existing Disease is subject to the same being declared at the time of application and accepted by Us. ... 6.1.14. Disclosure of Information: The Policy shall be void and all premium paid thereon shall be forfeited to the Company in the event of misrepresentation, mis-description or non-disclosure of any material fact by the policyholder.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN NBHHLIP27054V032627, as downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "The porting proposal form is a fresh declaration. Hiding a condition to avoid a loading or a rejection can leave that condition uncovered permanently, or void the policy until the moratorium is complete. The new insurer also sees your claim history through IIB."
+  },
+  {
+   "topic": "ped_disclosure",
+   "rule": "Star Comprehensive (Multiple Policies condition): the policyholder is expected to disclose all health policies covering the proposed lives. For non-disclosure of previous policies, or for multiple policies exceeding the product's maximum sum insured, Star may cancel any or all of the policies the policyholder opted for, ab initio, except the first-issued policy.",
+   "exact_text": "The Policyholder is expected to disclose all the health insurance policies under which the lives proposed for insurance are covered. The company reserves the right to cancel any / all of the policies (except the 1st issued Policy) opted by the Policyholder ab-initio, in case of any non-disclosure of previous policies and / or having multiple policies that exceeds the maximum Sum Insured filed as per the Product.",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Star_Comprehensive_Insurance_Policy_V_21_3a414ab104.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN SHAHLIP26044V092526, V.24/2025",
+   "check": "corrected",
+   "implication_for_switcher": "When switching, list all existing covers on the proposal, including employer group policies and top-ups."
+  },
+  {
+   "topic": "cumulative_bonus",
+   "rule": "IRDAI texts transfer NCB credit without saying how it is shown or priced. Loyalty, wellness and renewal incentives are optional, insurer-designed features under Sch III 4.2.",
+   "exact_text": "4.2 Insurers may devise mechanism(s) or incentive(s) to reward policyholders for early entry, continued renewals, favourable claims experience, preventive and wellness habits and disclose upfront such mechanism or incentives in the prospectus and the policy document.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01 (Schedule III cl. 4.2)",
+   "check": "confirmed",
+   "implication_for_switcher": "Expect to lose product-specific perks such as wellness discounts (e.g. Niva Bupa 'Live Healthy' up to 30%), loyalty or early-entry pricing, and possibly carried-forward unused cover (e.g. Niva Bupa 'Booster+' up to 3/5/10x). The transfer list covers sum insured, no-claim bonus, waiting periods and moratorium only. Whether a given bonus counts as 'No Claim Bonus' for porting is decided case by case, so get it in writing."
+  },
+  {
+   "topic": "other",
+   "rule": "Niva Bupa ReAssure 2.0 'Lock the Clock': the premium is charged at the age at entry when you buy the policy, until a claim is paid. After a claim it follows current age slabs.",
+   "exact_text": "4.7.2. Lock the Clock: Your age is locked at entry when you buy the policy, till a claim is paid. E.g. if you buy the policy at 25 years, you will keep paying the premium applicable for a 25 year old at each renewal, till a claim is paid in the policy. Post the claim is paid, the premium charged will be as per your current age and will continue to change as per the age slabs at each renewal.",
+   "source_url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN NBHHLIP27054V032627, as downloaded 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "This is an inference; the wording has no portability-specific clause. Leaving a Lock-the-Clock policy likely means losing the frozen-age premium. Porting into one likely locks your age at the time of porting, not your original entry age with the old insurer."
+  },
+  {
+   "topic": "migration",
+   "rule": "Migration means moving to another product of the same insurer, keeping credits to the extent of the previous SI and benefits. The insurer may underwrite only if the insured has not been continuously covered for 36 months.",
+   "exact_text": "10.1 General insurers and health insurers offering indemnity based health insurance policy except Personal Accident and Travel Policies, shall provide an option of migration to an alternative health insurance product to the extent of the sum insured and the benefits available in the previous policy. The insurer may underwrite the proposal in case of migration, if the insured is not continuously covered for 36 months.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "If the problem is the plan rather than the insurer, migrating after 36 months of continuous cover avoids the re-underwriting risk that porting carries."
+  },
+  {
+   "topic": "other",
+   "rule": "Mandatory portability (Sch III 10.2) covers only indemnity health policies of general and health insurers, excluding personal accident and travel. Life insurers, which may offer only benefit-based health products, 'may allow portability, wherever possible, as per the policy terms'.",
+   "exact_text": "10.3 Life insurers may allow portability, wherever possible, as per the policy terms.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=4590475",
+   "source_kind": "irdai_regulation",
+   "effective_from": "2024-04-01",
+   "check": "confirmed",
+   "implication_for_switcher": "Fixed-benefit covers such as critical-illness or hospital-cash plans, especially from life insurers, may have no porting right at all. The app should flag the policy type before suggesting a switch."
+  },
+  {
+   "topic": "documents",
+   "rule": "The acquiring insurer provides the Portability Form, which authorises it to obtain policy and claim data. The policyholder submits it with the proposal form.",
+   "exact_text": "24.3. The acquiring insurer shall furnish to the policyholder, the Portability Form authorizing it to obtain policy and claim related information from the existing insurer. The policyholder shall fill in the portability form along with proposal form and submit the same to the acquiring insurer.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "You need two forms, the proposal form and the portability form, both from the new insurer."
+  },
+  {
+   "topic": "documents",
+   "rule": "SBI General's porting document list: a duly filled and signed proposal form, a duly filled and signed portability form, all previous years' policy copies, and claim history (if any) for those policies with the claim documents. The same PDF states the 30-to-60-day window.",
+   "exact_text": "List of documents • Duly filled & signed Proposal form, • Duly filled & signed Portability form, • All Previous Year policy copies, • Claim history (if any) for all the Previous Year policies along with Claim documents",
+   "source_url": "https://content.sbigeneral.in/uploads/Portability_Document_List_13b4784c5e.pdf",
+   "source_kind": "insurer_page",
+   "effective_from": "As downloaded 2026-10-07 (undated PDF; it states the 30-to-60-day window)",
+   "check": "confirmed",
+   "implication_for_switcher": "Before you start, gather every year's policy schedule (continuity is proved year by year) and the paperwork for any past claim."
+  },
+  {
+   "topic": "documents",
+   "rule": "Star Health asks for the proposal and portability forms, copies of the previous policies, and pre-insurance medical reports where applicable. Medical examination is done at Star's cost.",
+   "exact_text": "Proposal Form and Portability form to be duly filled, signed and submitted along with the following documents, Policy copies of the previous insurance. Pre Insurance medical examination reports, wherever, applicable. Medical examination will be done at our cost.",
+   "source_url": "https://www.starhealth.in/portability/",
+   "source_kind": "insurer_page",
+   "effective_from": "As accessed 2026-10-07",
+   "check": "confirmed",
+   "implication_for_switcher": "Expect possible medical tests, which take time. Book them early within the 30-to-60-day window."
+  },
+  {
+   "topic": "other",
+   "rule": "Neither insurer may charge the policyholder for porting in or out. During the port-in year the acquiring insurer may not pay commission or incentive to its employees, its distribution channel, or the channel's employees on port-in policies.",
+   "exact_text": "24.7. On the port-in policies during the port-in year, acquiring insurer shall not pay any commission or incentive to its own employees or distribution channel or employees of the distribution channel. No charges shall be levied on the policyholder for porting-in or porting-out.",
+   "source_url": "https://irdai.gov.in/document-detail?documentId=5625747",
+   "source_kind": "irdai_circular",
+   "effective_from": "2024-09-05",
+   "check": "confirmed",
+   "implication_for_switcher": "Refuse any 'porting fee'. My inference: agents earn nothing on a port in year one, so be wary if one suggests a fresh policy instead. A fresh policy throws away your waiting-period and moratorium credits."
+  },
+  {
+   "topic": "other",
+   "rule": "Star Comprehensive: free look applies to new individual policies, not on renewals or when porting or migrating.",
+   "exact_text": "Free Look Period: The Free Look Period shall be applicable on new individual health insurance policies and not on renewals or at the time of porting/migrating the policy.",
+   "source_url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Star_Comprehensive_Insurance_Policy_V_21_3a414ab104.pdf",
+   "source_kind": "policy_wording",
+   "effective_from": "UIN SHAHLIP26044V092526, V.24/2025",
+   "check": "confirmed",
+   "implication_for_switcher": "With some insurers you cannot undo a port by free-look cancellation once the policy is issued. Read the offer, including any loadings or exclusions, before you pay. This varies by insurer: Niva Bupa's wording excludes only renewals, and IRDAI's master circulars do not mention porting."
+  }
+ ]
+}
