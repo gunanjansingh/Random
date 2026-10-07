@@ -75,6 +75,33 @@ def _values(owner: str, raw: dict) -> dict[str, CitedValue]:
 
 
 @dataclass
+class PremiumEstimate:
+    """An approximate annual premium for one reference profile, from public quotes.
+    Never rescaled to the user's profile; the engine picks the closest match."""
+    profile: str  # e.g. "P30" (individual, 30y), "FAM" (2A+1C)
+    members: str  # "1A", "2A+1C", ...
+    ages: list[int]
+    sum_insured: int
+    city_or_zone: str
+    low: int
+    high: int
+    best: int
+    gst_basis: str  # "ex-GST" | "incl-GST" | "mixed" | "unknown"
+    confidence: str  # "high" | "medium" | "low"
+    sources: list[str]
+    caveat: str = ""
+    as_of: str = ""
+
+    @property
+    def adults(self) -> int:
+        return int(self.members.split("A")[0]) if "A" in self.members else len(self.ages)
+
+    @property
+    def children(self) -> int:
+        return int(self.members.split("+")[1].rstrip("C")) if "+" in self.members else 0
+
+
+@dataclass
 class Insurer:
     id: str
     name: str
@@ -100,6 +127,7 @@ class Plan:
     highlights: list[str] = field(default_factory=list)
     premium_by_age: dict[int, int] = field(default_factory=dict)  # band lower bound -> annual premium per member
     premium_basis: str = ""  # SI / zone / variant the premium table is for
+    premium_estimates: list[PremiumEstimate] = field(default_factory=list)
     floater_discount_pct: float = 0.0
     zone: str | None = None  # pricing zone bought, if the plan prices by city
     zone_cities: dict[str, str] = field(default_factory=dict)
@@ -130,6 +158,7 @@ class Plan:
             highlights=d.get("highlights", []),
             premium_by_age={int(k): v for k, v in d.get("premium_by_age", {}).items()},
             premium_basis=d.get("premium_basis", ""),
+            premium_estimates=[PremiumEstimate(**e) for e in d.get("premium_estimates", [])],
             floater_discount_pct=d.get("floater_discount_pct", 0.0),
             zone=d.get("zone"),
             zone_cities={k.lower(): v for k, v in d.get("zone_cities", {}).items()},

@@ -7,7 +7,7 @@ from dataclasses import dataclass, field, replace
 from . import india
 from .criteria import BY_ID, CRITERIA, Category, Kind
 from .india import inr
-from .models import ZONE_COST_RANK, CitedValue, Member, Plan, UserProfile
+from .models import ZONE_COST_RANK, CitedValue, Member, Plan, PremiumEstimate, UserProfile
 
 # Unknown values score neutral: with real data, gaps mostly reflect what has
 # been extracted so far, not the plan. Coverage is reported next to the score,
@@ -50,6 +50,34 @@ def annual_premium(plan: Plan, members: list[Member]) -> int | None:
     if len(members) > 1:
         total *= 1 - plan.floater_discount_pct / 100
     return round(total)
+
+
+@dataclass
+class ApproxPremium:
+    estimate: PremiumEstimate
+    close: bool  # same family shape and sum insured, oldest age within 5 years
+
+    def describe(self) -> str:
+        e = self.estimate
+        who = f"{e.members} aged {'/'.join(map(str, e.ages))}"
+        rng = f"{inr(e.low)}-{inr(e.high)}" if e.low != e.high else inr(e.best)
+        return f"~{inr(e.best)} ({rng}; quoted for {who}, {inr(e.sum_insured)}, {e.city_or_zone}; {e.confidence} confidence)"
+
+
+def approx_premium(plan: Plan, user: UserProfile) -> ApproxPremium | None:
+    """Closest published reference quote to the user's family. Not a quote for them."""
+    if not plan.premium_estimates:
+        return None
+    adults = sum(1 for m in user.members if m.age >= 18)
+    children = len(user.members) - adults
+
+    def distance(e: PremiumEstimate) -> tuple:
+        return ((e.adults, e.children) != (adults, children), e.sum_insured != user.sum_insured,
+                abs(max(e.ages) - user.oldest))
+
+    best = min(plan.premium_estimates, key=distance)
+    shape_differs, si_differs, age_gap = distance(best)
+    return ApproxPremium(best, not shape_differs and not si_differs and age_gap <= 5)
 
 
 # --------------------------------------------------------------------------- hard filters
@@ -97,8 +125,11 @@ def check_deal_breakers(plan: Plan, user: UserProfile) -> FilterResult:
             r.failures.append(f"Not cashless at: {', '.join(missing)}")
     if db.max_premium is not None:
         p = annual_premium(plan, user.members)
-        if p is None:
-            r.unverified.append("Premium: no premium table loaded (get a quote)")
+        ap = approx_premium(plan, user) if p is None else None
+        if p is None and ap and ap.close and ap.estimate.low > db.max_premium:
+            r.failures.append(f"Premium ~{inr(ap.estimate.low)}+ (approx.) over budget {inr(db.max_premium)}")
+        elif p is None:
+            r.unverified.append("Premium: no exact premium for your family (get a quote)")
         elif p > db.max_premium:
             r.failures.append(f"Premium {inr(p)} over budget {inr(db.max_premium)}")
     return r
@@ -133,6 +164,7 @@ class ScoreCard:
     coverage: float  # share of weight backed by known data
     score_range: tuple[float, float]  # total if every unknown turned out worst / best
     premium: int | None
+    approx: ApproxPremium | None
     filters: FilterResult
     gotchas: list[Gotcha]
     irdai_flags: list[str]
@@ -165,6 +197,7 @@ def score_plan(plan: Plan, user: UserProfile) -> ScoreCard:
         coverage=round(known / den, 2),
         score_range=(round(100 * (num - unknown_num) / den, 1), round(100 * (num - unknown_num + (den - known)) / den, 1)),
         premium=annual_premium(plan, user.members),
+        approx=approx_premium(plan, user),
         filters=check_deal_breakers(plan, user),
         gotchas=gotchas(plan, user),
         irdai_flags=[v.message for v in india.irdai_violations(raw_values)],

@@ -125,3 +125,33 @@ class ClaimSimulatorTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ApproxPremiumTest(unittest.TestCase):
+    def est(self, profile, members, ages, best, si=10_00_000):
+        from healthcompare.models import PremiumEstimate
+        return PremiumEstimate(profile, members, ages, si, "Metro", best - 1000, best + 1000, best, "ex-GST", "medium", ["https://x"])
+
+    def setUp(self):
+        self.p = plan()
+        self.p.premium_estimates = [self.est("P30", "1A", [30], 12000), self.est("P45", "1A", [45], 20000),
+                                    self.est("FAM", "2A+1C", [35, 32, 5], 30000)]
+
+    def test_picks_matching_family_shape_and_age(self):
+        from healthcompare.engine import approx_premium
+        ap = approx_premium(self.p, user(members=[Member("You", 43)]))
+        self.assertEqual((ap.estimate.profile, ap.close), ("P45", True))
+        fam = approx_premium(self.p, user(members=[Member("A", 36), Member("B", 33), Member("C", 4)]))
+        self.assertEqual((fam.estimate.profile, fam.close), ("FAM", True))
+
+    def test_loose_match_is_flagged_not_rescaled(self):
+        from healthcompare.engine import approx_premium
+        ap = approx_premium(self.p, user(members=[Member("Mom", 68)]))
+        self.assertFalse(ap.close)
+        self.assertEqual(ap.estimate.best, 20000)
+
+    def test_budget_fails_only_on_close_match_above_low_end(self):
+        r = check_deal_breakers(self.p, user(members=[Member("You", 30)], deal_breakers=DealBreakers(max_premium=9000)))
+        self.assertFalse(r.eligible)
+        r = check_deal_breakers(self.p, user(members=[Member("Mom", 68)], deal_breakers=DealBreakers(max_premium=9000)))
+        self.assertTrue(r.eligible)

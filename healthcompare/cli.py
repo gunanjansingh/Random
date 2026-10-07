@@ -105,6 +105,14 @@ def _fmt(cid: str, value: object) -> str:
     return f"{value:g}{'%' if unit.startswith('%') else ' ' + unit if unit else ''}"
 
 
+def premium_cell(c: ScoreCard) -> str:
+    if c.premium is not None:
+        return inr(c.premium)
+    if c.approx:
+        return f"~{inr(c.approx.estimate.best)}" + ("" if c.approx.close else " (diff. profile)")
+    return "get quote"
+
+
 def table(rows: list[list[str]]) -> str:
     widths = [max(len(r[i]) for r in rows) for i in range(len(rows[0]))]
     widths = [min(w, 34) for w in widths]
@@ -136,7 +144,7 @@ def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile)
             ["Match score /100", *[f"{c.total}" for c in cards]],
             ["Possible range (unknowns)", *[f"{c.score_range[0]:g}-{c.score_range[1]:g}" for c in cards]],
             ["Data coverage", *[f"{c.coverage:.0%}" for c in cards]],
-            ["Annual premium", *[inr(c.premium) if c.premium is not None else "get quote" for c in cards]]]
+            ["Annual premium", *[premium_cell(c) for c in cards]]]
     for cat in Category:
         rows.append([f"  {cat.value}", *[str(c.by_category.get(cat, "-")) for c in cards]])
     for cid in KEY_ROWS:
@@ -165,14 +173,21 @@ def report(cards: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile)
               f"{len(c.plan.values)} data points, {verified} verified against policy wording ---")
         for h in c.plan.highlights:
             print(f"  [+     ] {h}")
+        if c.premium is None and c.approx:
+            print(f"  [PRICE ] {c.approx.describe()}")
+            if not c.approx.close:
+                print("           That reference profile differs from your family; get a real quote.")
+            if c.approx.estimate.caveat:
+                print(f"           {c.approx.estimate.caveat}")
         for g in sorted(c.gotchas, key=lambda g: ("high", "medium", "info").index(g.severity)):
             print(f"  [{g.severity.upper():6}] {g.text}")
         for flag in c.irdai_flags:
             print(f"  [IRDAI ] {flag}")
         for u in c.filters.unverified + c.to_verify:
             print(f"  [VERIFY] {u}")
-        if user.old_tax_regime and c.premium is not None:
-            ded = india.section_80d_deduction(c.premium, self_or_spouse_senior=user.oldest >= india.SENIOR_AGE)
+        price = c.premium if c.premium is not None else (c.approx.estimate.best if c.approx and c.approx.close else None)
+        if user.old_tax_regime and price is not None:
+            ded = india.section_80d_deduction(price, self_or_spouse_senior=user.oldest >= india.SENIOR_AGE)
             print(f"  [80D   ] Deduction {inr(ded)} saves about {inr(india.tax_saved(ded, user.tax_slab_pct))} in tax "
                   f"at {user.tax_slab_pct:g}% slab")
         if (doc := c.plan.documents.get("policy_wording") or next(iter(c.plan.documents.values()), "")):
