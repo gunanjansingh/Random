@@ -29,50 +29,16 @@ porting or upgrading, or advisors.
 **Recommended:** retail families (self, spouse, kids, plus a separate policy
 for parents), shared with a small group of testers first.
 
-### A6. Running the document downloader (plain-English version)
-**What the problem is.** I'm working in a locked-down cloud computer. Its
-internet access is limited to a short safe-list (GitHub and Python
-packages). Every insurer website, IRDAI and Policybazaar is off that list,
-so when the downloader tries to fetch a prospectus PDF, the request is
-blocked. That's the only reason the premium tables and policy wordings
-haven't been read yet. The code to download and read them is already built.
-
-**What I need from you: pick one.**
-
-1. **Let this cloud computer reach the insurer sites** (easiest; about 2
-   minutes in settings). Open the cloud environment menu in this session's
-   title bar → **Edit** → **Network access**. Then either choose full access,
-   or keep "Limited" and add the insurer and IRDAI domains (listed below)
-   under *Allowed domains*, leaving "Allow package managers" ticked. Guide:
-   https://code.claude.com/docs/en/cloud-environments#network-access.
-   If the current session still can't reach the sites afterwards, we continue in a new one.
-2. **Run it on your own computer.** Install Python, then run
-   `python -m healthcompare.ingest fetch`. That downloads every document
-   into a `.cache` folder; send or commit those files and I'll take it
-   from there.
-
-**Reading the documents.** Premium tables can mostly be read from the PDFs
-with plain code, with a quick check by me. To pull the ~90 fine-print terms out of
-each 40-100 page policy wording automatically, the pipeline uses Claude,
-which needs an **Anthropic API key**, with a monthly spend limit that you
-set. Without a key I can still read the documents myself in a session; that
-is slower, but fine for 10 plans.
-
-**Domains to allow** (exact hosts where the current documents live):
-- cms.careinsurance.com
-- customer-portal-assets.hdfcergo.com
-- d28c6jni2fmamz.cloudfront.net
-- selfcare.careinsurance.com
-- transactions.nivabupa.com
-- www.adityabirlacapital.com
-- www.bajajgeneralinsurance.com
-- www.careinsurance.com
-- www.hdfcergo.com
-- www.icicilombard.com
-- www.manipalcigna.com
-- www.starhealth.in
-- www.tataaig.com
-- irdai.gov.in (insurer claim statistics)
+### A6. Document access: **resolved** (network access enabled 7 Oct 2026)
+Documents are downloaded and read. What's left:
+- **ICICI Lombard** blocks automated downloads. To include it, download these two
+  PDFs in a browser and share them:
+  [prospectus](https://www.icicilombard.com/docs/default-source/default-document-library/elevate-prospectus_.pdf),
+  [policy wording](https://www.icicilombard.com/docs/default-source/default-document-library/elevate.pdf).
+- **Care Supreme** and **Activ One** current policy wordings aren't online, so the
+  current prospectus and CIS were used instead.
+- An Anthropic API key is **not needed for the MVP**. Extraction was done
+  in-session; a key only matters for automated monthly refreshes later.
 
 ---
 

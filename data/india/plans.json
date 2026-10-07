@@ -74,7 +74,7 @@
     },
     "ped_waiting_reducible": {
      "value": true,
-     "confidence": 0.5,
+     "confidence": 0.6,
      "verified": true,
      "citation": {
       "source": "policy_wording",
@@ -83,7 +83,7 @@
       "page": 26,
       "retrieved": "2026-10-07"
      },
-     "note": "The optional 'PED wait period modification' cuts the wait from 36 to 24 or 12 months. It can only be opted at channel level at inception, and the wording says individual policyholders cannot opt for it themselves."
+     "note": "The general PED-wait reduction option is not available to individual buyers. The ABCD Chronic Care add-on covers asthma, BP, cholesterol and diabetes after 30 days."
     },
     "pre_hosp_days": {
      "value": 60,
@@ -653,7 +653,7 @@
      "note": "Max loading is 100% per condition and 150% per insured person."
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.85,
      "verified": true,
      "citation": {
@@ -663,7 +663,7 @@
       "page": 33,
       "retrieved": "2026-10-07"
      },
-     "note": "Only participation as a professional is excluded."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -9603,7 +9603,17 @@
       "page": 6,
       "retrieved": "2026-10-07"
      },
-     "note": "No fixed rupee caps on listed diseases or procedures. The only disease-specific limit: for Sum Insured up to 10 lakh, cataract is paid only with a mono-focal lens."
+     "note": "No rupee caps. Up to Rs 10L base SI, cataract surgery is limited to a mono-focal lens.",
+     "si_rules": [
+      {
+       "max_si": 1000000,
+       "value": "cataract_only"
+      },
+      {
+       "min_si": 1000001,
+       "value": "none"
+      }
+     ]
     },
     "consumables_covered": {
      "value": false,
@@ -9743,7 +9753,12 @@
       "page": 5,
       "retrieved": "2026-10-07"
      },
-     "note": "There is no separate rupee cap: road ambulance is covered up to the Sum Insured. 500000 is the lowest Base SI option (5 lakh); the real limit equals the policy's SI. Paid only if the hospitalisation claim is paid."
+     "note": "There is no separate rupee cap: road ambulance is covered up to the Sum Insured. 500000 is the lowest Base SI option (5 lakh); the real limit equals the policy's SI. Paid only if the hospitalisation claim is paid.",
+     "si_rules": [
+      {
+       "value": "SI"
+      }
+     ]
     },
     "air_ambulance": {
      "value": true,
@@ -9888,7 +9903,7 @@
      "note": "Risk loading after underwriting, up to 100% per condition and 150% per person. It continues at renewals."
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.85,
      "verified": true,
      "citation": {
@@ -9898,7 +9913,7 @@
       "page": 16,
       "retrieved": "2026-10-07"
      },
-     "note": "Excluded only when taking part as a professional (Code-Excl09)."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -10882,7 +10897,17 @@
       "page": 23,
       "retrieved": "2026-10-07"
      },
-     "note": "Rs 10,000 per policy year (not per hospitalisation) for SI below Rs 15 lakh; up to SI for SI of Rs 15 lakh and above."
+     "note": "Rs 10,000 per policy year (not per hospitalisation) for SI below Rs 15 lakh; up to SI for SI of Rs 15 lakh and above.",
+     "si_rules": [
+      {
+       "max_si": 1499999,
+       "value": 10000
+      },
+      {
+       "min_si": 1500000,
+       "value": "SI"
+      }
+     ]
     },
     "maternity_covered": {
      "value": false,
@@ -10987,7 +11012,7 @@
      "note": "From 66 years: MER, CBC & ESR, HbA1c, cholesterol, ECG, SGPT, creatinine, RUA. At any age, tele-underwriting or tests may be required if a PED or adverse history is declared."
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.85,
      "verified": true,
      "citation": {
@@ -10997,7 +11022,7 @@
       "page": 13,
       "retrieved": "2026-10-07"
      },
-     "note": "Applies to participation as a professional."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -18548,19 +18573,6 @@
      },
      "note": "Code Excl 38, based on insured's consent."
     },
-    "premium_loading_for_ped": {
-     "value": true,
-     "confidence": 0.45,
-     "verified": true,
-     "citation": {
-      "source": "customer_information_sheet",
-      "url": "https://d28c6jni2fmamz.cloudfront.net/CIS_Super_Star_V_2_89eb6ddab6.pdf",
-      "quote": "Note: Premium rates specified in the above illustration are standard premium rates without considering any loading.",
-      "page": 17,
-      "retrieved": "2026-10-07"
-     },
-     "note": "Wording only refers to loading generically; not stated specifically for declared conditions."
-    },
     "portability_in": {
      "value": true,
      "confidence": 0.75,
@@ -18703,19 +18715,6 @@
       "retrieved": "2026-10-07"
      }
     },
-    "maternity_waiting_months": {
-     "value": 24,
-     "confidence": 0.7,
-     "verified": true,
-     "citation": {
-      "source": "policy_wording",
-      "url": "https://d28c6jni2fmamz.cloudfront.net/Policy_Super_Star_V_3_80e5dd8988.pdf",
-      "quote": "to a waiting period of 24 months from",
-      "page": 24,
-      "retrieved": "2026-10-07"
-     },
-     "note": "Maternity is not covered in the base plan; applies only under the optional Maternity Expenses cover Option A (Option B has a 12-month waiting period)."
-    },
     "day_care_all": {
      "value": true,
      "confidence": 0.9,
@@ -18819,7 +18818,7 @@
      "note": "Illustration shows the same insured using restored SI for a 2nd claim (same or different illness); no floater-member restriction stated."
     },
     "ncb_reduces_on_claim": {
-     "value": true,
+     "value": false,
      "confidence": 0.8,
      "verified": true,
      "citation": {
@@ -18829,7 +18828,7 @@
       "page": 13,
       "retrieved": "2026-10-07"
      },
-     "note": "Bonus is reduced only to the extent it is utilised in a claim; unutilised bonus is carried forward."
+     "note": "A claim reduces the bonus only by the part actually used; unused bonus carries forward."
     },
     "floater_per_member_cap": {
      "value": false,
@@ -18845,7 +18844,7 @@
      "note": "Floater SI, cumulative bonus and related benefits float among insured persons; no per-member cap stated."
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.75,
      "verified": true,
      "citation": {
@@ -18855,7 +18854,7 @@
       "page": 36,
       "retrieved": "2026-10-07"
      },
-     "note": "Code Excl 09 applies to participation as a professional in hazardous/adventure sports."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -19329,7 +19328,17 @@
       "page": 18,
       "retrieved": "2026-10-07"
      },
-     "note": "Physical tests apply only at ages 56-65 with SI above Rs 50 lakh. Otherwise a telephonic medical exam (Tele-MER) applies: from age 46, at any age for SI above Rs 50 lakh, and up to age 45 for SI up to 50L only if the medical declaration is positive. Extra tests are possible after an adverse declaration."
+     "note": "Up to Rs 50L SI: telephonic medical (Tele-MER) from age 46, no physical tests. Above Rs 50L: physical tests at 56-65.",
+     "si_rules": [
+      {
+       "max_si": 5000000,
+       "value": 46
+      },
+      {
+       "min_si": 5000001,
+       "value": 56
+      }
+     ]
     },
     "max_entry_age": {
      "value": 65,
@@ -19670,7 +19679,17 @@
       "page": 24,
       "retrieved": "2026-10-07"
      },
-     "note": "Depends on sum insured: only for SI Rs 75 lakh and above, not for SI up to Rs 50 lakh. Limited to dialysis, chemotherapy and pandemic care at home."
+     "note": "Depends on sum insured: only for SI Rs 75 lakh and above, not for SI up to Rs 50 lakh. Limited to dialysis, chemotherapy and pandemic care at home.",
+     "si_rules": [
+      {
+       "max_si": 7499999,
+       "value": false
+      },
+      {
+       "min_si": 7500000,
+       "value": true
+      }
+     ]
     },
     "ayush_covered": {
      "value": true,
@@ -19890,7 +19909,7 @@
      }
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.9,
      "verified": true,
      "citation": {
@@ -19900,7 +19919,7 @@
       "page": 38,
       "retrieved": "2026-10-07"
      },
-     "note": "The exclusion applies only to taking part as a professional."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -24658,7 +24677,7 @@
      "note": "Base plan has none. 24 months applies only if the optional 'Pratiksha' cover is opted."
     },
     "specific_disease_list_size": {
-     "value": 10,
+     "value": 0,
      "confidence": 0.55,
      "verified": true,
      "citation": {
@@ -24668,7 +24687,7 @@
       "page": 36,
       "retrieved": "2026-10-07"
      },
-     "note": "The list has 10 grouped items (i to x), each covering several conditions. It applies only if the optional 'Pratiksha' cover is opted; the base plan has no specific-disease waiting."
+     "note": "Base plan has no specific-illness wait; a list of 10 condition groups (24 months) applies only with the optional Pratiksha cover."
     },
     "personal_waiting_months": {
      "value": 36,
@@ -24861,19 +24880,6 @@
      },
      "note": "Excluded in the base plan (Excl 18). Optional add-on available ('Maternity & New Born Hospitalization Expenses', 36-month waiting, max 2 deliveries)."
     },
-    "maternity_limit": {
-     "value": 500000,
-     "confidence": 0.6,
-     "verified": true,
-     "citation": {
-      "source": "policy_wording",
-      "url": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
-      "quote": "Covered up to 20% of Base Sum Insured opted, subject to a maximum of ₹5 Lac, in addition to the Base Sum Insured opted.",
-      "page": 67,
-      "retrieved": "2026-10-07"
-     },
-     "note": "Optional add-on only; not covered in the base plan. The limit is 20% of Base SI capped at Rs 5 lakh per delivery, covering newborn and first-year vaccinations too. No separate normal/C-section limits."
-    },
     "newborn_day1": {
      "value": false,
      "confidence": 0.6,
@@ -24990,7 +24996,7 @@
      "note": "Applied from inception through renewals. No loading based on individual claims experience."
     },
     "adventure_sports_excluded": {
-     "value": true,
+     "value": false,
      "confidence": 0.7,
      "verified": true,
      "citation": {
@@ -25000,7 +25006,7 @@
       "page": 37,
       "retrieved": "2026-10-07"
      },
-     "note": "The health cover excludes only participation as a professional. The optional PA/TTD covers exclude all adventure sports, including amateur ones such as trekking."
+     "note": "Only participation as a professional is excluded (standard IRDAI wording); amateur/recreational adventure-sport injuries are covered."
     },
     "substance_related_excluded": {
      "value": true,
@@ -25445,6 +25451,16 @@
        },
        "note": "Gold with SI Rs 10 lakh and above only. SI Rs 3-7.5 lakh is capped at a single private AC room. A room-rent capping discount (1.5% of SI, max Rs 7,500/day) can be chosen voluntarily."
       }
+     ],
+     "si_rules": [
+      {
+       "max_si": 750000,
+       "value": "single_private_room"
+      },
+      {
+       "min_si": 1000000,
+       "value": "no_limit"
+      }
      ]
     },
     "ped_waiting_months": {
@@ -25650,7 +25666,17 @@
       "page": 8,
       "retrieved": "2026-10-07"
      },
-     "note": "Applies where a room cap exists (Silver; Gold SI 3-7.5 lakh). Pharmacy, consumables, implants, devices and diagnostics are exempt. Not applied in hospitals without differential billing."
+     "note": "Applies where a room cap exists (Silver; Gold SI 3-7.5 lakh). Pharmacy, consumables, implants, devices and diagnostics are exempt. Not applied in hospitals without differential billing.",
+     "si_rules": [
+      {
+       "max_si": 750000,
+       "value": true
+      },
+      {
+       "min_si": 1000000,
+       "value": false
+      }
+     ]
     },
     "general_copay_pct": {
      "value": 0,
@@ -25807,7 +25833,7 @@
      "note": "24 months for 27 listed conditions. A separate 36-month list (first three annual periods) covers joint replacement, spinal surgery, deviated septum, hypertrophied turbinate, congenital internal conditions, refractive error >=7.5, bariatric surgery, Parkinson's and genetic disorders."
     },
     "specific_disease_list_size": {
-     "value": 27,
+     "value": 36,
      "confidence": 0.8,
      "verified": true,
      "citation": {
@@ -25817,7 +25843,7 @@
       "page": 13,
       "retrieved": "2026-10-07"
      },
-     "note": "27 conditions on the 24-month list, plus 9 more on a separate 36-month list (36 in total)."
+     "note": "27 conditions with a 24-month wait plus 9 (incl. joint replacement, spine surgery) with a 36-month wait."
     },
     "maternity_waiting_months": {
      "value": 72,
@@ -29616,7 +29642,7 @@
      "note": "24 months for 27 listed conditions. A separate 36-month list (first three annual periods) covers joint replacement, spinal surgery, deviated septum, hypertrophied turbinate, congenital internal conditions, refractive error >=7.5, bariatric surgery, Parkinson's and genetic disorders."
     },
     "specific_disease_list_size": {
-     "value": 27,
+     "value": 36,
      "confidence": 0.8,
      "verified": true,
      "citation": {
@@ -29626,7 +29652,7 @@
       "page": 13,
       "retrieved": "2026-10-07"
      },
-     "note": "27 conditions on the 24-month list, plus 9 more on a separate 36-month list (36 in total)."
+     "note": "27 conditions with a 24-month wait plus 9 (incl. joint replacement, spine surgery) with a 36-month wait."
     },
     "bariatric_waiting_months": {
      "value": 36,

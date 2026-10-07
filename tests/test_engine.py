@@ -309,3 +309,23 @@ class VerifiedBeatsUnverified(unittest.TestCase):
         self.assertFalse(cv.conflicting)
         cv.alternates.append(CitedValue(48, verified=True))
         self.assertTrue(cv.conflicting)
+
+
+class SumInsuredDependentValues(unittest.TestCase):
+    def test_value_resolves_for_chosen_cover(self):
+        from healthcompare.engine import with_derived
+        p = plan(room_rent_limit="single_private_room", road_ambulance_limit=10000)
+        p.values["room_rent_limit"].si_rules = [{"max_si": 750000, "value": "single_private_room"},
+                                                {"min_si": 1000000, "value": "no_limit"}]
+        p.values["road_ambulance_limit"].si_rules = [{"max_si": 1499999, "value": 10000}, {"min_si": 1500000, "value": "SI"}]
+        self.assertEqual(with_derived(p, 5_00_000).get("room_rent_limit"), "single_private_room")
+        self.assertEqual(with_derived(p, 10_00_000).get("room_rent_limit"), "no_limit")
+        self.assertEqual(with_derived(p, 25_00_000).get("road_ambulance_limit"), 25_00_000)
+
+    def test_deal_breaker_uses_value_for_chosen_cover(self):
+        p = plan(room_rent_limit="single_private_room")
+        p.values["room_rent_limit"].si_rules = [{"max_si": 750000, "value": "single_private_room"},
+                                                {"min_si": 1000000, "value": "no_limit"}]
+        db = DealBreakers(no_room_rent_cap=True)
+        self.assertTrue(score_plan(p, user(sum_insured=10_00_000, deal_breakers=db)).filters.eligible)
+        self.assertFalse(score_plan(p, user(sum_insured=5_00_000, deal_breakers=db)).filters.eligible)

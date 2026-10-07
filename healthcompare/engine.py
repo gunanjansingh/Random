@@ -19,6 +19,7 @@ NEUTRAL = 0.5
 def with_derived(plan: Plan, sum_insured: int | None = None) -> Plan:
     """Copy of `plan` evaluated at `sum_insured`, plus values implied by others."""
     p = replace(plan, values=dict(plan.values), sum_insured=sum_insured or plan.sum_insured)
+    p.values = {cid: cv.for_sum_insured(p.sum_insured) for cid, cv in p.values.items()}
     if p.get("room_rent_limit") == "no_limit" and "proportionate_deduction" not in p.values:
         src = p.values["room_rent_limit"]
         p.values["proportionate_deduction"] = CitedValue(

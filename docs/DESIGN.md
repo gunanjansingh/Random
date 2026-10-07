@@ -150,32 +150,33 @@ Every plan value is stored as a **cited fact**:
 | `data/india/plans.json` | 10 real plans: official document URLs, UINs, cited values |
 | `data/india/insurers.json` | 9 insurers: FY2024-25 claim settlement, ICR, complaints |
 
-### 3.1 Data status (honest version)
+### 3.1 Data status (7 Oct 2026)
 
-The seed dataset was collected with web search, because this build
-environment cannot reach insurer sites directly. Every value has a source URL
-and a quote, but is marked `verified: false` with a confidence score until
-`python -m healthcompare.ingest` re-reads the policy wording and finds the
-quote on the page.
+**Fine print: from the insurers' own current documents.** Policy wordings,
+CIS, prospectuses and brochures of the current filed versions (UIN checked on
+each PDF) were downloaded for 9 plans. Agents extracted 489 values. Each
+was kept only if its verbatim quote is found on the cited page. Then an
+independent reviewer re-read every value against the document: 469 were
+confirmed correct, 18 were judgement calls (fixed or annotated), and none
+were found wrong. Values that depend on the chosen sum insured carry
+`si_rules`; for example, Bajaj Gold caps room rent at a single private room
+below Rs 10L only.
 
-Already visible in the seed data:
+**Premiums: from the insurers' own premium tables.** 1,412 table rows
+cover HDFC ERGO (6 tiers), Aditya Birla (3 zones, 10 family types), Tata AIG
+(3 zones) and Bajaj (Zone A). Each row's numbers were found in order on the
+document page; one row was checked by eye. Floater rules come from the
+documents. Niva Bupa, Care, Star and ManipalCigna publish only official
+sample illustrations, which are used as reference prices.
 
-- Aggregators disagree on insurer metrics. ICICI Lombard's FY25 claim
-  settlement ratio is 97.16% in one source and 83.65% in another, most likely
-  because they use different definitions. Both are kept, and the app shows
-  "sources disagree". The fix is to read IRDAI's Annual Report table directly.
-- Search summaries sometimes return a *definition* ("up to 36 months") in
-  place of the plan's *value*. Quote validation against the PDF exists to
-  catch this.
-- Premiums: 50 indicative reference-profile prices for 9 plans, each for a stated reference
-  profile (ages, members, sum insured, city), taken from broker reviews,
-  aggregators and insurer illustrations. They were adversarially checked;
-  4 refuted figures were dropped. Most are single-source and low confidence.
-  The engine never rescales a figure to the user's profile. It shows the
-  nearest profile (age gap ≤ 10 years) plus a like-for-like row.
-- Insurer CSR uses one definition for every insurer (a broker's computation
-  from public disclosures) until IRDAI's own tables can be read. See
-  `docs/OPEN_QUESTIONS.md` §D for what fact-checking changed.
+**Gaps.**
+- ICICI Lombard blocks automated downloads, so its plan still uses web-search
+  data.
+- Care's and Aditya Birla's current *policy wording* PDFs weren't found
+  online, so values come from their current prospectus or CIS.
+- Insurer claim metrics are still from secondary summaries of IRDAI data.
+- Earlier web-sourced values are kept as alternates and are never shown as
+  "in dispute" with a document-verified value.
 
 ### 3.2 Scoring under incomplete data
 

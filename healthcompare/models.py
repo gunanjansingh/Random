@@ -44,6 +44,15 @@ class CitedValue:
     note: str = ""
     period: str = ""  # for time-bound metrics, e.g. "FY2024-25"
     alternates: list[CitedValue] = field(default_factory=list)  # other sources that disagree
+    si_rules: list[dict] = field(default_factory=list)  # value by sum insured: {"min_si", "max_si", "value"}; "SI" = up to SI
+
+    def for_sum_insured(self, si: int) -> CitedValue:
+        """This value as it applies at sum insured `si` (unchanged if it does not depend on SI)."""
+        for r in self.si_rules:
+            if (r.get("min_si") or 0) <= si <= (r.get("max_si") or float("inf")):
+                v = si if r["value"] == "SI" else r["value"]
+                return CitedValue(v, self.citation, self.confidence, self.verified, self.note, self.period, self.alternates)
+        return self
 
     @property
     def conflicting(self) -> bool:
@@ -69,6 +78,7 @@ class CitedValue:
             note=raw.get("note", ""),
             period=raw.get("period", ""),
             alternates=[cls.from_raw(a) for a in raw.get("alternates", [])],
+            si_rules=raw.get("si_rules", []),
         )
 
 
