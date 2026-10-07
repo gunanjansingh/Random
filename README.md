@@ -41,4 +41,6 @@ means. Run the ingestion pipeline to verify values against the policy
 wordings. Not financial advice: always read the policy wording and your
 policy schedule before buying.
 
-See [`docs/DESIGN.md`](docs/DESIGN.md) for the architecture.
+See [`docs/DESIGN.md`](docs/DESIGN.md) for the architecture and
+[`docs/OPEN_QUESTIONS.md`](docs/OPEN_QUESTIONS.md) for decisions needed before launch
+(including IRDAI rules on ranking insurance products).

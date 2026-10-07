@@ -126,6 +126,8 @@ def check_deal_breakers(plan: Plan, user: UserProfile) -> FilterResult:
         elif not ok(v):
             r.failures.append(msg.format(v=v))
 
+    if plan.sum_insured_options and user.sum_insured not in plan.sum_insured_options:
+        r.failures.append(f"Not offered at {inr(user.sum_insured)} (options: {', '.join(inr(x) for x in plan.sum_insured_options)})")
     max_age = plan.get("max_entry_age")
     if isinstance(max_age, (int, float)) and user.oldest > max_age:
         r.failures.append(f"Entry age limit {max_age}; oldest member is {user.oldest}")

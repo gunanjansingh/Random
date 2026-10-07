@@ -65,6 +65,16 @@ class ScoringTest(unittest.TestCase):
         unsure = Plan(id="b", insurer="T", name="b", values={"general_copay_pct": CitedValue(30, confidence=0.2)})
         self.assertLess(score_plan(sure, user()).total, score_plan(unsure, user()).total)
 
+    def test_small_source_differences_are_not_conflicts(self):
+        p = plan(csr_count=97.45)
+        p.values["csr_count"].alternates = [CitedValue(96.71)]
+        self.assertFalse(any("disagree" in x for x in score_plan(p, user()).to_verify))
+
+    def test_sum_insured_must_be_offered(self):
+        p = plan()
+        p.sum_insured_options = [5_00_000, 25_00_000]
+        self.assertFalse(check_deal_breakers(p, user(sum_insured=10_00_000)).eligible)
+
     def test_conflicting_sources_are_flagged(self):
         p = plan(csr_count=97.16)
         p.values["csr_count"].alternates = [CitedValue(83.65)]

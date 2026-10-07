@@ -1,5 +1,5 @@
 {
- "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. Premiums are not included yet; they come from the prospectus premium tables.",
+ "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. Premiums are not included yet; they come from the prospectus premium tables. Insurer CSR uses one definition for all insurers (Ditto's computation from public disclosures); ICR from the IRDAI Annual Report 2024-25 via Business Standard. Replace with IRDAI primary tables when reachable.",
  "insurers": [
   {
    "id": "star-health",
@@ -7,30 +7,45 @@
    "kind": "standalone_health",
    "metrics": {
     "csr_count": {
-     "value": 99.06,
-     "confidence": 0.5,
+     "value": 88.34,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 99.06%",
+      "url": "https://joinditto.in/articles/health-insurance/star-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 88.34% (FY2024-25)",
       "retrieved": "2026-10-07"
      },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     "alternates": [
+      {
+       "value": 99.06,
+       "confidence": 0.3,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+        "quote": "CSR 99.06%",
+        "retrieved": "2026-10-07"
+       },
+       "note": "Unclear definition. The same post's Star Health figure matches a 'claims settled within 3 months' timeliness metric, so these may not be claim settlement ratios at all.",
+       "period": "FY2024-25"
+      }
+     ]
     },
     "icr": {
      "value": 70.3,
-     "confidence": 0.5,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 70.3%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 52,
@@ -67,44 +82,45 @@
    "kind": "private_general",
    "metrics": {
     "csr_count": {
-     "value": 96.71,
-     "confidence": 0.5,
+     "value": 97.45,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 96.71%",
+      "url": "https://joinditto.in/articles/health-insurance/hdfc-ergo-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 97.45% (FY2024-25)",
       "retrieved": "2026-10-07"
      },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25",
      "alternates": [
       {
-       "value": 97.45,
-       "confidence": 0.4,
+       "value": 96.71,
+       "confidence": 0.3,
        "verified": false,
        "citation": {
         "source": "secondary",
-        "url": "https://joinditto.in/articles/health-insurance/hdfc-ergo-health-insurance-claim-settlement-ratio/",
-        "quote": "CSR 97.45%",
+        "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+        "quote": "CSR 96.71%",
         "retrieved": "2026-10-07"
        },
+       "note": "Unclear definition. The same post's Star Health figure matches a 'claims settled within 3 months' timeliness metric, so these may not be claim settlement ratios at all.",
        "period": "FY2024-25"
       }
      ]
     },
     "icr": {
      "value": 84.85,
-     "confidence": 0.6,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 84.85%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 14.72,
@@ -127,45 +143,45 @@
    "kind": "private_general",
    "metrics": {
     "csr_count": {
-     "value": 97.16,
-     "confidence": 0.4,
+     "value": 83.65,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 97.16%",
+      "url": "https://joinditto.in/articles/health-insurance/icici-lombard-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 83.65% (FY2024-25)",
       "retrieved": "2026-10-07"
      },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25",
      "alternates": [
       {
-       "value": 83.65,
-       "confidence": 0.4,
+       "value": 97.16,
+       "confidence": 0.3,
        "verified": false,
        "citation": {
         "source": "secondary",
-        "url": "https://joinditto.in/articles/health-insurance/icici-lombard-health-insurance-claim-settlement-ratio/",
-        "quote": "CSR 83.65%",
+        "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+        "quote": "CSR 97.16%",
         "retrieved": "2026-10-07"
        },
-       "note": "Large gap vs other source: likely a different CSR definition (e.g. pending claims counted)",
+       "note": "Unclear definition. The same post's Star Health figure matches a 'claims settled within 3 months' timeliness metric, so these may not be claim settlement ratios at all.",
        "period": "FY2024-25"
       }
      ]
     },
     "icr": {
      "value": 82.24,
-     "confidence": 0.6,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 82.24%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 13.98,
@@ -189,29 +205,29 @@
    "metrics": {
     "csr_count": {
      "value": 96.74,
-     "confidence": 0.5,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 96.74%",
+      "url": "https://joinditto.in/articles/health-insurance/care-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 96.74% (FY2024-25)",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "icr": {
      "value": 64.53,
-     "confidence": 0.5,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 64.53%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 47,
@@ -235,16 +251,16 @@
    "metrics": {
     "csr_count": {
      "value": 92.39,
-     "confidence": 0.5,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 92.39%",
+      "url": "https://joinditto.in/articles/health-insurance/niva-bupa-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 92.39% (FY2024-25)",
       "retrieved": "2026-10-07"
      },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25",
      "alternates": [
       {
        "value": 93.3,
@@ -261,16 +277,16 @@
     },
     "icr": {
      "value": 61.22,
-     "confidence": 0.5,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 61.22%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 43,
@@ -298,6 +314,19 @@
        "note": "3-year weighted average"
       }
      ]
+    },
+    "repudiation_pct": {
+     "value": 7.4,
+     "confidence": 0.45,
+     "verified": false,
+     "period": "FY2024-25",
+     "note": "Repudiated / reported during FY25, by number, from Niva Bupa disclosures; repudiated count may include claims brought forward.",
+     "citation": {
+      "source": "secondary",
+      "url": "https://www.angelone.in/news/stocks/niva-bupa-health-insurance-claims-settlement-ratio-analysis-for-2024-25",
+      "quote": "75,892 claims repudiated vs 10,24,782 reported (FY25)",
+      "retrieved": "2026-10-07"
+     }
     }
    }
   },
@@ -307,44 +336,45 @@
    "kind": "standalone_health",
    "metrics": {
     "csr_count": {
-     "value": 95.64,
-     "confidence": 0.5,
+     "value": 95.88,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
-      "quote": "CSR 95.64%",
+      "url": "https://joinditto.in/articles/health-insurance/aditya-birla-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 95.88% (FY2024-25)",
       "retrieved": "2026-10-07"
      },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25",
      "alternates": [
       {
-       "value": 95.88,
-       "confidence": 0.4,
+       "value": 95.64,
+       "confidence": 0.3,
        "verified": false,
        "citation": {
         "source": "secondary",
-        "url": "https://joinditto.in/health-insurance/data-lab/",
-        "quote": "CSR 95.88%",
+        "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+        "quote": "CSR 95.64%",
         "retrieved": "2026-10-07"
        },
+       "note": "Unclear definition. The same post's Star Health figure matches a 'claims settled within 3 months' timeliness metric, so these may not be claim settlement ratios at all.",
        "period": "FY2024-25"
       }
      ]
     },
     "icr": {
      "value": 71.5,
-     "confidence": 0.6,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 71.5%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 16,
@@ -368,29 +398,29 @@
    "metrics": {
     "csr_count": {
      "value": 93.7,
-     "confidence": 0.4,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
-      "url": "https://joinditto.in/health-insurance/data-lab/",
-      "quote": "CSR 93.7%",
+      "url": "https://joinditto.in/articles/health-insurance/manipal-cigna-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 93.7% (FY2024-25)",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "icr": {
      "value": 74.81,
-     "confidence": 0.4,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 74.81%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
     },
     "complaints_per_10k": {
      "value": 25.3,
@@ -414,16 +444,29 @@
    "metrics": {
     "csr_count": {
      "value": 86.63,
-     "confidence": 0.4,
+     "confidence": 0.55,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
      "citation": {
       "source": "secondary",
       "url": "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-claim-settlement-ratio/",
-      "quote": "CSR 86.63%",
+      "quote": "CSR 86.63% (FY2024-25)",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
+    },
+    "icr": {
+     "value": 76.24,
+     "confidence": 0.45,
+     "verified": false,
+     "period": "FY2024-25",
+     "note": "Attributed to IRDAI FY2024-25 data via Business Standard; scope (health segment vs all lines) unconfirmed.",
+     "citation": {
+      "source": "secondary",
+      "url": "https://algatesinsurance.in/insurance-infographic/incurred-claim-ratio-is-your-health-insurer-financially-healthy/",
+      "quote": "ICR 76.24%",
+      "retrieved": "2026-10-07"
+     }
     }
    }
   },
@@ -434,16 +477,29 @@
    "metrics": {
     "icr": {
      "value": 87.31,
-     "confidence": 0.4,
+     "confidence": 0.65,
      "verified": false,
+     "period": "FY2024-25",
+     "note": "Net incurred claims / net earned premium (health segment for multi-line insurers), IRDAI Annual Report 2024-25, as reported by Business Standard.",
      "citation": {
       "source": "secondary",
-      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "url": "https://www.business-standard.com/finance/personal-finance/paying-claims-or-pushing-back-what-irdai-data-reveals-about-insurers-126010100580_1.html",
       "quote": "ICR 87.31%",
       "retrieved": "2026-10-07"
-     },
-     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
-     "period": "FY2024-25"
+     }
+    },
+    "csr_count": {
+     "value": 97.32,
+     "confidence": 0.55,
+     "verified": false,
+     "period": "FY2024-25",
+     "note": "Claims settled (full + partial) / (brought forward + reported - closed without payment - outstanding at year end), by number, computed by an IRDAI-registered broker (Ditto) from the insurer's public disclosures. Same definition for every insurer.",
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/articles/health-insurance/bajaj-general-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 97.32% (FY2024-25)",
+      "retrieved": "2026-10-07"
+     }
     }
    }
   }

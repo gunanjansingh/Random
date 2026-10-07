@@ -163,7 +163,15 @@ Already visible in the seed data:
 - Search summaries sometimes return a *definition* ("up to 36 months") in
   place of the plan's *value*. Quote validation against the PDF exists to
   catch this.
-- No premiums yet. These come next, from the premium tables in each prospectus.
+- Premiums: 52 indicative figures for 9 plans, each for a stated reference
+  profile (ages, members, sum insured, city), taken from broker reviews,
+  aggregators and insurer illustrations. They were adversarially checked;
+  4 refuted figures were dropped. Most are single-source and low confidence.
+  The engine never rescales a figure to the user's profile. It shows the
+  nearest profile (age gap ≤ 10 years) plus a like-for-like row.
+- Insurer CSR uses one definition for every insurer (a broker's computation
+  from public disclosures) until IRDAI's own tables can be read. See
+  `docs/OPEN_QUESTIONS.md` §D for what fact-checking changed.
 
 ### 3.2 Scoring under incomplete data
 

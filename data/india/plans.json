@@ -2225,7 +2225,68 @@
       "retrieved": "2026-10-07"
      }
     }
-   }
+   },
+   "premium_estimates": [
+    {
+     "profile": "1A-25-15L",
+     "members": "1A",
+     "ages": [
+      25
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 16403,
+     "high": 16403,
+     "best": 16403,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/bajaj-health-guard-review/"
+     ],
+     "caveat": "Configuration: Health Guard Gold, healthy, no add-ons stated. Indicative figure from joinditto.in; GST basis not stated (may predate the Sep-2025 GST exemption, i.e. up to ~18% high); not independently re-verified; not a quote for you.",
+     "as_of": "2026 (page)"
+    },
+    {
+     "profile": "2A-31/32-15L",
+     "members": "2A",
+     "ages": [
+      31,
+      32
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 25113,
+     "high": 25113,
+     "best": 25113,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/bajaj-health-guard-review/"
+     ],
+     "caveat": "Configuration: Health Guard Gold, healthy, no add-ons stated. Indicative figure from joinditto.in; GST basis not stated (may predate the Sep-2025 GST exemption, i.e. up to ~18% high); not independently re-verified; not a quote for you.",
+     "as_of": "2026 (page)"
+    },
+    {
+     "profile": "2A-60/61-15L",
+     "members": "2A",
+     "ages": [
+      60,
+      61
+     ],
+     "sum_insured": 1500000,
+     "city_or_zone": "Delhi (110010)",
+     "low": 93442,
+     "high": 93442,
+     "best": 93442,
+     "gst_basis": "unknown",
+     "confidence": "low",
+     "sources": [
+      "https://joinditto.in/articles/health-insurance/bajaj-health-guard-review/"
+     ],
+     "caveat": "Configuration: Health Guard Gold, healthy, no add-ons stated. Indicative figure from joinditto.in; GST basis not stated (may predate the Sep-2025 GST exemption, i.e. up to ~18% high); not independently re-verified; not a quote for you.",
+     "as_of": "2026 (page)"
+    }
+   ]
   },
   {
    "id": "bajaj-health-guard-silver",
@@ -2239,7 +2300,8 @@
     "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
    },
    "highlights": [
-    "Cheaper variant with a 1%-of-SI room cap"
+    "Cheaper variant with a 1%-of-SI room cap",
+    "Broker premium tables list Silver only at low sums insured (about Rs 1.5-2L); unconfirmed. At Rs 2L a 1% room cap is Rs 2,000/day."
    ],
    "values": {
     "room_rent_limit": {

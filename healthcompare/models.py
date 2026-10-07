@@ -47,7 +47,12 @@ class CitedValue:
 
     @property
     def conflicting(self) -> bool:
-        return any(a.value != self.value for a in self.alternates)
+        """Alternates disagree materially (numbers: more than 1 point or 2%)."""
+        def differs(a: object) -> bool:
+            if isinstance(a, (int, float)) and isinstance(self.value, (int, float)) and not isinstance(a, bool):
+                return abs(a - self.value) > max(1.0, 0.02 * abs(self.value))
+            return a != self.value
+        return any(differs(a.value) for a in self.alternates)
 
     @classmethod
     def from_raw(cls, raw: object) -> CitedValue:
