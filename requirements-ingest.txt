@@ -1,0 +1,3 @@
+# Only needed for `python -m healthcompare.ingest extract`
+pypdf>=5
+anthropic>=1.11

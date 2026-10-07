@@ -1,0 +1,451 @@
+{
+ "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. Premiums are not included yet; they come from the prospectus premium tables.",
+ "insurers": [
+  {
+   "id": "star-health",
+   "name": "Star Health and Allied Insurance",
+   "kind": "standalone_health",
+   "metrics": {
+    "csr_count": {
+     "value": 99.06,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 99.06%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "icr": {
+     "value": 70.3,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 70.3%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 52,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://nyvo.in/resources/complaint-ratio",
+      "quote": "52 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 53.9,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://nyvo.in/resources/complaint-ratio",
+        "quote": "53.9 (3-year weighted average)",
+        "retrieved": "2026-10-07"
+       },
+       "note": "3-year weighted average, not FY2024-25 alone"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "hdfc-ergo",
+   "name": "HDFC ERGO General Insurance",
+   "kind": "private_general",
+   "metrics": {
+    "csr_count": {
+     "value": 96.71,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 96.71%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 97.45,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://joinditto.in/articles/health-insurance/hdfc-ergo-health-insurance-claim-settlement-ratio/",
+        "quote": "CSR 97.45%",
+        "retrieved": "2026-10-07"
+       },
+       "period": "FY2024-25"
+      }
+     ]
+    },
+    "icr": {
+     "value": 84.85,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 84.85%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 14.72,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "14.72 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "icici-lombard",
+   "name": "ICICI Lombard General Insurance",
+   "kind": "private_general",
+   "metrics": {
+    "csr_count": {
+     "value": 97.16,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 97.16%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 83.65,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://joinditto.in/articles/health-insurance/icici-lombard-health-insurance-claim-settlement-ratio/",
+        "quote": "CSR 83.65%",
+        "retrieved": "2026-10-07"
+       },
+       "note": "Large gap vs other source: likely a different CSR definition (e.g. pending claims counted)",
+       "period": "FY2024-25"
+      }
+     ]
+    },
+    "icr": {
+     "value": 82.24,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 82.24%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 13.98,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "13.98 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "care-health",
+   "name": "Care Health Insurance",
+   "kind": "standalone_health",
+   "metrics": {
+    "csr_count": {
+     "value": 96.74,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 96.74%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "icr": {
+     "value": 64.53,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 64.53%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 47,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://nyvo.in/resources/complaint-ratio",
+      "quote": "47 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "niva-bupa",
+   "name": "Niva Bupa Health Insurance",
+   "kind": "standalone_health",
+   "metrics": {
+    "csr_count": {
+     "value": 92.39,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 92.39%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 93.3,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://nyvo.in/resources/claim-settlement-ratio/niva-bupa",
+        "quote": "Niva Bupa Claim Settlement Ratio 2026: 93.3%",
+        "retrieved": "2026-10-07"
+       }
+      }
+     ]
+    },
+    "icr": {
+     "value": 61.22,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 61.22%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 43,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://nyvo.in/resources/complaint-ratio",
+      "quote": "43 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 35.4,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://nyvo.in/resources/complaint-ratio",
+        "quote": "35.4 (3-year weighted average)",
+        "retrieved": "2026-10-07"
+       },
+       "note": "3-year weighted average"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "aditya-birla-health",
+   "name": "Aditya Birla Health Insurance",
+   "kind": "standalone_health",
+   "metrics": {
+    "csr_count": {
+     "value": 95.64,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "CSR 95.64%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25",
+     "alternates": [
+      {
+       "value": 95.88,
+       "confidence": 0.4,
+       "verified": false,
+       "citation": {
+        "source": "secondary",
+        "url": "https://joinditto.in/health-insurance/data-lab/",
+        "quote": "CSR 95.88%",
+        "retrieved": "2026-10-07"
+       },
+       "period": "FY2024-25"
+      }
+     ]
+    },
+    "icr": {
+     "value": 71.5,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://x.com/SanjayYada7n/status/2029383084295254298",
+      "quote": "ICR 71.5%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 16,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "16 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "manipalcigna",
+   "name": "ManipalCigna Health Insurance",
+   "kind": "standalone_health",
+   "metrics": {
+    "csr_count": {
+     "value": 93.7,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "CSR 93.7%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "icr": {
+     "value": 74.81,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "ICR 74.81%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    },
+    "complaints_per_10k": {
+     "value": 25.3,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "25.3 complaints per 10,000 claims",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Figure from a web-search summary of IRDAI complaint data (pages: nyvo.in, algatesinsurance.in, business-standard.com); exact page not pinned.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "tata-aig",
+   "name": "Tata AIG General Insurance",
+   "kind": "private_general",
+   "metrics": {
+    "csr_count": {
+     "value": 86.63,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/articles/health-insurance/tata-aig-health-insurance-claim-settlement-ratio/",
+      "quote": "CSR 86.63%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    }
+   }
+  },
+  {
+   "id": "bajaj-general",
+   "name": "Bajaj General Insurance (formerly Bajaj Allianz)",
+   "kind": "private_general",
+   "metrics": {
+    "icr": {
+     "value": 87.31,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/data-lab/",
+      "quote": "ICR 87.31%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Secondary source summarising IRDAI data; re-check against IRDAI Annual Report table.",
+     "period": "FY2024-25"
+    }
+   }
+  }
+ ]
+}

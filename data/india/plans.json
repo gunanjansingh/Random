@@ -1,0 +1,1366 @@
+{
+ "_about": "Real Indian retail health plans. Every value carries its source URL. verified=false means the value came from a web-search reading of that page and has NOT yet been checked against the policy wording by `python -m healthcompare.ingest`. Missing criteria are unknown, not 'no'. Premiums are not included yet; they come from the prospectus premium tables.",
+ "plans": [
+  {
+   "id": "hdfc-ergo-optima-secure",
+   "insurer_id": "hdfc-ergo",
+   "insurer": "HDFC ERGO",
+   "name": "Optima Secure",
+   "documents": {
+    "policy_wording": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+    "prospectus": "https://www.hdfcergo.com/docs/default-source/downloads/prospectus/health/my-optima-secure-prospectus.pdf",
+    "brochure": "https://www.hdfcergo.com/docs/default-source/downloads/brochures/optima-secure-brochure.pdf",
+    "product_page": "https://www.hdfcergo.com/health-insurance/optima-secure/"
+   },
+   "highlights": [
+    "Secure Benefit: base SI doubled from day 1",
+    "Plus Benefit: +50% SI per year up to +100%, irrespective of claims",
+    "Protect Benefit: listed non-payable items paid",
+    "Restore: 100% of base SI restored on partial or complete use"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+      "quote": "Room rent limit shall be 'At Actuals' unless otherwise specified in the Policy Schedule",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "initial_waiting_days": {
+     "value": 30,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.hdfcergo.com/health-insurance/optima-secure/",
+      "quote": "a waiting period of 30 days before making a claim except for accidental claims",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "specific_disease_waiting_months": {
+     "value": 24,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.hdfcergo.com/health-insurance/optima-secure/",
+      "quote": "24 months waiting period on specific & listed illnesses & surgical procedures",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+      "quote": "excluded until the expiry of 36 months (Unless specified otherwise in the Policy Schedule) of continuous coverage",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_reducible": {
+     "value": true,
+     "confidence": 0.45,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/hdfc-ergo/optima-secure/",
+      "quote": "pre-existing disease waiting period can be reduced from 3 years to 30 days for Asthma, Hypertension, Cholesterol, and Diabetes through an add-on",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "pre_hosp_days": {
+     "value": 60,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.hdfcergo.com/health-insurance/optima-secure/",
+      "quote": "covers 60 days of pre-hospitalisation",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "post_hosp_days": {
+     "value": 180,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.hdfcergo.com/health-insurance/optima-secure/",
+      "quote": "180 days of post-hospitalisation medical expenses",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "general_copay_pct": {
+     "value": 0,
+     "confidence": 0.45,
+     "verified": false,
+     "citation": {
+      "source": "secondary",
+      "url": "https://joinditto.in/health-insurance/hdfc-ergo/optima-secure/",
+      "quote": "Optima Secure does not impose a co-payment clause",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_trigger": {
+     "value": "partial_use",
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.hdfcergo.com/docs/default-source/downloads/policy-wordings/health/optima-secure-revision-pw.pdf",
+      "quote": "100% of the base cover gets restored automatically in the event of complete or partial utilization of the Base Sum insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 50,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "insurer_blog",
+      "url": "https://www.hdfcergo.com/blogs/health-insurance/understanding-hdfc-ergo-optima-secure-plan",
+      "quote": "sum insured gets increased by 50% of base sum insured per year maximum up to 100%",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_max_pct": {
+     "value": 100,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "insurer_blog",
+      "url": "https://www.hdfcergo.com/blogs/health-insurance/understanding-hdfc-ergo-optima-secure-plan",
+      "quote": "per year maximum up to 100%",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": false,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "insurer_blog",
+      "url": "https://www.hdfcergo.com/blogs/health-insurance/understanding-hdfc-ergo-optima-secure-plan",
+      "quote": "irrespective of claims",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "consumables_covered": {
+     "value": true,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "insurer_blog",
+      "url": "https://www.hdfcergo.com/blogs/health-insurance/understanding-hdfc-ergo-optima-secure-plan",
+      "quote": "Protect Benefit allows cashless coverage for non-payable items such as PPE kits, gloves, masks, food charges and other consumables",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "niva-bupa-reassure-2",
+   "insurer_id": "niva-bupa",
+   "insurer": "Niva Bupa",
+   "name": "ReAssure 2.0",
+   "variant": "Platinum+",
+   "uin": "NBHHLIP27054V032627",
+   "sum_insured_options": [
+    500000,
+    1000000,
+    1500000,
+    2000000,
+    2500000,
+    5000000,
+    10000000
+   ],
+   "documents": {
+    "policy_wording": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+    "prospectus": "https://transactions.nivabupa.com/pages/doc/prospectus/ReAssure-2.0-Prospectus-cum-Sales-Literature.pdf?v=1.10",
+    "brochure": "https://otc.nivabupa.com/nivabupalogo/ReAssureBrochure2.0.pdf",
+    "product_page": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html"
+   },
+   "highlights": [
+    "ReAssure Forever: unlimited restorations once the first claim is paid",
+    "Booster+: unused SI carries forward up to 3x/5x/10x by plan",
+    "Lock the Clock: premium stays at entry age until a claim is paid",
+    "Premium varies by zone"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "modern treatments without any room rent capping",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "initial_waiting_days": {
+     "value": 30,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "Expenses related to the treatment of any Illness within 30 days from the first Policy commencement date shall be excluded except claims arising due to an Accident",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "excluded until the expiry of 36 months of continuous coverage after the date of inception of the first Policy with Us",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_reducible": {
+     "value": true,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "You can choose to reduce or completely remove the Pre-Existing Disease waiting time",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "specific_disease_waiting_months": {
+     "value": 24,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "excluded until the expiry of 24 months of continuous coverage ... not applicable for claims arising due to an Accident (covered from day 1) or Cancer (covered after 30-day waiting period)",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "personal_waiting_months": {
+     "value": 48,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "Conditions specified for an Insured Person under Personal Waiting Period will be subject to a Waiting Period of up to 48 months",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Maximum; applies only if underwriting imposes it on a declared condition"
+    },
+    "pre_hosp_days": {
+     "value": 60,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/health-insurance-articles/benefits-of-niva-bupa-reassure-2-0.html",
+      "quote": "pre-hospitalisation expenses for 60 days",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "post_hosp_days": {
+     "value": 180,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/health-insurance-articles/benefits-of-niva-bupa-reassure-2-0.html",
+      "quote": "post-hospitalisation expenses for 180 days",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "modern_treatment_limit_pct": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "Modern treatments are covered up to sum insured with a sub-limit of INR 1 lac per claim on a few robotic surgeries",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "notable_sublimits": {
+     "value": "Rs 1 lakh per claim on a few robotic surgeries",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "sub-limit of INR 1 lac per claim on a few robotic surgeries",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_type": {
+     "value": "unlimited_any_illness",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "It is unlimited. Each Claim under ReAssure Forever will be up to Sum Insured. The first paid claim in the life of the policy triggers ReAssure Forever",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_trigger": {
+     "value": "partial_use",
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure-2.0-Policy-Wording.pdf",
+      "quote": "First claim paid triggers ReAssure Forever",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": true,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "Booster+ Safeguard+ provides no impact if claims are less than INR 1,00,000",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Booster+ is reduced by claims unless they stay under the Safeguard limit"
+    },
+    "inflation_protector": {
+     "value": true,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "Sum Insured Safeguard preserves the value of sum insured against inflation",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Via the Safeguard option"
+    },
+    "premium_age_lock": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.nivabupa.com/family-health-insurance-plans/reassurev2-insurance.html",
+      "quote": "Your age is locked at entry when you buy the policy, till a claim is paid",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "care-supreme",
+   "insurer_id": "care-health",
+   "insurer": "Care Health",
+   "name": "Care Supreme",
+   "uin": "CHIHLIP27061V032627",
+   "documents": {
+    "policy_wording": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---policy-terms-and-conditions.pdf",
+    "prospectus": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+    "brochure": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---brochure.pdf",
+    "product_page": "https://www.careinsurance.com/product/care-supreme",
+    "policy_usage_guide": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme----policy-usage-guide.pdf"
+   },
+   "highlights": [
+    "Unlimited automatic recharge of SI",
+    "Cumulative bonus 50%/yr up to 100%, not reduced by claims",
+    "Optional 20% co-pay for 61+ in exchange for 20% premium discount",
+    "Claim Shield add-on for consumables"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "eligible room rent or room category under the policy has 'no limit'",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "zone_copay_pct": {
+     "value": 0,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "no zone-based copayment",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "initial_waiting_days": {
+     "value": 30,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "30-day initial waiting period",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "specific_disease_waiting_months": {
+     "value": 24,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "2-year waiting period for named ailments",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "3-year waiting period for pre-existing diseases",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 50,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/blog/insurance-guide-articles/cumulative-bonus-make-care-supreme-the-best-health-insurance",
+      "quote": "50% of the sum insured accrued per year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_max_pct": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "up to 100% increase in sum insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": false,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "no reduction in accrued bonus on renewal due to claims",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_trigger": {
+     "value": "complete_exhaustion",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "coverage amount being replenished automatically once you exhaust the limit every time in a given policy year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "pre_hosp_days": {
+     "value": 60,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "prescribed pharmacy 60 days prior to hospitalization",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "post_hosp_days": {
+     "value": 180,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "180 days post discharge from hospital",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "modern_treatment_limit_pct": {
+     "value": 100,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "no sub-limits for hospitalisation, AYUSH treatments, modern treatments, domiciliary hospitalisation and organ donor expenses",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "disease_sublimits": {
+     "value": "none",
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "no sub-limits for hospitalisation, AYUSH treatments, modern treatments, domiciliary hospitalisation and organ donor expenses",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "domiciliary": {
+     "value": true,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "treatment at home continuing for at least 3 Days",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ayush_covered": {
+     "value": true,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "AYUSH Treatment ... up to the Sum Insured, if hospitalisation takes place in an AYUSH-certified clinic",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "organ_donor": {
+     "value": true,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "no sub-limits for ... organ donor expenses",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "air_ambulance": {
+     "value": true,
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "Air ambulance expenses are covered up to Rs 5 L",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "age_copay_pct": {
+     "value": 0,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "prospectus",
+      "url": "https://cms.careinsurance.com/cms/public/uploads/download_center/care-supreme---prospectus-cum-sales-literature.pdf",
+      "quote": "option to ... choose for co-payment option of 20% per claim ... and thereby get a discount of 20% in Premium",
+      "retrieved": "2026-10-07"
+     },
+     "note": "20% co-pay at 61+ is optional (voluntary, for a discount), not mandatory"
+    },
+    "consumables_covered": {
+     "value": false,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.careinsurance.com/product/care-supreme",
+      "quote": "Claim Shield is available as an optional benefit",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Base plan: not covered. Covered by the optional Claim Shield add-on."
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "icici-lombard-elevate",
+   "insurer_id": "icici-lombard",
+   "insurer": "ICICI Lombard",
+   "name": "Elevate",
+   "documents": {
+    "policy_wording": "https://www.icicilombard.com/docs/default-source/default-document-library/revised-elevate-policy-wording---rev---4.pdf",
+    "prospectus": "https://www.icicilombard.com/docs/default-source/default-document-library/elevate-prospectus8c0007ff45fd68ff8a0df0055f689f94.pdf",
+    "product_page": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+    "press_release": "https://www.icicilombard.com/docs/default-source/public-disclosures/2024-25/press-release---icici-lombard-introduces-elevate.pdf"
+   },
+   "highlights": [
+    "Infinite Care: unlimited cover for any one claim in the policy lifetime (add-on)",
+    "Power Booster: up to 100% SI added every year irrespective of claims",
+    "Unlimited reset of sum insured",
+    "Room Modifier: option to accept 1%/2% room/ICU caps for a lower premium"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+      "quote": "modify the room rent eligibility to any room category without any restriction or to a room rent capping of 1% of Annual Sum Insured",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Default has no cap; Room Modifier option can add a 1% cap. Check the schedule."
+    },
+    "ped_waiting_reducible": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "insurer_blog",
+      "url": "https://www.icicilombard.com/docs/default-source/public-disclosures/2024-25/press-release---icici-lombard-introduces-elevate.pdf",
+      "quote": "Infinite Assurance jump-start add-on enables people with pre-existing disease conditions like asthma, diabetes, hypertension, hyperlipidaemia and obesity to start benefitting from the policy after 30th day",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_type": {
+     "value": "unlimited_any_illness",
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+      "quote": "unlimited reset of sum insured",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Same-illness rule not confirmed"
+    },
+    "ncb_pct_per_year": {
+     "value": 100,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+      "quote": "earn a cumulative bonus of up to 100% of your annual sum insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": false,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+      "quote": "100% sum insured increase every year, irrespective of claims",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "inflation_protector": {
+     "value": true,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.icicilombard.com/health-insurance/elevate-health-policy/",
+      "quote": "Add-on benefits include Inflation Protector",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Add-on"
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "aditya-birla-activ-one-max",
+   "insurer_id": "aditya-birla-health",
+   "insurer": "Aditya Birla Health",
+   "name": "Activ One",
+   "variant": "MAX",
+   "documents": {
+    "policy_wording": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+    "customer_information_sheet": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/customer-information-sheet.pdf",
+    "prospectus": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/prospectus.pdf",
+    "product_page": "https://www.adityabirlacapital.com/healthinsurance/activ-one"
+   },
+   "highlights": [
+    "HealthReturns: premium back as wellness rewards",
+    "Chronic Care: PED and initial waiting waived for listed chronic conditions",
+    "Super Reload / Super Credit SI boosters"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "single_private_room",
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Room Rent Type Options include Single Private Room or Shared Accommodation",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Room option chosen at purchase"
+    },
+    "proportionate_deduction": {
+     "value": true,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Room Rent ... shall include the associated medical expenses",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Standard IRDAI proportionate deduction expected when exceeding eligible room; confirm"
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Pre-Existing Diseases Waiting Period: 3 years",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "specific_disease_waiting_months": {
+     "value": 24,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Specific Diseases Waiting Period: 2 years",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "initial_waiting_days": {
+     "value": 30,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Initial Waiting Period (Excluding Accidental): 30 Days",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_reducible": {
+     "value": true,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Reduction in Pre-Existing Disease Waiting Period offers Option 1 - 3 Years to 2 Years or Option 2 - 3 Years to 1 Year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "organ_donor": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Coverage under Activ One MAX includes ... Organ donor expenses",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ayush_covered": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+      "quote": "Coverage under Activ One MAX includes ... AYUSH treatments",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "star-super-star",
+   "insurer_id": "star-health",
+   "insurer": "Star Health",
+   "name": "Super Star",
+   "uin": "SHAHLIP27049V022627",
+   "documents": {
+    "product_page": "https://www.starhealth.in/health-insurance/super-star/"
+   },
+   "highlights": [
+    "Freeze age: premium kept at entry age until a claim",
+    "Unlimited restoration",
+    "Optional reduction of PED waiting (36 to 24/12 months) and specified-disease waiting (24 to 12 months)"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "an option to modify room rent eligibility from Any Room to a Single Private AC Room/Shared Room/General Ward",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Default 'Any Room'; a cheaper capped option exists"
+    },
+    "general_copay_pct": {
+     "value": 0,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "Co-pay is not applicable under this policy",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "The waiting period for pre-existing disease(s) (PED) is 36 months",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_reducible": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "reduction of pre-existing diseases waiting period from 36 months to either 12 or 24 months",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "specific_disease_waiting_months": {
+     "value": 24,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "For specified conditions, surgeries/treatments, the waiting period is 24 months",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "initial_waiting_days": {
+     "value": 30,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "The initial waiting period is 30 days",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "pre_hosp_days": {
+     "value": 90,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "Hospitalisation expenses incurred up to 90 days before hospitalisation",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "post_hosp_days": {
+     "value": 180,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "up to 180 days after discharge from hospital",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "modern_treatment_limit_pct": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "Modern Treatments are covered up to the Sum Insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 50,
+     "confidence": 0.45,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "50% cumulative bonus after each renewal (if claim-free) with a maximum up to 100% of Sum Insured",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Page also describes a separate guaranteed 'Super Star Bonus'; confirm which applies"
+    },
+    "ncb_max_pct": {
+     "value": 100,
+     "confidence": 0.45,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "maximum up to 100% of Sum Insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "premium_age_lock": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "product_page",
+      "url": "https://www.starhealth.in/health-insurance/super-star/",
+      "quote": "freeze your age and keep your premiums young until you make a claim",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "tata-aig-medicare-premier",
+   "insurer_id": "tata-aig",
+   "insurer": "Tata AIG",
+   "name": "MediCare Premier",
+   "documents": {
+    "policy_wording": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+    "prospectus": "https://www.tataaig.com/s3/03_medicare_premier_prospectus_b93b6fc6df.pdf",
+    "customer_information_sheet": "https://www.tataaig.com/s3/Medi_Care_Premier_48e8569ce1.PDF"
+   },
+   "highlights": [
+    "Consumables benefit included",
+    "Restore once a year, usable for a related illness after 45 days"
+   ],
+   "values": {
+    "ped_waiting_months": {
+     "value": 24,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "excluded until the expiry of 24 months of continuous coverage after the date of inception of the first policy",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 50,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "50% Cumulative Bonus will be applied on the Sum Insured for every claim free policy year subject to maximum of 100%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "If Cumulative Bonus option chosen"
+    },
+    "ncb_max_pct": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "subject to maximum of 100% of the sum insured",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_type": {
+     "value": "once_any_illness",
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "restored once during the policy year and can also be used for admissions due to related illness/diseases after 45 days from the date of discharge of the earlier claim",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_trigger": {
+     "value": "complete_exhaustion",
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "If Your Sum Insured including cumulative bonus is insufficient to pay a claim during a policy year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "consumables_covered": {
+     "value": true,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.tataaig.com/s3/Tata_AIG_Medi_Care_Premier_2f02f3813c.pdf",
+      "quote": "We will pay for expenses incurred, for specified consumables which are consumed during the period of hospitalization",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "manipalcigna-sarvah-param",
+   "insurer_id": "manipalcigna",
+   "insurer": "ManipalCigna",
+   "name": "Sarvah",
+   "variant": "Param",
+   "documents": {
+    "policy_wording": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
+    "prospectus": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-Prospectus/c2543c7b-764d-2157-7f4c-214616f20ff4",
+    "customer_information_sheet": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-Plan-CIS/d224d616-03a2-abf9-2273-94b3033e7e16",
+    "product_page": "https://www.manipalcigna.com/hospitalization-cover/manipalcigna-sarvah/manipalcigna-sarvah-param"
+   },
+   "highlights": [
+    "Unlimited 100% restoration, same or unrelated illness",
+    "Gullak: 100% of base SI added yearly irrespective of claims",
+    "Voluntary co-pay options 10/20/30% for lower premium"
+   ],
+   "values": {
+    "restoration_type": {
+     "value": "unlimited_any_illness",
+     "confidence": 0.65,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
+      "quote": "100% restoration of the Base Sum Insured unlimited times in a Policy Year, whether for the same or unrelated illness/condition and Injury",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
+      "quote": "we shall provide 100% of the Base Sum Insured as Bonus irrespective of claims made during the expiring Policy Year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": false,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
+      "quote": "irrespective of claims made during the expiring Policy Year",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "general_copay_pct": {
+     "value": 0,
+     "confidence": 0.5,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.manipalcigna.com/documents/20124/0/Sarvah-Param-TnC/19341cbc-41ae-b938-feac-cc7e373fbc0d",
+      "quote": "Voluntary Co-payment options are 10%, 20%, or 30%",
+      "retrieved": "2026-10-07"
+     },
+     "note": "No mandatory co-pay found; voluntary options exist"
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "bajaj-health-guard-gold",
+   "insurer_id": "bajaj-general",
+   "insurer": "Bajaj General",
+   "name": "Health Guard",
+   "variant": "Gold",
+   "uin": "BAJHLIP25035V072425",
+   "documents": {
+    "policy_wording": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+    "brochure": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+   },
+   "highlights": [
+    "Sum insured reinstatement up to 100% once SI + bonus are exhausted"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "no_limit",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "there is no such capping under the Gold plan",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.7,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+      "quote": "excluded until the expiry of 36 months of continuous coverage after the date of inception of the first Health Guard Policy",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 10,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "Cumulative bonus is 10% of base sum insured per claim free year maximum 100%",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_max_pct": {
+     "value": 100,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "maximum 100%",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": true,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "The same will also decrease by 10% in a year where claim is paid",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "restoration_trigger": {
+     "value": "complete_exhaustion",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+      "quote": "In case if the sum insured along with the Cumulative Bonus is exhausted due to claims made under the policy, then up to 100% of the sum insured is reinstated",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  },
+  {
+   "id": "bajaj-health-guard-silver",
+   "insurer_id": "bajaj-general",
+   "insurer": "Bajaj General",
+   "name": "Health Guard",
+   "variant": "Silver",
+   "uin": "BAJHLIP25035V072425",
+   "documents": {
+    "brochure": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+   },
+   "highlights": [
+    "Cheaper variant with a 1%-of-SI room cap"
+   ],
+   "values": {
+    "room_rent_limit": {
+     "value": "1pct_si_per_day",
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "In the Silver Plan, there is room rent capping of 1% of Sum Insured (excluding cumulative bonus) per day or actual, whichever is lower",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "proportionate_deduction": {
+     "value": true,
+     "confidence": 0.4,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+      "quote": "Room Rent ... shall include the associated medical expenses",
+      "retrieved": "2026-10-07"
+     },
+     "note": "Standard IRDAI proportionate deduction expected when room cap is exceeded; confirm in Silver wording"
+    },
+    "ped_waiting_months": {
+     "value": 36,
+     "confidence": 0.6,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://www.bajajallianz.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
+      "quote": "excluded until the expiry of 36 months of continuous coverage after the date of inception of the first Health Guard Policy",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_pct_per_year": {
+     "value": 10,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "Cumulative bonus is 10% of base sum insured per claim free year maximum 100%",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "ncb_reduces_on_claim": {
+     "value": true,
+     "confidence": 0.55,
+     "verified": false,
+     "citation": {
+      "source": "policy_wording",
+      "url": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+      "quote": "The same will also decrease by 10% in a year where claim is paid",
+      "retrieved": "2026-10-07"
+     }
+    },
+    "lifelong_renewal": {
+     "value": true,
+     "confidence": 0.9,
+     "verified": false,
+     "citation": {
+      "source": "irdai",
+      "url": "https://irdai.gov.in",
+      "quote": "IRDAI Master Circular on Health Insurance 2024: lifelong renewability",
+      "retrieved": "2026-10-07"
+     }
+    }
+   }
+  }
+ ]
+}
