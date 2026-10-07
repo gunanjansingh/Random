@@ -14,7 +14,8 @@ from .criteria import BY_ID, Category
 from .engine import ClaimScenario, ScoreCard, common_reference, rank, simulate_claim
 from .explain import explain, headline
 from .india import inr
-from .models import DealBreakers, Member, UserProfile, load_insurers, load_plans
+from .models import CurrentPolicy, DealBreakers, Member, UserProfile, load_insurers, load_plans
+from .switching import PORTABILITY, analyse, current_plan
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data" / "india"
 
@@ -35,7 +36,38 @@ def yes(prompt: str, default: bool = False) -> bool:
     return ask(prompt + " (y/n)", "y" if default else "n").lower().startswith("y")
 
 
-def questionnaire() -> UserProfile:
+def ask_current_policy(plans) -> CurrentPolicy | None:
+    if not yes("\nDo you already have a health policy you might switch or upgrade?"):
+        return None
+    print("Which plan is it?")
+    for i, p in enumerate(plans, 1):
+        print(f"  {i}. {p.label()}")
+    print("  0. Another plan")
+    pick = int(ask("Number", "0"))
+    cp = CurrentPolicy(plan_id=plans[pick - 1].id if pick else None)
+    if not pick:
+        cp.name = ask("Its name (insurer and plan)")
+        room = ask("Room rent limit: none / single (single private room) / 1pct (1% of cover per day) / unknown", "unknown")
+        if room in ("none", "single", "1pct"):
+            cp.terms["room_rent_limit"] = {"none": "no_limit", "single": "single_private_room", "1pct": "1pct_si_per_day"}[room]
+            cp.terms["proportionate_deduction"] = room != "none"
+        copay = ask("Co-pay on every claim, in % (blank if unknown)")
+        if copay:
+            cp.terms["general_copay_pct"] = float(copay)
+        cons = ask("Are consumables (gloves, PPE, kits) covered? y/n/unknown", "unknown")
+        if cons in ("y", "n"):
+            cp.terms["consumables_covered"] = cons == "y"
+    cp.sum_insured = int(float(ask("Its sum insured, in lakhs", "5")) * 1_00_000)
+    cp.cumulative_bonus = int(float(ask("Bonus cover built up so far, in lakhs (0 if none)", "0")) * 1_00_000)
+    cp.continuous_years = float(ask("Years of unbroken cover (including any earlier insurer you ported from)", "1"))
+    prem = ask("What you pay per year now, in rupees (blank to skip)")
+    cp.annual_premium = int(prem) if prem else None
+    cp.claimed_last_year = yes("Did you claim in the last policy year?")
+    cp.conditions_declared = yes("Were all existing illnesses declared when you bought it?", True)
+    return cp
+
+
+def questionnaire(plans=()) -> UserProfile:
     print("\nWho should be covered? Enter one person per line as name,age (blank line to finish).")
     members: list[Member] = []
     while True:
@@ -75,7 +107,8 @@ def questionnaire() -> UserProfile:
     print("\nHow much do you care about each area? 0 = ignore .. 5 = critical.")
     priorities = {cat: int(ask(f"  {cat.value}", "3")) for cat in Category}
     return UserProfile(members, city=city, sum_insured=si, preferred_hospitals=hospitals, priorities=priorities,
-                       deal_breakers=db, employer_cover=employer, old_tax_regime=old_regime)
+                       deal_breakers=db, employer_cover=employer, old_tax_regime=old_regime,
+                       current_policy=ask_current_policy(list(plans)))
 
 
 def demo_profile() -> UserProfile:
@@ -87,6 +120,45 @@ def demo_profile() -> UserProfile:
         employer_cover=5_00_000,
         old_tax_regime=True,
     )
+
+
+def demo_switch_profile() -> UserProfile:
+    """A couple with a 4-year-old Bajaj Health Guard Gold policy at Rs 5L, wanting Rs 10L and no room cap."""
+    u = demo_profile()
+    u.current_policy = CurrentPolicy(plan_id="bajaj-health-guard-gold", sum_insured=5_00_000, cumulative_bonus=1_00_000,
+                                     continuous_years=4, annual_premium=None, claimed_last_year=False)
+    return u
+
+
+def switching_report(fit: list[ScoreCard], user: UserProfile, plans: list, top: int) -> None:
+    cp = user.current_policy
+    cur = current_plan(cp, plans)
+    print(f"\n=== Stay or switch? You have {cur.label()}, {inr(cp.sum_insured)} cover, "
+          f"{cp.continuous_years:g} years of continuous cover ===")
+    shown = [c.plan for c in fit[:top]]
+    options = ([cur] if cur.id != "current" and cur not in shown else []) + shown
+    marks = {"gain": "+ Better", "loss": "- Worse", "wait": "~ Waiting", "keeps": "= Keeps", "caution": "! Note"}
+    cautions = []
+    for p in options:
+        a = analyse(p, cp, plans, user)
+        rank = next((i + 1 for i, c in enumerate(fit) if c.plan.id == p.id), None)
+        where = f"#{rank} of {len(fit)} that fit" if rank else "does not fit your filters at this cover"
+        head = f"Stay with {p.label()}" + (f" and raise cover to {inr(user.sum_insured)}" if user.sum_insured > cp.sum_insured else "") \
+            if a.staying else f"Switch to {p.label()}"
+        now = inr(a.premium_now) if a.premium_now else "?"
+        new = f"{inr(a.premium_new)} ({a.premium_new_basis})" if a.premium_new else "get a quote"
+        print(f"\n{head}  [{where}; premium now {now} -> {new}]")
+        for kind in ("gain", "loss", "wait", "keeps"):
+            for item in a.by_kind(kind):
+                print(f"  {marks[kind]}: {item.text}{f'  [{item.source}]' if item.source else ''}")
+        cautions += [i.text for i in a.by_kind("caution") if i.text not in cautions]
+    if cautions:
+        print("\nBefore you switch:")
+        for t in cautions:
+            print(f"  ! {t}")
+    unverified = [k for k, r in PORTABILITY.items() if not r["verified"]]
+    if unverified:
+        print(f"  (Portability rules still being confirmed from IRDAI's own documents: {', '.join(unverified)}.)")
 
 
 def fmt(cid: str, value: object, confidence: float = 1.0) -> str:
@@ -127,7 +199,7 @@ def table(rows: list[list[str]]) -> str:
     return "\n".join(lines)
 
 
-def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, top: int = 3) -> None:
+def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, top: int = 3, plans: list | None = None) -> None:
     """`fit`: every plan that passed the filters, best first; the first `top` are explained."""
     cards = fit[:top]
     if not cards:
@@ -151,6 +223,8 @@ def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, t
         print("\nRuled out by your filters:")
         for c in rejected:
             print(f"  x {c.plan.label()}: {'; '.join(c.filters.failures)}")
+    if user.current_policy:
+        switching_report(fit, user, plans or [c.plan for c in fit + rejected], top)
 
     print("\n=== Side-by-side ===")
     header = ["", *[c.plan.label() for c in cards]]
@@ -223,15 +297,16 @@ def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, t
 def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser(description="Compare Indian health insurance plans against your criteria.")
     ap.add_argument("--demo", action="store_true", help="use a canned profile instead of asking")
+    ap.add_argument("--demo-switch", action="store_true", help="canned profile of someone with an existing policy")
     ap.add_argument("--data", default=str(DATA_DIR), help="directory with plans.json and insurers.json")
     ap.add_argument("--top", type=int, default=3)
     args = ap.parse_args(argv)
 
     data = Path(args.data)
     plans = load_plans(data / "plans.json", load_insurers(data / "insurers.json"))
-    user = demo_profile() if args.demo else questionnaire()
+    user = demo_switch_profile() if args.demo_switch else demo_profile() if args.demo else questionnaire(plans)
     fit, rejected = rank(plans, user, top=None)
-    report(fit, rejected, user, top=args.top)
+    report(fit, rejected, user, top=args.top, plans=plans)
 
 
 if __name__ == "__main__":

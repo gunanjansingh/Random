@@ -14,6 +14,7 @@ continue in the meantime.
 | Data for premiums | Use the **insurers' own filed documents** (prospectus or premium chart) as the source of premium tables. |
 | v1 (MVP) | **Stateless**: nothing about the user is stored. |
 | Regulation research | Not needed now. |
+| v1 audience (A3) | **A: young families buying their first plan** and **C: people switching or upgrading an existing policy**. Senior-parent plans, super top-ups and advisor tools come later. |
 
 ## Deferred
 
@@ -21,13 +22,6 @@ continue in the meantime.
 - **Section B** below: discuss later.
 
 ## Still open
-
-### A3. Who is v1 for?
-Families buying a first base plan, people buying for senior parents, people
-porting or upgrading, or advisors.
-
-**Recommended:** retail families (self, spouse, kids, plus a separate policy
-for parents), shared with a small group of testers first.
 
 ### A6. Document access: **resolved** (network access enabled 7 Oct 2026)
 Documents are downloaded and read. What's left:

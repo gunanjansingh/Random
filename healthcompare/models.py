@@ -262,6 +262,24 @@ class DealBreakers:
 
 
 @dataclass
+class CurrentPolicy:
+    """The policy the user already holds (audience C: switching or upgrading)."""
+    plan_id: str | None = None  # one of our plans, if it is
+    name: str = ""  # as the user calls it, if not in our list
+    sum_insured: int = 5_00_000  # base sum insured
+    cumulative_bonus: int = 0  # bonus cover accrued so far, in rupees
+    continuous_years: float = 0  # years of unbroken cover, including earlier ports
+    annual_premium: int | None = None  # what they pay now
+    claimed_last_year: bool = False
+    conditions_declared: bool = True  # existing conditions were declared when buying
+    terms: dict[str, object] = field(default_factory=dict)  # known terms of a plan not in our list (criterion id -> value)
+
+    @property
+    def months_continuous(self) -> int:
+        return round(self.continuous_years * 12)
+
+
+@dataclass
 class UserProfile:
     members: list[Member]
     city: str = "Mumbai"  # where treatment is likely
@@ -272,6 +290,7 @@ class UserProfile:
     employer_cover: int = 0  # group cover from employer; ends when the job ends
     old_tax_regime: bool = False  # Section 80D is only available under the old regime
     tax_slab_pct: float = 30.0
+    current_policy: CurrentPolicy | None = None  # set when the user is switching or upgrading
 
     def zone_for(self, plan: Plan) -> str:
         return zone_for_city(self.city, plan.zone_cities)
