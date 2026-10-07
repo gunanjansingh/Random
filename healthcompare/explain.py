@@ -140,6 +140,8 @@ def headline(cards: list[ScoreCard]) -> str:
     tied = [c for c in cards[1:] if c.score_range[1] > first.score_range[0]]
     if not tied:
         return f"Based on our conversation and your filters, the best-suited plan for you is {first.plan.label()}."
-    return (f"Based on our conversation and your filters, {first.plan.label()} is the best-suited plan so far, but it is a "
-            f"close call with {', '.join(c.plan.label() for c in tied)}: much of the fine print is still being verified, "
-            f"so compare the reasons below rather than the score alone.")
+    why = ("much of their fine print is still unverified" if min(c.coverage for c in [first, *tied]) < 0.5
+           else "they are nearly tied on what matters to you")
+    return (f"Based on our conversation and your filters, {first.plan.label()} is the best-suited plan, but it is a close "
+            f"call with {', '.join(c.plan.label() for c in tied)} ({why}), so compare the reasons below rather than the "
+            f"score alone.")
