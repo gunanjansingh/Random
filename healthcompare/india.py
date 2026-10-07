@@ -46,8 +46,8 @@ def irdai_violations(values: dict[str, object]) -> list[RuleViolation]:
     over("moratorium_months", IRDAI_MORATORIUM_MONTHS, "Moratorium")
     if values.get("lifelong_renewal") is False:
         out.append(RuleViolation("lifelong_renewal", "Renewal is not lifelong; IRDAI requires lifelong renewability"))
-    if values.get("hiv_std_covered") is False:
-        out.append(RuleViolation("hiv_std_covered", "HIV/AIDS excluded, which conflicts with the HIV & AIDS Act 2017"))
+    # hiv_std_covered combines HIV/AIDS with STDs; excluding STDs alone is lawful, so a False value
+    # cannot be read as an HIV exclusion. Not checked here.
     if values.get("mental_health_parity") is False:
         out.append(RuleViolation("mental_health_parity", "Mental illness excluded, which conflicts with the Mental Healthcare Act 2017"))
     return out
