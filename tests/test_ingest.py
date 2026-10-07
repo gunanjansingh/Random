@@ -95,3 +95,32 @@ class VersionGuard(unittest.TestCase):
             {"criterion": "ped_waiting_months", "value": 48, "quote": "q", "page": 2, "confidence": 0.9, "validated": True}]}]}
         apply_extractions(doc, ext)
         self.assertEqual(doc["plans"][0]["values"], {})
+
+
+class RobotsPolicy(unittest.TestCase):
+    def test_rfc9309_status_handling(self):
+        from healthcompare.ingest.fetch import robots_policy
+        rp = robots_policy(200, "User-agent: *\nDisallow: /private/\n")
+        self.assertTrue(rp.can_fetch("CoverCompareBot", "https://x.in/docs/a.pdf"))
+        self.assertFalse(rp.can_fetch("CoverCompareBot", "https://x.in/private/a.pdf"))
+        self.assertIs(robots_policy(403, ""), True)    # no readable rules: allowed
+        self.assertIs(robots_policy(404, ""), True)
+        self.assertIs(robots_policy(503, ""), False)   # server error: assume disallowed
+        self.assertIs(robots_policy(None, ""), False)  # unreachable: assume disallowed
+
+
+class TableVerification(unittest.TestCase):
+    TEXT = ("Zone A Annual Per Person Rates\nAge  5 Lakhs  10 Lakhs\n 18 - 25   8,672   9,159\n 26 - 35   9,607   10,152\n"
+            "\f page two\n 36 - 40  12,255  12,977\n")
+
+    def test_rows_must_appear_in_document(self):
+        from healthcompare.ingest.tables import page_numbers, verify_table
+        pages = page_numbers(self.TEXT)
+        table = {"page": 1, "rows": [
+            {"age_from": 18, "age_to": 25, "age_label": "18 - 25", "premiums": [8672, 9159]},
+            {"age_from": 26, "age_to": 35, "age_label": "26 - 35", "premiums": [9607, 10153]},   # misread
+            {"age_from": 36, "age_to": 40, "age_label": "36 - 40", "premiums": [12255, 12977]},  # next page
+        ]}
+        out = verify_table(table, pages)
+        self.assertEqual([r["age_from"] for r in out["rows"]], [18, 36])
+        self.assertEqual((out["rows_checked"], out["rows_verified"]), (3, 2))

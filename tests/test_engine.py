@@ -225,3 +225,38 @@ class ExplainTest(unittest.TestCase):
         u = user()
         fit = self.cards(u, plan("a", general_copay_pct=0), plan("b"))
         self.assertIn("close call", headline(fit))
+
+
+class TablePremiumTest(unittest.TestCase):
+    def setUp(self):
+        from healthcompare.models import PremiumTable
+        rows = [{"age_from": 18, "age_to": 35, "age_label": "18-35", "premiums": [9000, 12000]},
+                {"age_from": 36, "age_to": 45, "age_label": "36-45", "premiums": [13000, 17000]},
+                {"age_from": 0, "age_to": 17, "age_label": "0-17", "premiums": [5000, 7000]}]
+        mk = lambda zone, ct, comp, rws: PremiumTable("Base", zone, ct, comp, "eldest", "excluding", "https://x", 3,
+                                                       [5_00_000, 10_00_000], rws)
+        self.p = plan()
+        self.p.zone_definitions = {"Zone A": "Mumbai, Delhi NCR", "Zone B": "Rest of India"}
+        self.p.premium_tables = [mk("Zone A", "individual", "1A", rows), mk("Zone B", "individual", "1A",
+                                 [dict(r, premiums=[v - 1000 for v in r["premiums"]]) for r in rows]),
+                                 mk("Zone A", "floater", "2A", [{"age_from": 18, "age_to": 45, "age_label": "18-45",
+                                                                 "premiums": [15000, 20000]}])]
+
+    def test_individual_uses_city_zone(self):
+        from healthcompare.engine import table_premium
+        self.assertEqual(table_premium(self.p, user(city="Mumbai", members=[Member("You", 30)])).amount, 12000)
+        tp = table_premium(self.p, user(city="Patna", members=[Member("You", 30)]))
+        self.assertEqual(tp.amount, 11000)
+        self.assertTrue(any("not named" in c for c in tp.caveats))
+
+    def test_floater_table_preferred_then_sum_of_individuals(self):
+        from healthcompare.engine import table_premium
+        couple = table_premium(self.p, user(city="Mumbai", members=[Member("A", 40), Member("B", 38)]))
+        self.assertEqual((couple.amount, "floater" in couple.method), (20000, True))
+        fam = table_premium(self.p, user(city="Mumbai", members=[Member("A", 40), Member("B", 38), Member("C", 5)]))
+        self.assertEqual(fam.amount, 17000 + 17000 + 7000)
+        self.assertTrue(fam.caveats)
+
+    def test_unpriced_sum_insured_returns_none(self):
+        from healthcompare.engine import table_premium
+        self.assertIsNone(table_premium(self.p, user(city="Mumbai", sum_insured=25_00_000)))

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import ssl
 import time
 import urllib.error
 import urllib.request
@@ -14,6 +15,28 @@ from urllib.parse import quote, urlsplit
 
 USER_AGENT = "CoverCompareBot/0.1 (health insurance comparison research)"
 DELAY_SECONDS = 2.0  # between requests to the same host
+CERTS_DIR = Path(__file__).parent / "certs"
+
+
+def ssl_context() -> ssl.SSLContext:
+    """Default verification, plus intermediate CA certificates that some insurer
+    servers fail to send (browsers fetch these automatically). Each file in certs/
+    is a public intermediate that chains to a root already in the system store;
+    verification is never disabled."""
+    ctx = ssl.create_default_context()
+    for pem in sorted(CERTS_DIR.glob("*.pem")):
+        ctx.load_verify_locations(cafile=str(pem))
+    return ctx
+
+
+def robots_policy(status: int | None, body: str) -> urllib.robotparser.RobotFileParser | bool:
+    """RFC 9309: rules from a 2xx robots.txt; 4xx means no rules (allowed);
+    5xx or unreachable means assume everything is disallowed."""
+    if status is not None and 200 <= status < 300:
+        rp = urllib.robotparser.RobotFileParser()
+        rp.parse(body.splitlines())
+        return rp
+    return status is not None and 400 <= status < 500
 
 
 class Fetcher:
@@ -23,21 +46,26 @@ class Fetcher:
         self.manifest: dict[str, dict] = (
             json.loads(self.manifest_path.read_text()) if self.manifest_path.exists() else {}
         )
-        self._robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+        self._robots: dict[str, urllib.robotparser.RobotFileParser | bool] = {}
         self._last_hit: dict[str, float] = {}
+        self._opener = urllib.request.build_opener(urllib.request.HTTPSHandler(context=ssl_context()))
 
     def allowed(self, url: str) -> bool:
         parts = urlsplit(url)
         host = f"{parts.scheme}://{parts.netloc}"
         if host not in self._robots:
-            rp = urllib.robotparser.RobotFileParser(host + "/robots.txt")
+            req = urllib.request.Request(host + "/robots.txt", headers={"User-Agent": USER_AGENT})
+            status, body = None, ""
             try:
-                rp.read()
+                with self._opener.open(req, timeout=30) as resp:
+                    status, body = resp.status, resp.read().decode("utf-8", "replace")
+            except urllib.error.HTTPError as e:
+                status = e.code
             except (urllib.error.URLError, OSError):
-                rp = None  # robots.txt unreachable: proceed, as crawlers conventionally do
-            self._robots[host] = rp
-        rp = self._robots[host]
-        return rp is None or rp.can_fetch(USER_AGENT, url)
+                pass
+            self._robots[host] = robots_policy(status, body)
+        policy = self._robots[host]
+        return policy if isinstance(policy, bool) else policy.can_fetch(USER_AGENT, url)
 
     def fetch(self, plan_id: str, doc_type: str, url: str) -> dict:
         """Download one document; returns its manifest entry."""
@@ -55,10 +83,14 @@ class Fetcher:
             time.sleep(wait)
         req = urllib.request.Request(quote(url, safe=":/?&=%#+,;@"), headers={"User-Agent": USER_AGENT})
         try:
-            with urllib.request.urlopen(req, timeout=60) as resp:
+            with self._opener.open(req, timeout=60) as resp:
                 body = resp.read()
                 ctype = resp.headers.get("Content-Type", "")
         except (urllib.error.URLError, OSError) as e:
+            previous = self.manifest.get(key, {})
+            if previous.get("status") == "ok" and (self.cache_dir / previous["path"]).exists():
+                previous["last_error"] = f"{entry['fetched_at']}: {e}"  # keep the earlier good copy
+                return previous
             entry["status"] = f"error: {e}"
             self.manifest[key] = entry
             return entry

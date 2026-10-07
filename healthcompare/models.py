@@ -107,6 +107,30 @@ class PremiumEstimate:
 
 
 @dataclass
+class PremiumTable:
+    """An insurer's own premium table, transcribed and checked row by row against the document."""
+    variant: str
+    zone: str
+    cover_type: str  # "individual" | "floater"
+    family_composition: str  # "1A", "2A", "2A+1C", ...
+    age_basis: str
+    gst: str
+    source: str  # document URL
+    page: int | None
+    sum_insureds: list[int]
+    rows: list[dict]  # {"age_from", "age_to", "age_label", "premiums": [...]}
+
+    def premium(self, age: int, sum_insured: int) -> int | None:
+        if sum_insured not in self.sum_insureds:
+            return None
+        col = self.sum_insureds.index(sum_insured)
+        for r in self.rows:
+            if r["age_from"] <= age <= r["age_to"]:
+                return r["premiums"][col]
+        return None
+
+
+@dataclass
 class Insurer:
     id: str
     name: str
@@ -136,6 +160,9 @@ class Plan:
     premium_by_age: dict[int, int] = field(default_factory=dict)  # band lower bound -> annual premium per member
     premium_basis: str = ""  # SI / zone / variant the premium table is for
     premium_estimates: list[PremiumEstimate] = field(default_factory=list)
+    premium_tables: list[PremiumTable] = field(default_factory=list)
+    zone_definitions: dict[str, str] = field(default_factory=dict)  # insurer's zone -> cities, as printed
+    pricing_rules: list[str] = field(default_factory=list)  # floater/family discounts etc., as printed
     floater_discount_pct: float = 0.0
     zone: str | None = None  # pricing zone bought, if the plan prices by city
     zone_cities: dict[str, str] = field(default_factory=dict)
@@ -170,6 +197,9 @@ class Plan:
             premium_by_age={int(k): v for k, v in d.get("premium_by_age", {}).items()},
             premium_basis=d.get("premium_basis", ""),
             premium_estimates=[PremiumEstimate(**e) for e in d.get("premium_estimates", [])],
+            premium_tables=[PremiumTable(**t) for t in d.get("premium_tables", [])],
+            zone_definitions=d.get("zone_definitions", {}),
+            pricing_rules=d.get("pricing_rules", []),
             floater_discount_pct=d.get("floater_discount_pct", 0.0),
             zone=d.get("zone"),
             zone_cities={k.lower(): v for k, v in d.get("zone_cities", {}).items()},

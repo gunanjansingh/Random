@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field, replace
 
 from . import india
 from .criteria import BY_ID, CRITERIA, Category, Kind
 from .india import inr
-from .models import ZONE_COST_RANK, CitedValue, Member, Plan, PremiumEstimate, UserProfile
+from .models import ZONE_COST_RANK, CitedValue, Member, Plan, PremiumEstimate, PremiumTable, UserProfile
 
 # Unknown values score neutral: with real data, gaps mostly reflect what has
 # been extracted so far, not the plan. Coverage is reported next to the score,
@@ -84,7 +85,8 @@ def approx_premium(plan: Plan, user: UserProfile) -> ApproxPremium | None:
     usable = [e for e in plan.premium_estimates if abs(max(e.ages) - user.oldest) <= MAX_REFERENCE_AGE_GAP]
     if not usable:
         return None
-    best = min(usable, key=lambda e: reference_distance(e, user))
+    conf = {"high": 0, "medium": 1, "low": 2}
+    best = min(usable, key=lambda e: (round(reference_distance(e, user), 6), conf.get(e.confidence, 3)))
     close = ((best.adults, best.children) == _shape(user) and best.sum_insured == user.sum_insured
              and abs(max(best.ages) - user.oldest) <= 5)
     return ApproxPremium(best, close)
@@ -102,6 +104,98 @@ def common_reference(plans: list[Plan], user: UserProfile) -> tuple[str, dict[st
     key = max(by_profile, key=lambda k: (len(by_profile[k]), -reference_distance(next(iter(by_profile[k].values())), user)))
     members, ages, si = key
     return f"{members} aged {'/'.join(map(str, ages))}, {inr(si)}", by_profile[key]
+
+
+# --------------------------------------------------------------------------- official premium tables
+
+CITY_ALIASES = {
+    "bangalore": ["bengaluru"], "bengaluru": ["bangalore"], "gurgaon": ["gurugram", "ncr", "national capital region"],
+    "gurugram": ["gurgaon", "ncr", "national capital region"], "noida": ["ncr", "national capital region"],
+    "greater noida": ["ncr", "national capital region"], "ghaziabad": ["ncr", "national capital region"],
+    "faridabad": ["ncr", "national capital region"], "new delhi": ["delhi"], "delhi": ["new delhi", "ncr"],
+    "bombay": ["mumbai"], "thane": ["mumbai metropolitan", "mumbai"], "navi mumbai": ["mumbai metropolitan", "mumbai"],
+    "calcutta": ["kolkata"], "madras": ["chennai"], "baroda": ["vadodara"], "vadodara": ["baroda"],
+    "secunderabad": ["hyderabad"], "mohali": ["chandigarh"], "panchkula": ["chandigarh"],
+}
+
+
+def _zone_key(z: str) -> str:
+    return re.sub(r"(zone|tier|\s|-)", "", z.lower())
+
+
+def insurer_zone(plan: Plan, city: str) -> tuple[str | None, bool]:
+    """The insurer's own zone for `city`: (zone, found by name). Falls back to the 'rest of India' zone."""
+    c = city.strip().lower()
+    names = [c, *CITY_ALIASES.get(c, [])]
+    rest = None
+    for zone, cities in plan.zone_definitions.items():
+        text = cities.lower()
+        if any(re.search(rf"\b{re.escape(n)}\b", text) for n in names):
+            return zone, True
+        if re.search(r"rest of|all other|other than|remaining", text):
+            rest = zone
+    return rest, False
+
+
+@dataclass
+class TablePremium:
+    amount: int
+    zone: str
+    method: str
+    source: str
+    page: int | None
+    caveats: list[str]
+
+    def describe(self) -> str:
+        return f"{inr(self.amount)}/yr from the insurer's premium table ({self.zone}, {self.method}; excl. GST, base plan)"
+
+
+def _variant_ok(plan: Plan, t: PremiumTable) -> bool:
+    return not plan.variant or plan.variant.lower().rstrip("+") in t.variant.lower()
+
+
+def table_premium(plan: Plan, user: UserProfile) -> TablePremium | None:
+    """Annual base premium from the insurer's own table, or None if the table can't price this family."""
+    tables = [t for t in plan.premium_tables if t.cover_type in ("individual", "floater") and _variant_ok(plan, t)]
+    if not tables:
+        return None
+    caveats: list[str] = []
+    zone, named = insurer_zone(plan, user.city)
+    zones = {_zone_key(t.zone): t.zone for t in tables}
+    if zone is None or _zone_key(zone) not in zones:
+        if len(zones) == 1:
+            only = next(iter(zones.values()))
+            caveats.append(f"Only {only} rates are published in this document; {user.city} may be priced lower.")
+            zone = only
+        else:
+            return None
+    elif not named:
+        caveats.append(f"{user.city} not named in the insurer's zone list; priced as '{zone}'.")
+    zt = [t for t in tables if _zone_key(t.zone) == _zone_key(zone)]
+    adults = sum(1 for m in user.members if m.age >= 18)
+    children = len(user.members) - adults
+    comp = f"{adults}A" + (f"+{children}C" if children else "")
+
+    if len(user.members) > 1:
+        for t in zt:
+            if t.cover_type == "floater" and t.family_composition.replace(" ", "").upper() == comp:
+                amt = t.premium(user.oldest, user.sum_insured)
+                if amt is not None:
+                    return TablePremium(amt, zone, f"family floater {comp}, priced on eldest age {user.oldest}", t.source, t.page, caveats)
+    ind = [t for t in zt if t.cover_type == "individual" and t.family_composition.upper() in ("1A", "")]
+    if not ind:
+        return None
+    total = 0
+    for m in user.members:
+        amt = next((a for t in ind if (a := t.premium(m.age, user.sum_insured)) is not None), None)
+        if amt is None:
+            return None
+        total += amt
+    if len(user.members) > 1:
+        caveats.append("No floater table for your family in this document: shown as separate individual covers. "
+                       "Floater or family discounts in the pricing rules usually make it cheaper.")
+    return TablePremium(total, zone, "individual rates" if len(user.members) == 1 else f"sum of {len(user.members)} individual rates",
+                        ind[0].source, ind[0].page, caveats)
 
 
 # --------------------------------------------------------------------------- hard filters
@@ -152,7 +246,8 @@ def check_deal_breakers(plan: Plan, user: UserProfile) -> FilterResult:
         if missing:
             r.failures.append(f"Not cashless at: {', '.join(missing)}")
     if db.max_premium is not None:
-        p = annual_premium(plan, user.members)
+        tp = table_premium(plan, user)
+        p = tp.amount if tp else annual_premium(plan, user.members)
         ap = approx_premium(plan, user) if p is None else None
         if p is None and ap and ap.close and ap.estimate.low > db.max_premium:
             r.failures.append(f"Premium ~{inr(ap.estimate.low)}+ (approx.) over budget {inr(db.max_premium)}")
@@ -192,6 +287,7 @@ class ScoreCard:
     coverage: float  # share of weight backed by known data
     score_range: tuple[float, float]  # total if every unknown turned out worst / best
     premium: int | None
+    priced: TablePremium | None
     approx: ApproxPremium | None
     filters: FilterResult
     gotchas: list[Gotcha]
@@ -224,7 +320,8 @@ def score_plan(plan: Plan, user: UserProfile) -> ScoreCard:
         by_category={c: round(100 * cat_num[c] / cat_den[c]) for c in cat_den if cat_den[c]},
         coverage=round(known / den, 2),
         score_range=(round(100 * (num - unknown_num) / den, 1), round(100 * (num - unknown_num + (den - known)) / den, 1)),
-        premium=annual_premium(plan, user.members),
+        premium=(tp.amount if (tp := table_premium(plan, user)) else annual_premium(plan, user.members)),
+        priced=tp,
         approx=approx_premium(plan, user),
         filters=check_deal_breakers(plan, user),
         gotchas=gotchas(plan, user),

@@ -1257,9 +1257,8 @@
    "variant": "MAX",
    "documents": {
     "premium_chart": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/ActivOneDocs/ActivOneMAX/ProductInformation/RateChart.pdf",
-    "policy_wording": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+    "policy_wording": "https://www.adityabirlahealthinsurance.com/assets/pdf/active-one/NXT/product-information/policy-document.pdf",
     "customer_information_sheet": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/customer-information-sheet.pdf",
-    "prospectus": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/prospectus.pdf",
     "product_page": "https://www.adityabirlacapital.com/healthinsurance/activ-one"
    },
    "highlights": [
@@ -1470,7 +1469,15 @@
      "as_of": "unknown"
     }
    ],
-   "document_notes": "Premium tables: MAX RateChart.pdf, gross premium by age band x SI x Zones 1-3 (Zone 2: Kolkata, Pune, Hyderabad, Chennai, Chandigarh, Mohali, Panchkula, Lucknow, Patna; Zone 3: rest). Do NOT use the NXT/VYTL/MAXplus rate charts. UIN unclear: ADIHLIP24097V012324 vs newer ADIHLIP27048V022627; check page 1."
+   "document_notes": "Premium tables: MAX RateChart.pdf, gross premium by age band x SI x Zones 1-3 (Zone 2: Kolkata, Pune, Hyderabad, Chennai, Chandigarh, Mohali, Panchkula, Lucknow, Patna; Zone 3: rest). Do NOT use the NXT/VYTL/MAXplus rate charts. UIN unclear: ADIHLIP24097V012324 vs newer ADIHLIP27048V022627; check page 1. Activ One is one product (one UIN) with MAX/NXT/VYTL variants; the current common wording is served on the NXT path.",
+   "uin": "ADIHLIP27048V022627",
+   "uin_history": [
+    "ADIHLIP24097V012324"
+   ],
+   "documents_older": {
+    "policy_wording_v01": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/MAX/product-information/policy-document.pdf",
+    "prospectus_v01": "https://www.adityabirlacapital.com/healthinsurance/assets/pdf/active-one/prospectus.pdf"
+   }
   },
   {
    "id": "star-super-star",
@@ -2178,9 +2185,10 @@
    "uin": "BAJHLIP26073V082526",
    "documents": {
     "premium_chart": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/New-Health-Guard-Premium-Chart.pdf",
-    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf",
+    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/Health-PW/Health-Guard_PW.pdf",
     "customer_information_sheet": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-CIS-print.pdf",
-    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html"
+    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html",
+    "brochure": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Brochure-print.pdf"
    },
    "highlights": [
     "Sum insured reinstatement up to 100% once SI + bonus are exhausted"
@@ -2331,7 +2339,8 @@
    "documents_older": {
     "brochure_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
     "policy_wording_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/HG_Gold_Policy_Wording_&_CIS.pdf",
-    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+    "policy_wording_print_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf"
    },
    "document_notes": "Insurer renamed to Bajaj General (bajajgeneralinsurance.com). Current set (probably V08, BAJHLIP26073V082526) is in the health-guard/ folder; premium chart by age x SI x zone covers Gold and Silver. Check the chart prints V08 (a 2023 copy with the same name exists). Previous UIN BAJHLIP25035V072425 (V07)."
   },
@@ -2344,9 +2353,10 @@
    "uin": "BAJHLIP26073V082526",
    "documents": {
     "premium_chart": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/New-Health-Guard-Premium-Chart.pdf",
-    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf",
+    "policy_wording": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/Health-PW/Health-Guard_PW.pdf",
     "customer_information_sheet": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-CIS-print.pdf",
-    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html"
+    "product_page": "https://www.bajajgeneralinsurance.com/health-insurance-plans/health-guard-insurance-policy.html",
+    "brochure": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Brochure-print.pdf"
    },
    "highlights": [
     "Cheaper variant with a 1%-of-SI room cap",
@@ -2427,7 +2437,8 @@
    "documents_older": {
     "brochure_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/Health_Guard_Brochure.pdf",
     "policy_wording_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard-individual-policy/HG_Silver_Policy_Wording_&_CIS.pdf",
-    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF"
+    "faq": "https://general.bajajallianz.com/Insurance/healthGuard/images/Health_Guard_FAQ.PDF",
+    "policy_wording_print_v07": "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/health-guard/Health-Guard-Policy-Wordings-print.pdf"
    },
    "document_notes": "Insurer renamed to Bajaj General (bajajgeneralinsurance.com). Current set (probably V08, BAJHLIP26073V082526) is in the health-guard/ folder; premium chart by age x SI x zone covers Gold and Silver. Check the chart prints V08 (a 2023 copy with the same name exists). Previous UIN BAJHLIP25035V072425 (V07)."
   }

@@ -107,6 +107,8 @@ def _fmt(cid: str, value: object) -> str:
 
 
 def premium_cell(c: ScoreCard) -> str:
+    if c.priced is not None:
+        return f"{inr(c.priced.amount)} (insurer table)"
     if c.premium is not None:
         return inr(c.premium)
     if c.approx:
@@ -173,8 +175,8 @@ def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, t
     print(table(rows))
     print("(! = clause that commonly causes rejections or deductions; ~ = low-confidence value; "
           "? = not yet extracted, ask the insurer)\n"
-          "(Premiums are indicative public figures for reference profiles, mostly single-source; configurations and add-ons "
-          "differ. Not quotes. Get a quote from the insurer before deciding.)")
+          "(Premiums marked 'insurer table' come from the insurer's filed premium table: base plan, excl. GST, before "
+          "discounts/loadings. Others marked ~ are indicative public figures for a reference profile. Not quotes.)")
 
     scenario = ClaimScenario(bill=5_00_000, room_rent_per_day=8_000, days=5, patient_age=user.oldest)
     print(f"\n=== Claim simulator: {inr(scenario.bill)} bill, {scenario.days} days in a "
@@ -191,7 +193,12 @@ def report(fit: list[ScoreCard], rejected: list[ScoreCard], user: UserProfile, t
               f"{len(c.plan.values)} data points, {verified} verified against policy wording ---")
         for h in c.plan.highlights:
             print(f"  [+     ] {h}")
-        if c.premium is None and c.approx:
+        if c.priced:
+            print(f"  [PRICE ] {c.priced.describe()}")
+            for cav in c.priced.caveats:
+                print(f"           {cav}")
+            print(f"           Source: {c.priced.source}{f' (page {c.priced.page})' if c.priced.page else ''}")
+        elif c.premium is None and c.approx:
             print(f"  [PRICE ] {c.approx.describe()}")
             if not c.approx.close:
                 print("           That reference profile differs from your family; get a real quote.")
