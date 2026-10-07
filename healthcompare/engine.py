@@ -523,8 +523,10 @@ def gotchas(plan: Plan, user: UserProfile) -> list[Gotcha]:
 
     # Maternity.
     if user.planning_pregnancy:
-        if not v("maternity_covered"):
+        if v("maternity_covered") is False:
             g.append(Gotcha("high", "Maternity is not covered."))
+        elif v("maternity_covered") is None:
+            g.append(Gotcha("medium", "Maternity cover not confirmed for this plan: ask the insurer."))
         elif (mw := v("maternity_waiting_months")):
             g.append(Gotcha("medium", f"Maternity claimable only after {mw:g} months; plan a pregnancy after that."))
 

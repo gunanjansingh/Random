@@ -266,13 +266,18 @@ class CurrentPolicy:
     """The policy the user already holds (audience C: switching or upgrading)."""
     plan_id: str | None = None  # one of our plans, if it is
     name: str = ""  # as the user calls it, if not in our list
+    insurer_id: str = ""  # insurer of a plan not in our list (lets us spot same-insurer migration)
     sum_insured: int = 5_00_000  # base sum insured
     cumulative_bonus: int = 0  # bonus cover accrued so far, in rupees
     continuous_years: float = 0  # years of unbroken cover, including earlier ports
     annual_premium: int | None = None  # what they pay now
     claimed_last_year: bool = False
     conditions_declared: bool = True  # existing conditions were declared when buying
-    renewal_in_days: int | None = None  # days until the current policy's renewal date
+    renewal_in_days: int | None = None  # days until the current policy's renewal date (negative = already passed)
+    pays_monthly: bool = False  # monthly premium: grace period is 15 days instead of 30
+    employer_group: bool = False  # an employer/group policy, not a retail one
+    all_members_since_start: bool = True  # everyone has been covered for the full continuous period
+    ever_claimed: bool | None = None  # any claim ever paid (ends 'lock the clock' style premium locks)
     terms: dict[str, object] = field(default_factory=dict)  # known terms of a plan not in our list (criterion id -> value)
 
     @property

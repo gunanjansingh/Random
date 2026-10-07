@@ -178,7 +178,25 @@ sample illustrations, which are used as reference prices.
 - Earlier web-sourced values are kept as alternates and are never shown as
   "in dispute" with a document-verified value.
 
-### 3.2 Scoring under incomplete data
+### 3.2 Stay or switch (v1 audience C)
+
+`healthcompare/switching.py` compares the user's current policy (one of ours, or
+described by them) with staying-and-upgrading, moving within the same insurer
+(migration), and porting to each suggested plan. It follows 91 IRDAI rules that
+were researched from the 2024 master circulars, the Products Regulations and
+insurer wordings, and re-checked against their sources. Key rules:
+
+- credits carry over up to the old sum insured plus no-claim bonus;
+- extra cover starts fresh waits and a fresh 5-year moratorium on that part only;
+- migration after 36 months is not re-underwritten, except for any extra cover;
+- apply 30-60 days before renewal; grace period 30 days (15 if paying monthly);
+- the new insurer may load, exclude or decline.
+
+An independent three-angle review (regulation, logic, user scenarios) produced
+39 confirmed findings. All are fixed and covered by tests in
+`tests/test_switching.py`.
+
+### 3.3 Scoring under incomplete data
 
 Unknown criteria score neutral (0.5). Treating them as bad would rank plans by
 how much we happened to extract, not by how good they are. Each value is
@@ -187,7 +205,7 @@ pulled toward neutral in proportion to its confidence. Every score shows a
 CLI says plainly when the top plans' ranges overlap, which means the order is
 not yet decisive.
 
-### 3.3 Running ingestion
+### 3.4 Running ingestion
 
 ```
 pip install pypdf anthropic          # plus ANTHROPIC_API_KEY or `ant auth login`

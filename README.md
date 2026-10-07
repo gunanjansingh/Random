@@ -6,13 +6,22 @@ about your family, city, health conditions and deal-breakers, and get the top
 plans side by side, with personal warnings and a claim simulator.
 
 ```
-python3 -m healthcompare --demo     # canned profile
-python3 -m healthcompare            # interactive questionnaire
+python3 -m healthcompare --demo          # canned profile: family buying a first plan
+python3 -m healthcompare --demo-switch   # canned profile: someone with a policy deciding to stay or switch
+python3 -m healthcompare                 # interactive questionnaire
 python3 -m unittest discover -s tests -t .
 ```
 
 No dependencies for the comparison app (Python 3.10+). The ingestion pipeline
 needs `pip install pypdf anthropic`.
+
+## Who v1 is for
+
+- **Families buying their first plan**: ask, filter, then "based on our conversation and your filters,
+  this is the best-suited plan", with the reasons and sources.
+- **People with a policy deciding to stay, upgrade or switch**: what they'd gain, lose or restart
+  (waiting periods, 5-year moratorium, bonus, locked premiums), the porting window from their renewal
+  date, and the IRDAI portability rules behind each point (`data/india/portability_rules.json`).
 
 ## What it compares
 
